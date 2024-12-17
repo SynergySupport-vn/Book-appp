@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text Input Page</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script src="https://kit.fontawesome.com/03d2fb7007.js" crossorigin="anonymous"></script>
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom right, #6a11cb, #2575fc);
+        height: 100vh;
+        color: white;
+        overflow: hidden; /* Prevent body overflow */
+      }
+
+      .container {
+        width: 100%;
+        height: 100vh; /* Fullscreen height */
+        overflow-y: auto; /* Enable vertical scrolling */
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 30px;
+        box-sizing: border-box; /* Include padding in width and height */
+        text-align: center;
+      }
+
+      .horizontal-card {
+        width: 100%;
+        padding: 20px;
+        background-color: #333; /* Dark background */
+        color: #fff; /* Light text color for contrast */
+        border-radius: 8px;
+        border: 1px solid #ccc; /* Light gray border */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        text-align: left;
+        display: flex;
+        flex-direction: column; /* Change to column to stack elements vertically */
+        align-items: center;
+      }
+
+      .card-header {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .card-content {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+      }
+
+      .card-section {
+        text-align: center;
+      }
+
+      .card-section img {
+        width: 24px;
+        height: 24px;
+        margin-bottom: 5px;
+      }
+
+      .card-section label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #ffcc00; /* Change this color to your desired label color */
+      }
+
+      .card-section .value {
+        font-size: 1.2em;
+      }
+
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .input-section {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+      }
+
+      textarea {
+        width: 100%;
+        max-width: 600px;
+        height: 100px;
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      textarea:focus {
+        border-color: #4caf50;
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        outline: none;
+      }
+
+      .show-button,
+      .return-button,
+      .add-button {
+        padding: 12px 24px;
+        font-size: 18px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .show-button:hover,
+      .return-button:hover,
+      .add-button:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+      }
+
+      .return-button {
+        display: none;
+      }
+
+      .add-button {
+        display: none;
+      }
+
+      .show-button {
+        animation: bounce 1s infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .book-card {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #fff;
+        color: #333;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: left;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .book-card:hover {
+        transform: scale(1.05);
+      }
+
+      .book-card h2 {
+        margin-top: 0;
+      }
+
+      .additional-buttons {
+        display: none;
+        margin-top: 20px;
+      }
+
+      .additional-buttons button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #2196f3;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        margin: 5px;
+      }
+
+      .additional-buttons button:hover {
+        background-color: #1976d2;
+        transform: scale(1.05);
+      }
+
+      .submit-button {
+        padding: 12px 24px;
+        font-size: 18px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .submit-button:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+      }
+
+      .separator {
+        height: 4px;
+        background: linear-gradient(to right, #ff7e5f, #feb47b);
+        margin: 20px 0;
+        border-radius: 2px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .separator::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0.3),
+          rgba(255, 255, 255, 0)
+        );
+        animation: slide 2s infinite;
+      }
+
+      @keyframes slide {
+        0% {
+          left: -100%;
+        }
+        50% {
+          left: 100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+
+      .library {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #fff;
+        color: #333;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: left;
+      }
+
+      .page {
+        display: none;
+      }
+
+    .page p {
+      width: 100%;
+      max-width: 100%; /* Ensure the paragraph doesn't exceed the container width */
+      margin: 0; /* Remove default margin */
+      padding: 0; /* Remove default padding */
+      word-wrap: break-word; /* Ensure long words break to the next line */
+      overflow-wrap: break-word; /* Ensure long words break to the next line */
+      line-height: 1.5; /* Adjust line height for readability */
+      box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    }
+
+      .page.active {
+        display: block;
+      }
+
+      .nav-buttons {
+        margin-top: 20px;
+      }
+
+      .nav-buttons button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #2196f3;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        margin: 5px;
+      }
+
+      .nav-buttons button:hover {
+        background-color: #1976d2;
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div class="container">
+      <div class="horizontal-card">
+        <div class="card-header">Start learning to see weekly stats</div>
+        <div class="card-content">
+          <div class="card-section">
+            <i id="streak-icon" class="fa-solid fa-fire"></i>
+            <label>Streak</label>
+            <div id="streak-value" class="value">0 days</div>
+          </div>
+          <div class="card-section">
+            <img src="blue-circle-icon.png" alt="Blue Circle Icon" />
+            <label>Key Points</label>
+            <div class="value">0</div>
+          </div>
+          <div class="card-section">
+            <img src="green-circle-icon.png" alt="Green Circle Icon" />
+            <label>Minutes</label>
+            <div class="value">0</div>
+          </div>
+          <div class="card-section">
+            <img src="orange-circle-icon.png" alt="Orange Circle Icon" />
+            <label>Insights</label>
+            <div class="value">0</div>
+          </div>
+        </div>
+      </div>
+
+      <h1>Text Entry Page</h1>
+
+      <button class="show-button" onclick="showAddButton()">
+        Click to Enter Text
+      </button>
+      <button class="return-button" onclick="hideTextEntry()">Return</button>
+      <button class="add-button" onclick="showAdditionalButtons()">+</button>
+
+      <div class="additional-buttons">
+        <button onclick="addPage()">Add Page</button>
+        <button onclick="addInsight()">Add Insight</button>
+        <button onclick="addParagraph()">Add Paragraph</button>
+        <button onclick="addHeading()">Add Heading</button>
+      </div>
+
+      <div id="library" class="library">
+        <h2>Library</h2>
+        <div id="library-content"></div>
+      </div>
+    </div>
+
+    <script>
+      let currentCharIndex = 0;
+      let isSubmitButtonAdded = false;
+      let currentPageIndex = 0;
+      const pages = [[]]; // Start with one page
+      let isPlaying = false;
+      let utterance = null;
+      let finishedPagesCount = 0;
+
+      function showAddButton() {
+        document.querySelector(".add-button").style.display = "inline-block";
+        document.querySelector(".show-button").style.display = "none";
+        document.querySelector(".return-button").style.display = "inline-block";
+      }
+
+      function showAdditionalButtons() {
+        const additionalButtons = document.querySelector(".additional-buttons");
+        const isVisible = additionalButtons.style.display === "block";
+
+        if (isVisible) {
+          additionalButtons.style.display = "none";
+        } else {
+          additionalButtons.style.display = "block";
+        }
+      }
+
+      function addPage() {
+        pages.push([]); // Start a new page
+        const container = document.querySelector(".container");
+        const separator = document.createElement("div");
+        separator.classList.add("separator");
+        container.insertBefore(
+          separator,
+          document.querySelector(".add-button")
+        );
+        addSubmitButtonOnce(container);
+      }
+
+      function addInsight() {
+        addInputSection("Insight");
+      }
+
+      function addParagraph() {
+        addInputSection("Paragraph");
+      }
+
+      function addHeading() {
+        addInputSection("Heading");
+      }
+
+      function addInputSection(type) {
+        const container = document.querySelector(".container");
+        const inputSection = createInputSection(type);
+        container.insertBefore(
+          inputSection,
+          document.querySelector(".add-button")
+        );
+        pages[pages.length - 1].push(inputSection); // Add to the current page
+        addSubmitButtonOnce(container);
+      }
+
+      function createInputSection(type) {
+        const section = document.createElement("div");
+        section.classList.add("input-section");
+        const label = document.createElement("label");
+        label.innerText = `Enter ${type}:`;
+        const input = document.createElement("textarea");
+        input.placeholder = `Enter ${type} details here...`;
+        section.appendChild(label);
+        section.appendChild(input);
+        return section;
+      }
+
+      function addSubmitButtonOnce(container) {
+        if (!isSubmitButtonAdded) {
+          const submitButton = document.createElement("button");
+          submitButton.innerText = "Submit";
+          submitButton.classList.add("submit-button");
+          submitButton.onclick = displayLibraryContent;
+          container.appendChild(submitButton);
+          isSubmitButtonAdded = true;
+        }
+      }
+
+      function displayLibraryContent() {
+        const libraryContent = document.getElementById("library-content");
+
+        // Remove this line to allow multiple cards
+        // libraryContent.innerHTML = "";
+
+        const card = document.createElement("div");
+        card.classList.add("book-card");
+        card.innerText = "Click to view content";
+        card.onclick = () => showFullView();
+        libraryContent.appendChild(card);
+
+        // Ensure the library is always displayed
+        document.getElementById("library").style.display = "block";
+      }
+
+      function showFullView() {
+        const fullView = document.createElement("div");
+        fullView.style.position = "fixed";
+        fullView.style.top = "0";
+        fullView.style.left = "0";
+        fullView.style.width = "100%";
+        fullView.style.height = "100%";
+        fullView.style.backgroundColor = "#333";
+        fullView.style.color = "white";
+        fullView.style.padding = "20px";
+        fullView.style.overflowY = "auto";
+        fullView.style.zIndex = "1000";
+
+        const closeButton = document.createElement("button");
+        closeButton.innerText = "Close";
+        closeButton.style.marginBottom = "20px";
+        closeButton.style.padding = "10px 20px";
+        closeButton.style.fontSize = "16px";
+        closeButton.style.backgroundColor = "#f44336"; // Red background
+        closeButton.style.color = "white";
+        closeButton.style.border = "none";
+        closeButton.style.borderRadius = "4px";
+        closeButton.style.cursor = "pointer";
+        closeButton.style.transition =
+          "background-color 0.3s ease, transform 0.3s ease";
+        closeButton.onmouseover = () => {
+          closeButton.style.backgroundColor = "#d32f2f"; // Darker red on hover
+          closeButton.style.transform = "scale(1.05)";
+        };
+        closeButton.onmouseout = () => {
+          closeButton.style.backgroundColor = "#f44336"; // Original red
+          closeButton.style.transform = "scale(1)";
+        };
+        closeButton.onclick = () => document.body.removeChild(fullView);
+        fullView.appendChild(closeButton);
+
+        const playPauseButton = document.createElement("button");
+        playPauseButton.innerHTML = '<i class="fa fa-play"></i>';
+        playPauseButton.style.marginBottom = "20px";
+        playPauseButton.style.padding = "10px 20px";
+        playPauseButton.style.fontSize = "16px";
+        playPauseButton.style.backgroundColor = "#4caf50"; // Green background
+        playPauseButton.style.color = "white";
+        playPauseButton.style.border = "none";
+        playPauseButton.style.borderRadius = "4px";
+        playPauseButton.style.cursor = "pointer";
+        playPauseButton.style.transition =
+          "background-color 0.3s ease, transform 0.3s ease";
+        playPauseButton.onmouseover = () => {
+          playPauseButton.style.backgroundColor = "#45a049"; // Darker green on hover
+          playPauseButton.style.transform = "scale(1.05)";
+        };
+        playPauseButton.onmouseout = () => {
+          playPauseButton.style.backgroundColor = "#4caf50"; // Original green
+          playPauseButton.style.transform = "scale(1)";
+        };
+        playPauseButton.onclick = () => togglePlayPause(playPauseButton);
+        fullView.appendChild(playPauseButton);
+
+        pages.forEach((page, pageIndex) => {
+          const pageDiv = document.createElement("div");
+          pageDiv.classList.add("page");
+          if (pageIndex === currentPageIndex) {
+            pageDiv.classList.add("active");
+          }
+
+          page.forEach((section) => {
+            const content = section.querySelector("textarea").value;
+            const paragraphElement = document.createElement("p");
+            paragraphElement.innerText = content;
+
+            // Apply styles based on the type of input
+            if (section.querySelector("label").innerText.includes("Heading")) {
+              paragraphElement.style.fontWeight = "bold";
+              paragraphElement.style.fontSize = "1.5em"; // Larger font size for headings
+            } else {
+              paragraphElement.style.fontFamily = "sans-serif"; // Clean, sans-serif font for paragraphs and insights
+            }
+
+            pageDiv.appendChild(paragraphElement);
+          });
+
+          // Add Finish button to each page
+          const finishButton = document.createElement("button");
+          finishButton.innerText = "Finish";
+          finishButton.style.marginTop = "10px";
+          finishButton.style.padding = "10px 20px";
+          finishButton.style.fontSize = "16px";
+          finishButton.style.backgroundColor = "#ff9800"; // Orange background
+          finishButton.style.color = "white";
+          finishButton.style.border = "none";
+          finishButton.style.borderRadius = "4px";
+          finishButton.style.cursor = "pointer";
+          finishButton.style.transition =
+            "background-color 0.3s ease, transform 0.3s ease";
+          finishButton.onmouseover = () => {
+            finishButton.style.backgroundColor = "#fb8c00"; // Darker orange on hover
+            finishButton.style.transform = "scale(1.05)";
+          };
+          finishButton.onmouseout = () => {
+            finishButton.style.backgroundColor = "#ff9800"; // Original orange
+            finishButton.style.transform = "scale(1)";
+          };
+          finishButton.onclick = () => finishPage(pageIndex);
+          pageDiv.appendChild(finishButton);
+
+          fullView.appendChild(pageDiv);
+        });
+
+        const navNumbers = document.createElement("div");
+        navNumbers.classList.add("nav-numbers");
+        navNumbers.style.marginTop = "20px";
+        navNumbers.style.textAlign = "center";
+
+        pages.forEach((_, pageIndex) => {
+          const pageNumber = document.createElement("span");
+          pageNumber.innerText = pageIndex + 1;
+          pageNumber.style.cursor = "pointer";
+          pageNumber.style.margin = "0 5px";
+          pageNumber.style.padding = "5px 10px";
+          pageNumber.style.backgroundColor =
+            pageIndex === currentPageIndex ? "#2196f3" : "#555";
+          pageNumber.style.color = "white";
+          pageNumber.style.borderRadius = "4px";
+          pageNumber.onclick = () => {
+            document.querySelectorAll(".page").forEach((page, index) => {
+              page.classList.toggle("active", index === pageIndex);
+            });
+            currentPageIndex = pageIndex;
+            updateNavNumbers();
+          };
+          navNumbers.appendChild(pageNumber);
+        });
+
+        fullView.appendChild(navNumbers);
+        document.body.appendChild(fullView);
+      }
+
+      function finishPage(pageIndex) {
+  const pageElements = document.querySelectorAll(".page");
+  if (pageElements[pageIndex]) {
+    pageElements[pageIndex].style.display = "none"; // Hide the finished page
+    finishedPagesCount++;
+    if (finishedPagesCount >= 3) {
+      updateStreakValue();
+      finishedPagesCount = 0; // Reset the count after updating the streak
+    }
+
+    // Show confetti on the fullView div
+    const fullView = document.querySelector("div[style*='position: fixed']");
+    if (fullView) {
+      confetti({
+        particleCount: 150,
+        spread: 180,
+        origin: { y: 1.0 }, // Start from the bottom
+        zIndex: 1001, // Ensure confetti is above the fullView
+      });
+    }
+  }
+}
+
+      function updateStreakValue() {
+        const streakValueElement = document.getElementById("streak-value");
+        let streakValue = parseInt(streakValueElement.innerText);
+        streakValue++;
+        streakValueElement.innerText = `${streakValue} days`;
+        updateStreakIconColor();
+      }
+
+      function togglePlayPause(button) {
+        if (!utterance) {
+          utterance = new SpeechSynthesisUtterance();
+        }
+
+        let textToRead = "";
+        const activePage = document.querySelector(".page.active");
+
+        if (activePage) {
+          activePage.querySelectorAll("p").forEach((paragraph) => {
+            textToRead += paragraph.innerText + " ";
+          });
+        }
+
+        utterance.text = textToRead;
+        utterance.onboundary = (event) => {
+          if (event.name === "word") {
+            currentCharIndex = event.charIndex;
+          }
+        };
+
+        utterance.onend = () => {
+          // Reset to start of the page when the end is reached
+          currentCharIndex = 0;
+          button.innerHTML = '<i class="fa fa-play"></i>';
+          isPlaying = false;
+        };
+
+        if (isPlaying) {
+          speechSynthesis.cancel();
+          button.innerHTML = '<i class="fa fa-play"></i>';
+        } else {
+          if (currentCharIndex > 0) {
+            utterance.text = utterance.text.substring(currentCharIndex);
+          }
+          speechSynthesis.speak(utterance);
+          button.innerHTML = '<i class="fa fa-pause"></i>';
+        }
+
+        isPlaying = !isPlaying;
+      }
+
+      function navigatePages(direction) {
+        const pageElements = document.querySelectorAll(".page");
+        pageElements[currentPageIndex].classList.remove("active");
+        currentPageIndex =
+          (currentPageIndex + direction + pages.length) % pages.length;
+        pageElements[currentPageIndex].classList.add("active");
+      }
+
+      function hideTextEntry() {
+        document.querySelector(".add-button").style.display = "none";
+        document.querySelector(".show-button").style.display = "inline-block";
+        document.querySelector(".return-button").style.display = "none";
+        document.querySelector(".additional-buttons").style.display = "none";
+
+        const inputSections = document.querySelectorAll(".input-section");
+        inputSections.forEach((section) => section.remove());
+
+        const separators = document.querySelectorAll(".separator");
+        separators.forEach((separator) => separator.remove());
+
+        const submitButton = document.querySelector(".submit-button");
+        if (submitButton) {
+          submitButton.remove();
+          isSubmitButtonAdded = false;
+        }
+
+        pages.length = 0; // Reset pages
+        pages.push([]); // Start with one page
+      }
+
+      function updateNavNumbers() {
+        const navNumbers = document.querySelector(".nav-numbers");
+        if (navNumbers) {
+          navNumbers.childNodes.forEach((pageNumber, index) => {
+            pageNumber.style.backgroundColor =
+              index === currentPageIndex ? "#2196f3" : "#555";
+          });
+        }
+      }
+
+      // Function to update the streak icon color
+      function updateStreakIconColor() {
+        const streakValueElement = document.getElementById("streak-value");
+        const streakIcon = document.getElementById("streak-icon");
+        const streakValue = parseInt(streakValueElement.innerText);
+
+        if (streakValue > 0) {
+          streakIcon.style.color = "#FF8833";
+        } else {
+          streakIcon.style.color = ""; // Default color
+        }
+      }
+
+      // Call the function to update the icon color on page load
+      updateStreakIconColor();
+    </script>
+  </body>
+</html>
