@@ -10,6 +10,33 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <script src="https://kit.fontawesome.com/03d2fb7007.js" crossorigin="anonymous"></script>
+    
+    <script>const socket = new WebSocket('ws://localhost:8080');
+
+      // Log when the connection is established
+      socket.addEventListener('open', () => {
+          console.log('Connected to WebSocket server');
+      });
+      
+      // Listen for messages from the server
+      socket.addEventListener('message', (event) => {
+          console.log('Message from server:', event.data);
+      
+          // Handle the data (e.g., update the UI)
+      });
+      
+      // Send data to the server
+      function sendData(action, payload) {
+          const message = JSON.stringify({ action, payload });
+          socket.send(message);
+      }
+      
+      // Example: Call sendData() when an action occurs
+      document.getElementById('exampleButton').addEventListener('click', () => {
+          sendData('buttonClick', { id: 'exampleButton' });
+      });
+      </script>
+    
     <style>
       body {
         font-family: "Roboto", sans-serif;
@@ -168,6 +195,7 @@
         text-align: left;
         cursor: pointer;
         transition: transform 0.3s ease;
+        position: relative; /* For positioning the settings icon */
       }
 
       .book-card:hover {
@@ -176,6 +204,35 @@
 
       .book-card h2 {
         margin-top: 0;
+      }
+
+      .settings-icon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        font-size: 20px;
+        color: #333;
+      }
+
+      .delete-button {
+        display: none;
+        position: absolute;
+        top: 40px;
+        right: 10px;
+        padding: 5px 10px;
+        font-size: 14px;
+        background-color: #f44336;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .delete-button:hover {
+        background-color: #d32f2f;
+        transform: scale(1.05);
       }
 
       .additional-buttons {
@@ -267,16 +324,16 @@
         display: none;
       }
 
-    .page p {
-      width: 100%;
-      max-width: 100%; /* Ensure the paragraph doesn't exceed the container width */
-      margin: 0; /* Remove default margin */
-      padding: 0; /* Remove default padding */
-      word-wrap: break-word; /* Ensure long words break to the next line */
-      overflow-wrap: break-word; /* Ensure long words break to the next line */
-      line-height: 1.5; /* Adjust line height for readability */
-      box-sizing: border-box; /* Include padding and border in the element's total width and height */
-    }
+      .page p {
+        width: 100%;
+        max-width: 100%; /* Ensure the paragraph doesn't exceed the container width */
+        margin: 0; /* Remove default margin */
+        padding: 0; /* Remove default padding */
+        word-wrap: break-word; /* Ensure long words break to the next line */
+        overflow-wrap: break-word; /* Ensure long words break to the next line */
+        line-height: 1.5; /* Adjust line height for readability */
+        box-sizing: border-box; /* Include padding and border in the element's total width and height */
+      }
 
       .page.active {
         display: block;
@@ -302,10 +359,88 @@
         background-color: #1976d2;
         transform: scale(1.05);
       }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 20px;
+        overflow-y: auto;
+        z-index: 1000;
+      }
+
+      .modal-content {
+        background-color: #333;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 600px;
+        margin: 50px auto;
+      }
+
+      .close-modal {
+        background-color: #f44336;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        padding: 10px 20px;
+        margin-bottom: 20px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .close-modal:hover {
+        background-color: #d32f2f;
+        transform: scale(1.05);
+      }
+
+      .edit-button {
+        display: none; /* Hide the edit button initially */
+        position: absolute;
+        top: 70px; /* Adjust position as needed */
+        right: 10px;
+        padding: 5px 10px;
+        font-size: 14px;
+        background-color: #2196f3;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .edit-button:hover {
+        background-color: #1976d2;
+        transform: scale(1.05);
+      }
+
+      .voice-selector {
+  margin-bottom: 20px;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #f0f0f0; /* Light gray background for better contrast */
+  color: #333;
+  border: 2px solid #ddd;
+  border-radius: 8px; /* Slightly larger border radius for a smoother look */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%; /* Full width for better alignment */
+  max-width: 300px; /* Limit the maximum width */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  appearance: none; /* Remove default styling for consistency */
+}
+
+.voice-selector:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  outline: none;
+}
     </style>
   </head>
   <body>
-    
     <div class="container">
       <div class="horizontal-card">
         <div class="card-header">Start learning to see weekly stats</div>
@@ -354,6 +489,15 @@
       </div>
     </div>
 
+    <!-- Modal for editing card content -->
+    <div id="edit-modal" class="modal">
+      <div class="modal-content">
+        <button class="close-modal" onclick="closeModal()">Close</button>
+        <div id="edit-form"></div>
+        <button class="submit-button" onclick="submitEdit()">Submit</button>
+      </div>
+    </div>
+
     <script>
       let currentCharIndex = 0;
       let isSubmitButtonAdded = false;
@@ -362,6 +506,22 @@
       let isPlaying = false;
       let utterance = null;
       let finishedPagesCount = 0;
+      const cardContents =
+        JSON.parse(localStorage.getItem("cardContents")) || []; // Load from localStorage
+      let currentCardIndex = null; // Add this line to track the current card index
+      let voices = []; // Array to store available voices
+
+      document.addEventListener("DOMContentLoaded", () => {
+        displaySavedCards();
+        loadVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+          speechSynthesis.onvoiceschanged = loadVoices;
+        }
+      });
+
+      function loadVoices() {
+        voices = speechSynthesis.getVoices();
+      }
 
       function showAddButton() {
         document.querySelector(".add-button").style.display = "inline-block";
@@ -385,10 +545,7 @@
         const container = document.querySelector(".container");
         const separator = document.createElement("div");
         separator.classList.add("separator");
-        container.insertBefore(
-          separator,
-          document.querySelector(".add-button")
-        );
+        container.insertBefore(separator, document.querySelector(".add-button"));
         addSubmitButtonOnce(container);
       }
 
@@ -411,7 +568,7 @@
           inputSection,
           document.querySelector(".add-button")
         );
-        pages[pages.length - 1].push(inputSection); // Add to the current page
+        pages[pages.length - 1].push({ element: inputSection, type }); // Add to the current page with type
         addSubmitButtonOnce(container);
       }
 
@@ -441,20 +598,115 @@
       function displayLibraryContent() {
         const libraryContent = document.getElementById("library-content");
 
-        // Remove this line to allow multiple cards
-        // libraryContent.innerHTML = "";
+        const cardIndex = cardContents.length; // Use the current length as an index
+        const cardContent = pages.map((page) =>
+          page.map((section) => ({
+            text: section.element.querySelector("textarea").value,
+            type: section.type,
+          }))
+        );
+        cardContents.push(cardContent); // Store the content for this card
+        localStorage.setItem("cardContents", JSON.stringify(cardContents)); // Save to localStorage
 
         const card = document.createElement("div");
         card.classList.add("book-card");
         card.innerText = "Click to view content";
-        card.onclick = () => showFullView();
+        card.onclick = () => showFullView(cardIndex); // Pass the index to showFullView
+
+        // Add settings icon
+        const settingsIcon = document.createElement("i");
+        settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
+        settingsIcon.onclick = (event) => {
+          event.stopPropagation(); // Prevent triggering the card click event
+          toggleDeleteButton(card);
+        };
+        card.appendChild(settingsIcon);
+
+        // Add delete button
+        const deleteButton = document.createElement("button");
+        deleteButton.innerText = "Delete";
+        deleteButton.classList.add("delete-button");
+        deleteButton.onclick = (event) => {
+          event.stopPropagation(); // Prevent triggering the card click event
+          deleteCard(cardIndex, card);
+        };
+        card.appendChild(deleteButton);
+
+        // Add edit button
+        const editButton = document.createElement("button");
+        editButton.innerText = "Edit";
+        editButton.classList.add("edit-button");
+        editButton.onclick = (event) => {
+          event.stopPropagation(); // Prevent triggering the card click event
+          openEditModal(cardIndex);
+        };
+        card.appendChild(editButton);
+
         libraryContent.appendChild(card);
 
-        // Ensure the library is always displayed
         document.getElementById("library").style.display = "block";
       }
 
-      function showFullView() {
+      function toggleDeleteButton(card) {
+        const deleteButton = card.querySelector(".delete-button");
+        const editButton = card.querySelector(".edit-button");
+        const isVisible = deleteButton.style.display === "block";
+
+        deleteButton.style.display = isVisible ? "none" : "block";
+        editButton.style.display = isVisible ? "none" : "block";
+      }
+      function deleteCard(cardIndex, cardElement) {
+        cardContents.splice(cardIndex, 1); // Remove the card content from the array
+        localStorage.setItem("cardContents", JSON.stringify(cardContents)); // Update localStorage
+        cardElement.remove(); // Remove the card element from the DOM
+      }
+
+      function displaySavedCards() {
+        const libraryContent = document.getElementById("library-content");
+        cardContents.forEach((_, cardIndex) => {
+          const card = document.createElement("div");
+          card.classList.add("book-card");
+          card.innerText = "Click to view content";
+          card.onclick = () => showFullView(cardIndex);
+
+          // Add settings icon
+          const settingsIcon = document.createElement("i");
+          settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
+          settingsIcon.onclick = (event) => {
+            event.stopPropagation(); // Prevent triggering the card click event
+            toggleDeleteButton(card);
+          };
+          card.appendChild(settingsIcon);
+
+          // Add delete button
+          const deleteButton = document.createElement("button");
+          deleteButton.innerText = "Delete";
+          deleteButton.classList.add("delete-button");
+          deleteButton.onclick = (event) => {
+            event.stopPropagation(); // Prevent triggering the card click event
+            deleteCard(cardIndex, card);
+          };
+          card.appendChild(deleteButton);
+
+          // Add edit button
+          const editButton = document.createElement("button");
+          editButton.innerText = "Edit";
+          editButton.classList.add("edit-button");
+          editButton.onclick = (event) => {
+            event.stopPropagation(); // Prevent triggering the card click event
+            openEditModal(cardIndex);
+          };
+          card.appendChild(editButton);
+
+          libraryContent.appendChild(card);
+        });
+
+        if (cardContents.length > 0) {
+          document.getElementById("library").style.display = "block";
+        }
+      }
+
+      function showFullView(cardIndex) {
         const fullView = document.createElement("div");
         fullView.style.position = "fixed";
         fullView.style.top = "0";
@@ -490,6 +742,16 @@
         closeButton.onclick = () => document.body.removeChild(fullView);
         fullView.appendChild(closeButton);
 
+        const voiceSelect = document.createElement("select");
+        voiceSelect.classList.add("voice-selector");
+        voices.forEach((voice, index) => {
+          const option = document.createElement("option");
+          option.value = index;
+          option.textContent = `${voice.name} (${voice.lang})`;
+          voiceSelect.appendChild(option);
+        });
+        fullView.appendChild(voiceSelect);
+
         const playPauseButton = document.createElement("button");
         playPauseButton.innerHTML = '<i class="fa fa-play"></i>';
         playPauseButton.style.marginBottom = "20px";
@@ -510,27 +772,31 @@
           playPauseButton.style.backgroundColor = "#4caf50"; // Original green
           playPauseButton.style.transform = "scale(1)";
         };
-        playPauseButton.onclick = () => togglePlayPause(playPauseButton);
+        playPauseButton.onclick = () => togglePlayPause(playPauseButton, voiceSelect);
         fullView.appendChild(playPauseButton);
 
-        pages.forEach((page, pageIndex) => {
+        const cardContent = cardContents[cardIndex]; // Retrieve the content for this card
+
+        cardContent.forEach((page, pageIndex) => {
           const pageDiv = document.createElement("div");
           pageDiv.classList.add("page");
           if (pageIndex === currentPageIndex) {
             pageDiv.classList.add("active");
           }
 
-          page.forEach((section) => {
-            const content = section.querySelector("textarea").value;
+          page.forEach((content) => {
             const paragraphElement = document.createElement("p");
-            paragraphElement.innerText = content;
+            paragraphElement.innerText = content.text;
 
             // Apply styles based on the type of input
-            if (section.querySelector("label").innerText.includes("Heading")) {
+            if (content.type === "Heading") {
               paragraphElement.style.fontWeight = "bold";
               paragraphElement.style.fontSize = "1.5em"; // Larger font size for headings
+            } else if (content.type === "Insight") {
+              paragraphElement.style.fontStyle = "italic"; // Italic style for insights
+              paragraphElement.style.color = "#ffcc00"; // Different color for insights
             } else {
-              paragraphElement.style.fontFamily = "sans-serif"; // Clean, sans-serif font for paragraphs and insights
+              paragraphElement.style.fontFamily = "sans-serif"; // Clean, sans-serif font for paragraphs
             }
 
             pageDiv.appendChild(paragraphElement);
@@ -568,7 +834,7 @@
         navNumbers.style.marginTop = "20px";
         navNumbers.style.textAlign = "center";
 
-        pages.forEach((_, pageIndex) => {
+        cardContent.forEach((_, pageIndex) => {
           const pageNumber = document.createElement("span");
           pageNumber.innerText = pageIndex + 1;
           pageNumber.style.cursor = "pointer";
@@ -591,29 +857,30 @@
         fullView.appendChild(navNumbers);
         document.body.appendChild(fullView);
       }
-
       function finishPage(pageIndex) {
-  const pageElements = document.querySelectorAll(".page");
-  if (pageElements[pageIndex]) {
-    pageElements[pageIndex].style.display = "none"; // Hide the finished page
-    finishedPagesCount++;
-    if (finishedPagesCount >= 3) {
-      updateStreakValue();
-      finishedPagesCount = 0; // Reset the count after updating the streak
-    }
+        const pageElements = document.querySelectorAll(".page");
+        if (pageElements[pageIndex]) {
+          pageElements[pageIndex].style.display = "none"; // Hide the finished page
+          finishedPagesCount++;
+          if (finishedPagesCount >= 3) {
+            updateStreakValue();
+            finishedPagesCount = 0; // Reset the count after updating the streak
+          }
 
-    // Show confetti on the fullView div
-    const fullView = document.querySelector("div[style*='position: fixed']");
-    if (fullView) {
-      confetti({
-        particleCount: 150,
-        spread: 180,
-        origin: { y: 1.0 }, // Start from the bottom
-        zIndex: 1001, // Ensure confetti is above the fullView
-      });
-    }
-  }
-}
+          // Show confetti on the fullView div
+          const fullView = document.querySelector(
+            "div[style*='position: fixed']"
+          );
+          if (fullView) {
+            confetti({
+              particleCount: 150,
+              spread: 180,
+              origin: { y: 1.0 }, // Start from the bottom
+              zIndex: 1001, // Ensure confetti is above the fullView
+            });
+          }
+        }
+      }
 
       function updateStreakValue() {
         const streakValueElement = document.getElementById("streak-value");
@@ -623,7 +890,7 @@
         updateStreakIconColor();
       }
 
-      function togglePlayPause(button) {
+      function togglePlayPause(button, voiceSelect) {
         if (!utterance) {
           utterance = new SpeechSynthesisUtterance();
         }
@@ -638,6 +905,7 @@
         }
 
         utterance.text = textToRead;
+        utterance.voice = voices[voiceSelect.value]; // Set the selected voice
         utterance.onboundary = (event) => {
           if (event.name === "word") {
             currentCharIndex = event.charIndex;
@@ -720,6 +988,84 @@
 
       // Call the function to update the icon color on page load
       updateStreakIconColor();
+
+      function openEditModal(cardIndex) {
+        currentCardIndex = cardIndex; // Set the current card index
+        const modal = document.getElementById("edit-modal");
+        const editForm = document.getElementById("edit-form");
+        editForm.innerHTML = ""; // Clear previous content
+
+        const cardContent = cardContents[cardIndex];
+        cardContent.forEach((page, pageIndex) => {
+          page.forEach((content, contentIndex) => {
+            const textarea = document.createElement("textarea");
+            textarea.value = content.text;
+            textarea.dataset.pageIndex = pageIndex;
+            textarea.dataset.contentIndex = contentIndex;
+            editForm.appendChild(textarea);
+          });
+        });
+
+        modal.style.display = "block";
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("edit-modal");
+        modal.style.display = "none";
+      }
+
+      function submitEdit() {
+        const editForm = document.getElementById("edit-form");
+        const textareas = editForm.querySelectorAll("textarea");
+
+        textareas.forEach((textarea) => {
+          const pageIndex = textarea.dataset.pageIndex;
+          const contentIndex = textarea.dataset.contentIndex;
+          cardContents[currentCardIndex][pageIndex][contentIndex].text =
+            textarea.value;
+        });
+
+        localStorage.setItem("cardContents", JSON.stringify(cardContents)); // Update localStorage
+        closeModal();
+        updateCardDisplay(currentCardIndex); // Update the card display
+      }
+
+      function updateCardDisplay(cardIndex) {
+        const card = document.querySelectorAll(".book-card")[cardIndex];
+        if (card) {
+          card.innerText = "Click to view content"; // Update the card text or content as needed
+
+          // Add settings icon
+          const settingsIcon = document.createElement("i");
+          settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
+          settingsIcon.onclick = (event) => {
+            event.stopPropagation(); // Prevent triggering the card click event
+            toggleDeleteButton(card);
+          };
+          card.appendChild(settingsIcon);
+
+          // Add delete button
+          const deleteButton = document.createElement("button");
+          deleteButton.innerText = "Delete";
+          deleteButton.classList.add("delete-button");
+          deleteButton.onclick = (event) => {
+            event.stopPropagation(); // Prevent triggering the card click event
+            deleteCard(cardIndex, card);
+          };
+          card.appendChild(deleteButton);
+
+          // Add edit button
+          const editButton = document.createElement("button");
+          editButton.innerText = "Edit";
+          editButton.classList.add("edit-button");
+          editButton.onclick = (event) => {
+            event.stopPropagation(); // Prevent triggering the card click event
+            openEditModal(cardIndex);
+          };
+          card.appendChild(editButton);
+        }
+      }
+      
     </script>
   </body>
 </html>
