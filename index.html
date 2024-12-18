@@ -11,31 +11,6 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <script src="https://kit.fontawesome.com/03d2fb7007.js" crossorigin="anonymous"></script>
     
-    <script>const socket = new WebSocket('ws://localhost:8080');
-
-      // Log when the connection is established
-      socket.addEventListener('open', () => {
-          console.log('Connected to WebSocket server');
-      });
-      
-      // Listen for messages from the server
-      socket.addEventListener('message', (event) => {
-          console.log('Message from server:', event.data);
-      
-          // Handle the data (e.g., update the UI)
-      });
-      
-      // Send data to the server
-      function sendData(action, payload) {
-          const message = JSON.stringify({ action, payload });
-          socket.send(message);
-      }
-      
-      // Example: Call sendData() when an action occurs
-      document.getElementById('exampleButton').addEventListener('click', () => {
-          sendData('buttonClick', { id: 'exampleButton' });
-      });
-      </script>
     
     <style>
       body {
