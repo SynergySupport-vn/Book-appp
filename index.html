@@ -11,7 +11,41 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <script src="https://kit.fontawesome.com/03d2fb7007.js" crossorigin="anonymous"></script>
     
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
     
+
+<script>
+  const firebaseConfig = {
+  apiKey: "AIzaSyBkLhHokiD7xmIaXop8w2Q_bba9WFO8iJ8",
+  authDomain: "bookapp-cfc83.firebaseapp.com",
+  databaseURL: "https://bookapp-cfc83-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "bookapp-cfc83",
+  storageBucket: "bookapp-cfc83.firebasestorage.app",
+  messagingSenderId: "400196439029",
+  appId: "1:400196439029:web:3a2c9d9c5debb9e2486ebc"
+};
+
+ // Initialize Firebase
+ const app = firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  function saveAction(actionData) {
+    firebase.database().ref('actions').push(actionData);
+}
+
+
+firebase.database().ref('actions').on('child_added', (snapshot) => {
+    const action = snapshot.val();
+    // Apply the action to the app
+    console.log('New action:', action);
+});
+
+      // Test Realtime Database
+      db.ref('test').set({ message: 'Hello Realtime Database!' })
+        .then(() => console.log('Data written successfully!'))
+        .catch((error) => console.error('Error writing data:', error));
+</script>
     <style>
       body {
         font-family: "Roboto", sans-serif;
