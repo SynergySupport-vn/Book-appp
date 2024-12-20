@@ -11,66 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <script src="https://kit.fontawesome.com/03d2fb7007.js" crossorigin="anonymous"></script>
     
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
-    <script>
-      const supabase = supabase.createClient('https://skzenebegqbgxjmazvvg.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNremVuZWJlZ3FiZ3hqbWF6dnZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQ2ODEyMjYsImV4cCI6MjA1MDI1NzIyNn0._MrL6sOj25ETKk7dHSQALaiEJCYg3IXtXoALdjQJtSo');
-      document.addEventListener("DOMContentLoaded", () => {
-        displaySavedCards();
-        loadVoices();
-        if (speechSynthesis.onvoiceschanged !== undefined) {
-          speechSynthesis.onvoiceschanged = loadVoices;
-        }
-      });
-
-      async function displayLibraryContent() {
-        const cardContent = pages.map((page) =>
-          page.map((section) => ({
-            text: section.element.querySelector("textarea").value,
-            type: section.type,
-          }))
-        );
-
-        // Save to Supabase
-        const { data, error } = await supabase
-          .from('cards')
-          .insert([{ content: JSON.stringify(cardContent) }]);
-
-        if (error) {
-          console.error('Error saving to Supabase:', error);
-        } else {
-          console.log('Data saved:', data);
-          // Optionally, update the UI to reflect the new card
-        }
-      }
-
-      async function displaySavedCards() {
-        const { data: cards, error } = await supabase
-          .from('cards')
-          .select('*');
-
-        if (error) {
-          console.error('Error fetching from Supabase:', error);
-        } else {
-          const libraryContent = document.getElementById("library-content");
-          cards.forEach((card, cardIndex) => {
-            const cardElement = document.createElement("div");
-            cardElement.classList.add("book-card");
-            cardElement.innerText = "Click to view content";
-            cardElement.onclick = () => showFullView(cardIndex);
-
-            // Add settings icon, delete button, and edit button as before
-
-            libraryContent.appendChild(cardElement);
-          });
-
-          if (cards.length > 0) {
-            document.getElementById("library").style.display = "block";
-          }
-        }
-      }
-
-    </script>
+    
     <style>
       body {
         font-family: "Roboto", sans-serif;
@@ -472,6 +413,12 @@
   box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
   outline: none;
 }
+
+      .speed-control {
+        margin-bottom: 20px;
+        width: 100%;
+        max-width: 300px;
+      }
     </style>
   </head>
   <body>
@@ -533,15 +480,25 @@
     </div>
 
     <script>
-          let currentCharIndex = 0;
+       let currentCharIndex = 0;
       let isSubmitButtonAdded = false;
       let currentPageIndex = 0;
       const pages = [[]]; // Start with one page
       let isPlaying = false;
       let utterance = null;
       let finishedPagesCount = 0;
+      const cardContents =
+        JSON.parse(localStorage.getItem("cardContents")) || []; // Load from localStorage
       let currentCardIndex = null; // Add this line to track the current card index
       let voices = []; // Array to store available voices
+
+      document.addEventListener("DOMContentLoaded", () => {
+        displaySavedCards();
+        loadVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+          speechSynthesis.onvoiceschanged = loadVoices;
+        }
+      });
 
       function loadVoices() {
         voices = speechSynthesis.getVoices();
@@ -619,6 +576,58 @@
         }
       }
 
+      function displayLibraryContent() {
+        const libraryContent = document.getElementById("library-content");
+
+        const cardIndex = cardContents.length; // Use the current length as an index
+        const cardContent = pages.map((page) =>
+          page.map((section) => ({
+            text: section.element.querySelector("textarea").value,
+            type: section.type,
+          }))
+        );
+        cardContents.push(cardContent); // Store the content for this card
+        localStorage.setItem("cardContents", JSON.stringify(cardContents)); // Save to localStorage
+
+        const card = document.createElement("div");
+        card.classList.add("book-card");
+        card.innerText = "Click to view content";
+        card.onclick = () => showFullView(cardIndex); // Pass the index to showFullView
+
+        // Add settings icon
+        const settingsIcon = document.createElement("i");
+        settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
+        settingsIcon.onclick = (event) => {
+          event.stopPropagation(); // Prevent triggering the card click event
+          toggleDeleteButton(card);
+        };
+        card.appendChild(settingsIcon);
+
+        // Add delete button
+        const deleteButton = document.createElement("button");
+        deleteButton.innerText = "Delete";
+        deleteButton.classList.add("delete-button");
+        deleteButton.onclick = (event) => {
+          event.stopPropagation(); // Prevent triggering the card click event
+          deleteCard(cardIndex, card);
+        };
+        card.appendChild(deleteButton);
+
+        // Add edit button
+        const editButton = document.createElement("button");
+        editButton.innerText = "Edit";
+        editButton.classList.add("edit-button");
+        editButton.onclick = (event) => {
+          event.stopPropagation(); // Prevent triggering the card click event
+          openEditModal(cardIndex);
+        };
+        card.appendChild(editButton);
+
+        libraryContent.appendChild(card);
+
+        document.getElementById("library").style.display = "block";
+      }
+
       function toggleDeleteButton(card) {
         const deleteButton = card.querySelector(".delete-button");
         const editButton = card.querySelector(".edit-button");
@@ -627,20 +636,55 @@
         deleteButton.style.display = isVisible ? "none" : "block";
         editButton.style.display = isVisible ? "none" : "block";
       }
-
       function deleteCard(cardIndex, cardElement) {
-        // Delete from Supabase
-        supabase
-          .from('cards')
-          .delete()
-          .eq('id', cardIndex)
-          .then(({ error }) => {
-            if (error) {
-              console.error('Error deleting from Supabase:', error);
-            } else {
-              cardElement.remove(); // Remove the card element from the DOM
-            }
-          });
+        cardContents.splice(cardIndex, 1); // Remove the card content from the array
+        localStorage.setItem("cardContents", JSON.stringify(cardContents)); // Update localStorage
+        cardElement.remove(); // Remove the card element from the DOM
+      }
+
+      function displaySavedCards() {
+        const libraryContent = document.getElementById("library-content");
+        cardContents.forEach((_, cardIndex) => {
+          const card = document.createElement("div");
+          card.classList.add("book-card");
+          card.innerText = "Click to view content";
+          card.onclick = () => showFullView(cardIndex);
+
+          // Add settings icon
+          const settingsIcon = document.createElement("i");
+          settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
+          settingsIcon.onclick = (event) => {
+            event.stopPropagation(); // Prevent triggering the card click event
+            toggleDeleteButton(card);
+          };
+          card.appendChild(settingsIcon);
+
+          // Add delete button
+          const deleteButton = document.createElement("button");
+          deleteButton.innerText = "Delete";
+          deleteButton.classList.add("delete-button");
+          deleteButton.onclick = (event) => {
+            event.stopPropagation(); // Prevent triggering the card click event
+            deleteCard(cardIndex, card);
+          };
+          card.appendChild(deleteButton);
+
+          // Add edit button
+          const editButton = document.createElement("button");
+          editButton.innerText = "Edit";
+          editButton.classList.add("edit-button");
+          editButton.onclick = (event) => {
+            event.stopPropagation(); // Prevent triggering the card click event
+            openEditModal(cardIndex);
+          };
+          card.appendChild(editButton);
+
+          libraryContent.appendChild(card);
+        });
+
+        if (cardContents.length > 0) {
+          document.getElementById("library").style.display = "block";
+        }
       }
 
       function showFullView(cardIndex) {
@@ -689,6 +733,15 @@
         });
         fullView.appendChild(voiceSelect);
 
+        const speedControl = document.createElement("input");
+        speedControl.type = "range";
+        speedControl.min = "0.5";
+        speedControl.max = "2";
+        speedControl.step = "0.1";
+        speedControl.value = "1";
+        speedControl.classList.add("speed-control");
+        fullView.appendChild(speedControl);
+
         const playPauseButton = document.createElement("button");
         playPauseButton.innerHTML = '<i class="fa fa-play"></i>';
         playPauseButton.style.marginBottom = "20px";
@@ -709,103 +762,91 @@
           playPauseButton.style.backgroundColor = "#4caf50"; // Original green
           playPauseButton.style.transform = "scale(1)";
         };
-        playPauseButton.onclick = () => togglePlayPause(playPauseButton, voiceSelect);
+        playPauseButton.onclick = () => togglePlayPause(playPauseButton, voiceSelect, speedControl);
         fullView.appendChild(playPauseButton);
 
-        // Fetch card content from Supabase
-        supabase
-          .from('cards')
-          .select('content')
-          .eq('id', cardIndex)
-          .then(({ data, error }) => {
-            if (error) {
-              console.error('Error fetching card content:', error);
+        const cardContent = cardContents[cardIndex]; // Retrieve the content for this card
+
+        cardContent.forEach((page, pageIndex) => {
+          const pageDiv = document.createElement("div");
+          pageDiv.classList.add("page");
+          if (pageIndex === currentPageIndex) {
+            pageDiv.classList.add("active");
+          }
+
+          page.forEach((content) => {
+            const paragraphElement = document.createElement("p");
+            paragraphElement.innerText = content.text;
+
+            // Apply styles based on the type of input
+            if (content.type === "Heading") {
+              paragraphElement.style.fontWeight = "bold";
+              paragraphElement.style.fontSize = "1.5em"; // Larger font size for headings
+            } else if (content.type === "Insight") {
+              paragraphElement.style.fontStyle = "italic"; // Italic style for insights
+              paragraphElement.style.color = "#ffcc00"; // Different color for insights
             } else {
-              const cardContent = JSON.parse(data[0].content);
-
-              cardContent.forEach((page, pageIndex) => {
-                const pageDiv = document.createElement("div");
-                pageDiv.classList.add("page");
-                if (pageIndex === currentPageIndex) {
-                  pageDiv.classList.add("active");
-                }
-
-                page.forEach((content) => {
-                  const paragraphElement = document.createElement("p");
-                  paragraphElement.innerText = content.text;
-
-                  // Apply styles based on the type of input
-                  if (content.type === "Heading") {
-                    paragraphElement.style.fontWeight = "bold";
-                    paragraphElement.style.fontSize = "1.5em"; // Larger font size for headings
-                  } else if (content.type === "Insight") {
-                    paragraphElement.style.fontStyle = "italic"; // Italic style for insights
-                    paragraphElement.style.color = "#ffcc00"; // Different color for insights
-                  } else {
-                    paragraphElement.style.fontFamily = "sans-serif"; // Clean, sans-serif font for paragraphs
-                  }
-
-                  pageDiv.appendChild(paragraphElement);
-                });
-
-                // Add Finish button to each page
-                const finishButton = document.createElement("button");
-                finishButton.innerText = "Finish";
-                finishButton.style.marginTop = "10px";
-                finishButton.style.padding = "10px 20px";
-                finishButton.style.fontSize = "16px";
-                finishButton.style.backgroundColor = "#ff9800"; // Orange background
-                finishButton.style.color = "white";
-                finishButton.style.border = "none";
-                finishButton.style.borderRadius = "4px";
-                finishButton.style.cursor = "pointer";
-                finishButton.style.transition =
-                  "background-color 0.3s ease, transform 0.3s ease";
-                finishButton.onmouseover = () => {
-                  finishButton.style.backgroundColor = "#fb8c00"; // Darker orange on hover
-                  finishButton.style.transform = "scale(1.05)";
-                };
-                finishButton.onmouseout = () => {
-                  finishButton.style.backgroundColor = "#ff9800"; // Original orange
-                  finishButton.style.transform = "scale(1)";
-                };
-                finishButton.onclick = () => finishPage(pageIndex);
-                pageDiv.appendChild(finishButton);
-
-                fullView.appendChild(pageDiv);
-              });
-
-              const navNumbers = document.createElement("div");
-              navNumbers.classList.add("nav-numbers");
-              navNumbers.style.marginTop = "20px";
-              navNumbers.style.textAlign = "center";
-
-              cardContent.forEach((_, pageIndex) => {
-                const pageNumber = document.createElement("span");
-                pageNumber.innerText = pageIndex + 1;
-                pageNumber.style.cursor = "pointer";
-                pageNumber.style.margin = "0 5px";
-                pageNumber.style.padding = "5px 10px";
-                pageNumber.style.backgroundColor =
-                  pageIndex === currentPageIndex ? "#2196f3" : "#555";
-                pageNumber.style.color = "white";
-                pageNumber.style.borderRadius = "4px";
-                pageNumber.onclick = () => {
-                  document.querySelectorAll(".page").forEach((page, index) => {
-                    page.classList.toggle("active", index === pageIndex);
-                  });
-                  currentPageIndex = pageIndex;
-                  updateNavNumbers();
-                };
-                navNumbers.appendChild(pageNumber);
-              });
-
-              fullView.appendChild(navNumbers);
-              document.body.appendChild(fullView);
+              paragraphElement.style.fontFamily = "sans-serif"; // Clean, sans-serif font for paragraphs
             }
-          });
-      }
 
+            pageDiv.appendChild(paragraphElement);
+          });
+
+          // Add Finish button to each page
+          const finishButton = document.createElement("button");
+          finishButton.innerText = "Finish";
+          finishButton.style.marginTop = "10px";
+          finishButton.style.padding = "10px 20px";
+          finishButton.style.fontSize = "16px";
+          finishButton.style.backgroundColor = "#ff9800"; // Orange background
+          finishButton.style.color = "white";
+          finishButton.style.border = "none";
+          finishButton.style.borderRadius = "4px";
+          finishButton.style.cursor = "pointer";
+          finishButton.style.transition =
+            "background-color 0.3s ease, transform 0.3s ease";
+          finishButton.onmouseover = () => {
+            finishButton.style.backgroundColor = "#fb8c00"; // Darker orange on hover
+            finishButton.style.transform = "scale(1.05)";
+          };
+          finishButton.onmouseout = () => {
+            finishButton.style.backgroundColor = "#ff9800"; // Original orange
+            finishButton.style.transform = "scale(1)";
+          };
+          finishButton.onclick = () => finishPage(pageIndex);
+          pageDiv.appendChild(finishButton);
+
+          fullView.appendChild(pageDiv);
+        });
+
+        const navNumbers = document.createElement("div");
+        navNumbers.classList.add("nav-numbers");
+        navNumbers.style.marginTop = "20px";
+        navNumbers.style.textAlign = "center";
+
+        cardContent.forEach((_, pageIndex) => {
+          const pageNumber = document.createElement("span");
+          pageNumber.innerText = pageIndex + 1;
+          pageNumber.style.cursor = "pointer";
+          pageNumber.style.margin = "0 5px";
+          pageNumber.style.padding = "5px 10px";
+          pageNumber.style.backgroundColor =
+            pageIndex === currentPageIndex ? "#2196f3" : "#555";
+          pageNumber.style.color = "white";
+          pageNumber.style.borderRadius = "4px";
+          pageNumber.onclick = () => {
+            document.querySelectorAll(".page").forEach((page, index) => {
+              page.classList.toggle("active", index === pageIndex);
+            });
+            currentPageIndex = pageIndex;
+            updateNavNumbers();
+          };
+          navNumbers.appendChild(pageNumber);
+        });
+
+        fullView.appendChild(navNumbers);
+        document.body.appendChild(fullView);
+      }
       function finishPage(pageIndex) {
         const pageElements = document.querySelectorAll(".page");
         if (pageElements[pageIndex]) {
@@ -839,7 +880,7 @@
         updateStreakIconColor();
       }
 
-      function togglePlayPause(button, voiceSelect) {
+      function togglePlayPause(button, voiceSelect, speedControl) {
         if (!utterance) {
           utterance = new SpeechSynthesisUtterance();
         }
@@ -855,6 +896,7 @@
 
         utterance.text = textToRead;
         utterance.voice = voices[voiceSelect.value]; // Set the selected voice
+        utterance.rate = speedControl.value; // Set the speech rate
         utterance.onboundary = (event) => {
           if (event.name === "word") {
             currentCharIndex = event.charIndex;
@@ -944,30 +986,18 @@
         const editForm = document.getElementById("edit-form");
         editForm.innerHTML = ""; // Clear previous content
 
-        // Fetch card content from Supabase
-        supabase
-          .from('cards')
-          .select('content')
-          .eq('id', cardIndex)
-          .then(({ data, error }) => {
-            if (error) {
-              console.error('Error fetching card content:', error);
-            } else {
-              const cardContent = JSON.parse(data[0].content);
-
-              cardContent.forEach((page, pageIndex) => {
-                page.forEach((content, contentIndex) => {
-                  const textarea = document.createElement("textarea");
-                  textarea.value = content.text;
-                  textarea.dataset.pageIndex = pageIndex;
-                  textarea.dataset.contentIndex = contentIndex;
-                  editForm.appendChild(textarea);
-                });
-              });
-
-              modal.style.display = "block";
-            }
+        const cardContent = cardContents[cardIndex];
+        cardContent.forEach((page, pageIndex) => {
+          page.forEach((content, contentIndex) => {
+            const textarea = document.createElement("textarea");
+            textarea.value = content.text;
+            textarea.dataset.pageIndex = pageIndex;
+            textarea.dataset.contentIndex = contentIndex;
+            editForm.appendChild(textarea);
           });
+        });
+
+        modal.style.display = "block";
       }
 
       function closeModal() {
@@ -979,26 +1009,16 @@
         const editForm = document.getElementById("edit-form");
         const textareas = editForm.querySelectorAll("textarea");
 
-        const updatedContent = pages.map((page, pageIndex) =>
-          page.map((section, contentIndex) => ({
-            text: textareas[pageIndex * page.length + contentIndex].value,
-            type: section.type,
-          }))
-        );
+        textareas.forEach((textarea) => {
+          const pageIndex = textarea.dataset.pageIndex;
+          const contentIndex = textarea.dataset.contentIndex;
+          cardContents[currentCardIndex][pageIndex][contentIndex].text =
+            textarea.value;
+        });
 
-        // Update Supabase
-        supabase
-          .from('cards')
-          .update({ content: JSON.stringify(updatedContent) })
-          .eq('id', currentCardIndex)
-          .then(({ error }) => {
-            if (error) {
-              console.error('Error updating Supabase:', error);
-            } else {
-              closeModal();
-              updateCardDisplay(currentCardIndex); // Update the card display
-            }
-          });
+        localStorage.setItem("cardContents", JSON.stringify(cardContents)); // Update localStorage
+        closeModal();
+        updateCardDisplay(currentCardIndex); // Update the card display
       }
 
       function updateCardDisplay(cardIndex) {
@@ -1036,7 +1056,6 @@
           card.appendChild(editButton);
         }
       }
-      
     </script>
   </body>
 </html>
