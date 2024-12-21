@@ -413,12 +413,6 @@
   box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
   outline: none;
 }
-
-      .speed-control {
-        margin-bottom: 20px;
-        width: 100%;
-        max-width: 300px;
-      }
     </style>
   </head>
   <body>
@@ -480,7 +474,7 @@
     </div>
 
     <script>
-       let currentCharIndex = 0;
+      let currentCharIndex = 0;
       let isSubmitButtonAdded = false;
       let currentPageIndex = 0;
       const pages = [[]]; // Start with one page
@@ -733,15 +727,6 @@
         });
         fullView.appendChild(voiceSelect);
 
-        const speedControl = document.createElement("input");
-        speedControl.type = "range";
-        speedControl.min = "0.5";
-        speedControl.max = "2";
-        speedControl.step = "0.1";
-        speedControl.value = "1";
-        speedControl.classList.add("speed-control");
-        fullView.appendChild(speedControl);
-
         const playPauseButton = document.createElement("button");
         playPauseButton.innerHTML = '<i class="fa fa-play"></i>';
         playPauseButton.style.marginBottom = "20px";
@@ -762,7 +747,7 @@
           playPauseButton.style.backgroundColor = "#4caf50"; // Original green
           playPauseButton.style.transform = "scale(1)";
         };
-        playPauseButton.onclick = () => togglePlayPause(playPauseButton, voiceSelect, speedControl);
+        playPauseButton.onclick = () => togglePlayPause(playPauseButton, voiceSelect);
         fullView.appendChild(playPauseButton);
 
         const cardContent = cardContents[cardIndex]; // Retrieve the content for this card
@@ -880,7 +865,7 @@
         updateStreakIconColor();
       }
 
-      function togglePlayPause(button, voiceSelect, speedControl) {
+      function togglePlayPause(button, voiceSelect) {
         if (!utterance) {
           utterance = new SpeechSynthesisUtterance();
         }
@@ -896,7 +881,6 @@
 
         utterance.text = textToRead;
         utterance.voice = voices[voiceSelect.value]; // Set the selected voice
-        utterance.rate = speedControl.value; // Set the speech rate
         utterance.onboundary = (event) => {
           if (event.name === "word") {
             currentCharIndex = event.charIndex;
@@ -1056,6 +1040,7 @@
           card.appendChild(editButton);
         }
       }
+      
     </script>
   </body>
 </html>
