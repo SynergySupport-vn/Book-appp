@@ -1,560 +1,622 @@
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Text Input Page</title>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
-        rel="stylesheet"
-      />
-      <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-      <script src="https://kit.fontawesome.com/03d2fb7007.js" crossorigin="anonymous"></script>
-      
-      <style>
-        body {
-          font-family: "Roboto", sans-serif;
-          margin: 0;
-          padding: 0;
-          background: linear-gradient(to bottom right, #6a11cb, #2575fc);
-          height: 100vh;
-          color: white;
-          overflow: hidden; /* Prevent body overflow */
-        }
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text Input Page</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/03d2fb7007.js"
+      crossorigin="anonymous"
+    ></script>
 
-        .container {
-          width: 100%;
-          height: 100vh; /* Fullscreen height */
-          overflow-y: auto; /* Enable vertical scrolling */
-          background-color: rgba(255, 255, 255, 0.9);
-          padding: 30px;
-          box-sizing: border-box; /* Include padding in width and height */
-          text-align: center;
-        }
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom right, #6a11cb, #2575fc);
+        height: 100vh;
+        color: white;
+        overflow: hidden; /* Prevent body overflow */
+      }
 
-        .horizontal-card {
-          width: 100%;
-          padding: 20px;
-          background-color: #333; /* Dark background */
-          color: #fff; /* Light text color for contrast */
-          border-radius: 8px;
-          border: 1px solid #ccc; /* Light gray border */
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          margin-bottom: 20px;
-          text-align: left;
-          display: flex;
-          flex-direction: column; /* Change to column to stack elements vertically */
-          align-items: center;
-        }
+      .container {
+        width: 100%;
+        height: 100vh; /* Fullscreen height */
+        overflow-y: auto; /* Enable vertical scrolling */
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 30px;
+        box-sizing: border-box; /* Include padding in width and height */
+        text-align: center;
+      }
 
-        .card-header {
-          font-size: 1.2em;
-          margin-bottom: 10px;
-          text-align: center;
-        }
+      .horizontal-card {
+        width: 100%;
+        padding: 20px;
+        background-color: #333; /* Dark background */
+        color: #fff; /* Light text color for contrast */
+        border-radius: 8px;
+        border: 1px solid #ccc; /* Light gray border */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        text-align: left;
+        display: flex;
+        flex-direction: column; /* Change to column to stack elements vertically */
+        align-items: center;
+      }
 
-        .card-content {
-          display: flex;
-          justify-content: space-around;
-          width: 100%;
-        }
+      .card-header {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+        text-align: center;
+      }
 
-        .card-section {
-          text-align: center;
-        }
+      .card-content {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+      }
 
-        .card-section img {
-          width: 24px;
-          height: 24px;
-          margin-bottom: 5px;
-        }
+      .card-section {
+        text-align: center;
+      }
 
-        .card-section label {
-          display: block;
-          font-weight: bold;
-          margin-bottom: 5px;
-          color: #ffcc00; /* Change this color to your desired label color */
-        }
+      .card-section img {
+        width: 24px;
+        height: 24px;
+        margin-bottom: 5px;
+      }
 
-        .card-section .value {
-          font-size: 1.2em;
-        }
+      .card-section label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #ffcc00; /* Change this color to your desired label color */
+      }
 
-        h1 {
-          font-size: 2.5em;
-          margin-bottom: 20px;
-          color: #333;
-        }
+      .card-section .value {
+        font-size: 1.2em;
+      }
 
-        .input-section {
-          margin-bottom: 20px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        color: #333;
+      }
 
-        label {
-          font-weight: bold;
-          display: block;
-          margin-bottom: 5px;
-          color: #333;
-        }
+      .input-section {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
 
-        textarea {
-          width: 100%;
-          max-width: 600px;
-          height: 100px;
-          padding: 10px;
-          border: 2px solid #ddd;
-          border-radius: 4px;
-          font-size: 16px;
-          transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
+      label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+      }
 
-        textarea:focus {
-          border-color: #4caf50;
-          box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
-          outline: none;
-        }
+      textarea {
+        width: 100%;
+        max-width: 600px;
+        height: 100px;
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
 
-        .show-button,
-        .return-button,
-        .add-button {
-          padding: 12px 24px;
-          font-size: 18px;
-          background-color: #4caf50;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          transition: background-color 0.3s ease, transform 0.3s ease;
-        }
+      textarea:focus {
+        border-color: #4caf50;
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        outline: none;
+      }
 
-        .show-button:hover,
-        .return-button:hover,
-        .add-button:hover {
-          background-color: #45a049;
-          transform: scale(1.05);
-        }
+      .show-button,
+      .return-button,
+      .add-button {
+        padding: 12px 24px;
+        font-size: 18px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
 
-        .return-button {
-          display: none;
-        }
+      .show-button:hover,
+      .return-button:hover,
+      .add-button:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+      }
 
-        .add-button {
-          display: none;
-        }
+      .return-button {
+        display: none;
+      }
 
-        .show-button {
-          animation: bounce 1s infinite;
-        }
+      .add-button {
+        display: none;
+      }
 
-        @keyframes bounce {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-10px);
-          }
-        }
+      .show-button {
+        animation: bounce 1s infinite;
+      }
 
-        .book-card {
-          margin-top: 30px;
-          padding: 20px;
-          background-color: #fff;
-          color: #333;
-          border-radius: 8px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          text-align: left;
-          cursor: pointer;
-          transition: transform 0.3s ease;
-          position: relative; /* For positioning the settings icon */
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
         }
-
-        .book-card:hover {
-          transform: scale(1.05);
+        50% {
+          transform: translateY(-10px);
         }
+      }
 
-        .book-card h2 {
-          margin-top: 0;
-        }
+      .book-card {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #fff;
+        color: #333;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: left;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        position: relative; /* For positioning the settings icon */
+      }
 
-        .settings-icon {
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          cursor: pointer;
-          font-size: 20px;
-          color: #333;
-        }
+      .book-card:hover {
+        transform: scale(1.05);
+      }
 
-        .delete-button {
-          display: none;
-          position: absolute;
-          top: 40px;
-          right: 10px;
-          padding: 5px 10px;
-          font-size: 14px;
-          background-color: #f44336;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          transition: background-color 0.3s ease, transform 0.3s ease;
-        }
+      .book-card h2 {
+        margin-top: 0;
+      }
 
-        .delete-button:hover {
-          background-color: #d32f2f;
-          transform: scale(1.05);
-        }
+      .settings-icon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        font-size: 20px;
+        color: #333;
+      }
 
-        .additional-buttons {
-          display: none;
-          margin-top: 20px;
-        }
+      .delete-button {
+        display: none;
+        position: absolute;
+        top: 40px;
+        right: 10px;
+        padding: 5px 10px;
+        font-size: 14px;
+        background-color: #f44336;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
 
-        .additional-buttons button {
-          padding: 10px 20px;
-          font-size: 16px;
-          background-color: #2196f3;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          transition: background-color 0.3s ease, transform 0.3s ease;
-          margin: 5px;
-        }
+      .delete-button:hover {
+        background-color: #d32f2f;
+        transform: scale(1.05);
+      }
 
-        .additional-buttons button:hover {
-          background-color: #1976d2;
-          transform: scale(1.05);
-        }
+      .additional-buttons {
+        display: none;
+        margin-top: 20px;
+      }
 
-        .submit-button {
-          padding: 12px 24px;
-          font-size: 18px;
-          background-color: #4caf50;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          margin-top: 10px;
-          transition: background-color 0.3s ease, transform 0.3s ease;
-        }
+      .additional-buttons button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #2196f3;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        margin: 5px;
+      }
 
-        .submit-button:hover {
-          background-color: #45a049;
-          transform: scale(1.05);
-        }
+      .additional-buttons button:hover {
+        background-color: #1976d2;
+        transform: scale(1.05);
+      }
 
-        .separator {
-          height: 4px;
-          background: linear-gradient(to right, #ff7e5f, #feb47b);
-          margin: 20px 0;
-          border-radius: 2px;
-          position: relative;
-          overflow: hidden;
-        }
+      .submit-button {
+        padding: 12px 24px;
+        font-size: 18px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
 
-        .separator::before {
-          content: "";
-          position: absolute;
-          top: 0;
+      .submit-button:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+      }
+
+      .separator {
+        height: 4px;
+        background: linear-gradient(to right, #ff7e5f, #feb47b);
+        margin: 20px 0;
+        border-radius: 2px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .separator::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0.3),
+          rgba(255, 255, 255, 0)
+        );
+        animation: slide 2s infinite;
+      }
+
+      @keyframes slide {
+        0% {
           left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(
-            to right,
-            rgba(255, 255, 255, 0.3),
-            rgba(255, 255, 255, 0)
-          );
-          animation: slide 2s infinite;
         }
+        50% {
+          left: 100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
 
-        @keyframes slide {
-          0% {
-            left: -100%;
-          }
-          50% {
-            left: 100%;
-          }
-          100% {
-            left: 100%;
-          }
-        }
+      .library {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #fff;
+        color: #333;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: left;
+      }
 
-        .library {
-          margin-top: 30px;
-          padding: 20px;
-          background-color: #fff;
-          color: #333;
-          border-radius: 8px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          text-align: left;
-        }
+      .page {
+        display: none;
+      }
 
-        .page {
-          display: none;
-        }
+      .page p {
+        width: 100%;
+        max-width: 100%; /* Ensure the paragraph doesn't exceed the container width */
+        margin: 0; /* Remove default margin */
+        padding: 0; /* Remove default padding */
+        word-wrap: break-word; /* Ensure long words break to the next line */
+        overflow-wrap: break-word; /* Ensure long words break to the next line */
+        line-height: 1.5; /* Adjust line height for readability */
+        box-sizing: border-box; /* Include padding and border in the element's total width and height */
+      }
 
-        .page p {
-          width: 100%;
-          max-width: 100%; /* Ensure the paragraph doesn't exceed the container width */
-          margin: 0; /* Remove default margin */
-          padding: 0; /* Remove default padding */
-          word-wrap: break-word; /* Ensure long words break to the next line */
-          overflow-wrap: break-word; /* Ensure long words break to the next line */
-          line-height: 1.5; /* Adjust line height for readability */
-          box-sizing: border-box; /* Include padding and border in the element's total width and height */
-        }
+      .page.active {
+        display: block;
+      }
 
-        .page.active {
-          display: block;
-        }
+      .nav-buttons {
+        margin-top: 20px;
+      }
 
-        .nav-buttons {
-          margin-top: 20px;
-        }
+      .nav-buttons button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #2196f3;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        margin: 5px;
+      }
 
-        .nav-buttons button {
-          padding: 10px 20px;
-          font-size: 16px;
-          background-color: #2196f3;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          transition: background-color 0.3s ease, transform 0.3s ease;
-          margin: 5px;
-        }
+      .nav-buttons button:hover {
+        background-color: #1976d2;
+        transform: scale(1.05);
+      }
 
-        .nav-buttons button:hover {
-          background-color: #1976d2;
-          transform: scale(1.05);
-        }
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 20px;
+        overflow-y: auto;
+        z-index: 1000;
+      }
 
-        .modal {
-          display: none;
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0, 0, 0, 0.8);
-          color: white;
-          padding: 20px;
-          overflow-y: auto;
-          z-index: 1000;
-        }
+      .modal-content {
+        background-color: #333;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 600px;
+        margin: 50px auto;
+      }
 
-        .modal-content {
-          background-color: #333;
-          padding: 20px;
-          border-radius: 8px;
-          max-width: 600px;
-          margin: 50px auto;
-        }
+      .close-modal {
+        background-color: #f44336;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        padding: 10px 20px;
+        margin-bottom: 20px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
 
-        .close-modal {
-          background-color: #f44336;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          padding: 10px 20px;
-          margin-bottom: 20px;
-          transition: background-color 0.3s ease, transform 0.3s ease;
-        }
+      .close-modal:hover {
+        background-color: #d32f2f;
+        transform: scale(1.05);
+      }
 
-        .close-modal:hover {
-          background-color: #d32f2f;
-          transform: scale(1.05);
-        }
+      .edit-button {
+        display: none; /* Hide the edit button initially */
+        position: absolute;
+        top: 70px; /* Adjust position as needed */
+        right: 10px;
+        padding: 5px 10px;
+        font-size: 14px;
+        background-color: #2196f3;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
 
-        .edit-button {
-          display: none; /* Hide the edit button initially */
-          position: absolute;
-          top: 70px; /* Adjust position as needed */
-          right: 10px;
-          padding: 5px 10px;
-          font-size: 14px;
-          background-color: #2196f3;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .edit-button:hover {
-          background-color: #1976d2;
-          transform: scale(1.05);
-        }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="horizontal-card">
-          <div class="card-header">Start learning to see weekly stats</div>
-          <div class="card-content">
-            <div class="card-section">
-              <i id="streak-icon" class="fa-solid fa-fire"></i>
-              <label>Streak</label>
-              <div id="streak-value" class="value">0 days</div>
-            </div>
-            <div class="card-section">
-              <img src="blue-circle-icon.png" alt="Blue Circle Icon" />
-              <label>Key Points</label>
-              <div class="value">0</div>
-            </div>
-            <div class="card-section">
-              <img src="green-circle-icon.png" alt="Green Circle Icon" />
-              <label>Minutes</label>
-              <div class="value">0</div>
-            </div>
-            <div class="card-section">
-              <img src="orange-circle-icon.png" alt="Orange Circle Icon" />
-              <label>Insights</label>
-              <div class="value">0</div>
-            </div>
+      .edit-button:hover {
+        background-color: #1976d2;
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="horizontal-card">
+        <div class="card-header">Start learning to see weekly stats</div>
+        <div class="card-content">
+          <div class="card-section">
+            <i id="streak-icon" class="fa-solid fa-fire"></i>
+            <label>Streak</label>
+            <div id="streak-value" class="value">0 days</div>
+          </div>
+          <div class="card-section">
+            <img src="blue-circle-icon.png" alt="Blue Circle Icon" />
+            <label>Key Points</label>
+            <div class="value">0</div>
+          </div>
+          <div class="card-section">
+            <img src="green-circle-icon.png" alt="Green Circle Icon" />
+            <label>Minutes</label>
+            <div class="value">0</div>
+          </div>
+          <div class="card-section">
+            <img src="orange-circle-icon.png" alt="Orange Circle Icon" />
+            <label>Insights</label>
+            <div class="value">0</div>
           </div>
         </div>
-
-        <h1>Text Entry Page</h1>
-
-        <button class="show-button" onclick="showAddButton()">
-          Click to Enter Text
-        </button>
-        <button class="return-button" onclick="hideTextEntry()">Return</button>
-        <button class="add-button" onclick="showAdditionalButtons()">+</button>
-
-        <div class="additional-buttons">
-          <button onclick="addPage()">Add Page</button>
-          <button onclick="addInsight()">Add Insight</button>
-          <button onclick="addParagraph()">Add Paragraph</button>
-          <button onclick="addHeading()">Add Heading</button>
-        </div>
-
-        <div id="library" class="library">
-          <h2>Library</h2>
-          <div id="library-content"></div>
-        </div>
       </div>
 
-      <!-- Modal for editing card content -->
-      <div id="edit-modal" class="modal">
-        <div class="modal-content">
-          <button class="close-modal" onclick="closeModal()">Close</button>
-          <div id="edit-form"></div>
-          <button class="submit-button" onclick="submitEdit()">Submit</button>
-        </div>
+      <h1>Text Entry Page</h1>
+
+      <button class="show-button" onclick="showAddButton()">
+        Click to Enter Text
+      </button>
+      <button class="return-button" onclick="hideTextEntry()">Return</button>
+      <button class="add-button" onclick="showAdditionalButtons()">+</button>
+
+      <div class="additional-buttons">
+        <button onclick="addPage()">Add Page</button>
+        <button onclick="addInsight()">Add Insight</button>
+        <button onclick="addParagraph()">Add Paragraph</button>
+        <button onclick="addHeading()">Add Heading</button>
       </div>
 
-      <script>
-        let isSubmitButtonAdded = false;
-        let currentPageIndex = 0;
-        const pages = [[]]; // Start with one page
-        let finishedPagesCount = 0;
-        const cardContents =
-          JSON.parse(localStorage.getItem("cardContents")) || []; // Load from localStorage
-        let currentCardIndex = null; // Add this line to track the current card index
+      <div id="library" class="library">
+        <h2>Library</h2>
+        <div id="library-content"></div>
+      </div>
+    </div>
 
-        document.addEventListener("DOMContentLoaded", () => {
-          displaySavedCards();
-        });
+    <!-- Modal for editing card content -->
+    <div id="edit-modal" class="modal">
+      <div class="modal-content">
+        <button class="close-modal" onclick="closeModal()">Close</button>
+        <div id="edit-form"></div>
+        <button class="submit-button" onclick="submitEdit()">Submit</button>
+      </div>
+    </div>
 
-        let synth = window.speechSynthesis;
-let utterance = null;
-        function showAddButton() {
-          document.querySelector(".add-button").style.display = "inline-block";
-          document.querySelector(".show-button").style.display = "none";
-          document.querySelector(".return-button").style.display = "inline-block";
+    <script>
+      let isSubmitButtonAdded = false;
+      let currentPageIndex = 0;
+      const pages = [[]]; // Start with one page
+      let finishedPagesCount = 0;
+      const cardContents =
+        JSON.parse(localStorage.getItem("cardContents")) || []; // Load from localStorage
+      let currentCardIndex = null; // Add this line to track the current card index
+
+      document.addEventListener("DOMContentLoaded", () => {
+        displaySavedCards();
+      });
+
+      let synth = window.speechSynthesis;
+      let utterance = null;
+      function showAddButton() {
+        document.querySelector(".add-button").style.display = "inline-block";
+        document.querySelector(".show-button").style.display = "none";
+        document.querySelector(".return-button").style.display = "inline-block";
+      }
+
+      function showAdditionalButtons() {
+        const additionalButtons = document.querySelector(".additional-buttons");
+        const isVisible = additionalButtons.style.display === "block";
+
+        if (isVisible) {
+          additionalButtons.style.display = "none";
+        } else {
+          additionalButtons.style.display = "block";
         }
+      }
 
-        function showAdditionalButtons() {
-          const additionalButtons = document.querySelector(".additional-buttons");
-          const isVisible = additionalButtons.style.display === "block";
+      function addPage() {
+        pages.push([]); // Start a new page
+        const container = document.querySelector(".container");
+        const separator = document.createElement("div");
+        separator.classList.add("separator");
+        container.insertBefore(
+          separator,
+          document.querySelector(".add-button")
+        );
+        addSubmitButtonOnce(container);
+      }
 
-          if (isVisible) {
-            additionalButtons.style.display = "none";
-          } else {
-            additionalButtons.style.display = "block";
-          }
+      function addInsight() {
+        addInputSection("Insight");
+      }
+
+      function addParagraph() {
+        addInputSection("Paragraph");
+      }
+
+      function addHeading() {
+        addInputSection("Heading");
+      }
+
+      function addInputSection(type) {
+        const container = document.querySelector(".container");
+        const inputSection = createInputSection(type);
+        container.insertBefore(
+          inputSection,
+          document.querySelector(".add-button")
+        );
+        pages[pages.length - 1].push({ element: inputSection, type }); // Add to the current page with type
+        addSubmitButtonOnce(container);
+      }
+
+      function createInputSection(type) {
+        const section = document.createElement("div");
+        section.classList.add("input-section");
+        const label = document.createElement("label");
+        label.innerText = `Enter ${type}:`;
+        const input = document.createElement("textarea");
+        input.placeholder = `Enter ${type} details here...`;
+        section.appendChild(label);
+        section.appendChild(input);
+        return section;
+      }
+
+      function addSubmitButtonOnce(container) {
+        if (!isSubmitButtonAdded) {
+          const submitButton = document.createElement("button");
+          submitButton.innerText = "Submit";
+          submitButton.classList.add("submit-button");
+          submitButton.onclick = displayLibraryContent;
+          container.appendChild(submitButton);
+          isSubmitButtonAdded = true;
         }
+      }
 
-        function addPage() {
-          pages.push([]); // Start a new page
-          const container = document.querySelector(".container");
-          const separator = document.createElement("div");
-          separator.classList.add("separator");
-          container.insertBefore(separator, document.querySelector(".add-button"));
-          addSubmitButtonOnce(container);
-        }
+      function displayLibraryContent() {
+        const libraryContent = document.getElementById("library-content");
 
-        function addInsight() {
-          addInputSection("Insight");
-        }
+        const cardIndex = cardContents.length; // Use the current length as an index
+        const cardContent = pages.map((page) =>
+          page.map((section) => ({
+            text: section.element.querySelector("textarea").value,
+            type: section.type,
+          }))
+        );
+        cardContents.push(cardContent); // Store the content for this card
+        localStorage.setItem("cardContents", JSON.stringify(cardContents)); // Save to localStorage
 
-        function addParagraph() {
-          addInputSection("Paragraph");
-        }
+        const card = document.createElement("div");
+        card.classList.add("book-card");
+        card.innerText = "Click to view content";
+        card.onclick = () => showFullView(cardIndex); // Pass the index to showFullView
 
-        function addHeading() {
-          addInputSection("Heading");
-        }
+        // Add settings icon
+        const settingsIcon = document.createElement("i");
+        settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
+        settingsIcon.onclick = (event) => {
+          event.stopPropagation(); // Prevent triggering the card click event
+          toggleDeleteButton(card);
+        };
+        card.appendChild(settingsIcon);
 
-        function addInputSection(type) {
-          const container = document.querySelector(".container");
-          const inputSection = createInputSection(type);
-          container.insertBefore(
-            inputSection,
-            document.querySelector(".add-button")
-          );
-          pages[pages.length - 1].push({ element: inputSection, type }); // Add to the current page with type
-          addSubmitButtonOnce(container);
-        }
+        // Add delete button
+        const deleteButton = document.createElement("button");
+        deleteButton.innerText = "Delete";
+        deleteButton.classList.add("delete-button");
+        deleteButton.onclick = (event) => {
+          event.stopPropagation(); // Prevent triggering the card click event
+          deleteCard(cardIndex, card);
+        };
+        card.appendChild(deleteButton);
 
-        function createInputSection(type) {
-          const section = document.createElement("div");
-          section.classList.add("input-section");
-          const label = document.createElement("label");
-          label.innerText = `Enter ${type}:`;
-          const input = document.createElement("textarea");
-          input.placeholder = `Enter ${type} details here...`;
-          section.appendChild(label);
-          section.appendChild(input);
-          return section;
-        }
+        // Add edit button
+        const editButton = document.createElement("button");
+        editButton.innerText = "Edit";
+        editButton.classList.add("edit-button");
+        editButton.onclick = (event) => {
+          event.stopPropagation(); // Prevent triggering the card click event
+          openEditModal(cardIndex);
+        };
+        card.appendChild(editButton);
 
-        function addSubmitButtonOnce(container) {
-          if (!isSubmitButtonAdded) {
-            const submitButton = document.createElement("button");
-            submitButton.innerText = "Submit";
-            submitButton.classList.add("submit-button");
-            submitButton.onclick = displayLibraryContent;
-            container.appendChild(submitButton);
-            isSubmitButtonAdded = true;
-          }
-        }
+        libraryContent.appendChild(card);
 
-        function displayLibraryContent() {
-          const libraryContent = document.getElementById("library-content");
+        document.getElementById("library").style.display = "block";
+      }
 
-          const cardIndex = cardContents.length; // Use the current length as an index
-          const cardContent = pages.map((page) =>
-            page.map((section) => ({
-              text: section.element.querySelector("textarea").value,
-              type: section.type,
-            }))
-          );
-          cardContents.push(cardContent); // Store the content for this card
-          localStorage.setItem("cardContents", JSON.stringify(cardContents)); // Save to localStorage
+      function toggleDeleteButton(card) {
+        const deleteButton = card.querySelector(".delete-button");
+        const editButton = card.querySelector(".edit-button");
+        const isVisible = deleteButton.style.display === "block";
 
+        deleteButton.style.display = isVisible ? "none" : "block";
+        editButton.style.display = isVisible ? "none" : "block";
+      }
+      function deleteCard(cardIndex, cardElement) {
+        cardContents.splice(cardIndex, 1); // Remove the card content from the array
+        localStorage.setItem("cardContents", JSON.stringify(cardContents)); // Update localStorage
+        cardElement.remove(); // Remove the card element from the DOM
+      }
+
+      function displaySavedCards() {
+        const libraryContent = document.getElementById("library-content");
+        cardContents.forEach((_, cardIndex) => {
           const card = document.createElement("div");
           card.classList.add("book-card");
           card.innerText = "Click to view content";
-          card.onclick = () => showFullView(cardIndex); // Pass the index to showFullView
+          card.onclick = () => showFullView(cardIndex);
 
           // Add settings icon
           const settingsIcon = document.createElement("i");
@@ -586,88 +648,31 @@ let utterance = null;
           card.appendChild(editButton);
 
           libraryContent.appendChild(card);
+        });
 
+        if (cardContents.length > 0) {
           document.getElementById("library").style.display = "block";
         }
+      }
 
-        function toggleDeleteButton(card) {
-          const deleteButton = card.querySelector(".delete-button");
-          const editButton = card.querySelector(".edit-button");
-          const isVisible = deleteButton.style.display === "block";
+      function playText(text) {
+        fetch("/synthesize", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ text: text }),
+        })
+          .then((response) => response.blob())
+          .then((blob) => {
+            const audioUrl = URL.createObjectURL(blob);
+            const audio = new Audio(audioUrl);
+            audio.play();
+          })
+          .catch((error) => console.error("Error:", error));
+      }
 
-          deleteButton.style.display = isVisible ? "none" : "block";
-          editButton.style.display = isVisible ? "none" : "block";
-        }
-        function deleteCard(cardIndex, cardElement) {
-          cardContents.splice(cardIndex, 1); // Remove the card content from the array
-          localStorage.setItem("cardContents", JSON.stringify(cardContents)); // Update localStorage
-          cardElement.remove(); // Remove the card element from the DOM
-        }
-
-        function displaySavedCards() {
-          const libraryContent = document.getElementById("library-content");
-          cardContents.forEach((_, cardIndex) => {
-            const card = document.createElement("div");
-            card.classList.add("book-card");
-            card.innerText = "Click to view content";
-            card.onclick = () => showFullView(cardIndex);
-
-            // Add settings icon
-            const settingsIcon = document.createElement("i");
-            settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
-            settingsIcon.onclick = (event) => {
-              event.stopPropagation(); // Prevent triggering the card click event
-              toggleDeleteButton(card);
-            };
-            card.appendChild(settingsIcon);
-
-            // Add delete button
-            const deleteButton = document.createElement("button");
-            deleteButton.innerText = "Delete";
-            deleteButton.classList.add("delete-button");
-            deleteButton.onclick = (event) => {
-              event.stopPropagation(); // Prevent triggering the card click event
-              deleteCard(cardIndex, card);
-            };
-            card.appendChild(deleteButton);
-
-            // Add edit button
-            const editButton = document.createElement("button");
-            editButton.innerText = "Edit";
-            editButton.classList.add("edit-button");
-            editButton.onclick = (event) => {
-              event.stopPropagation(); // Prevent triggering the card click event
-              openEditModal(cardIndex);
-            };
-            card.appendChild(editButton);
-
-            libraryContent.appendChild(card);
-          });
-
-          if (cardContents.length > 0) {
-            document.getElementById("library").style.display = "block";
-          }
-        }
-
-
-        function playText(text) {
-  fetch('https://solar-test-project-405317.as.r.appspot.com/synthesize', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ text: text }),
-  })
-    .then(response => response.blob())
-    .then(blob => {
-      const audioUrl = URL.createObjectURL(blob);
-      const audio = new Audio(audioUrl);
-      audio.play();
-    })
-    .catch(error => console.error('Error:', error));
-}
-
-        function showFullView(cardIndex) {
+      function showFullView(cardIndex) {
         const fullView = document.createElement("div");
         fullView.style.position = "fixed";
         fullView.style.top = "0";
@@ -810,188 +815,187 @@ let utterance = null;
         document.body.appendChild(fullView);
       }
 
-function togglePlayPause(button) {
-  const pageDiv = button.parentElement;
-  const paragraphs = pageDiv.querySelectorAll("p"); 
-  const textToRead = Array.from(paragraphs).map(p => p.innerText).join(' ');
+      function togglePlayPause(button) {
+        const pageDiv = button.parentElement;
+        const paragraphs = pageDiv.querySelectorAll("p");
+        const textToRead = Array.from(paragraphs)
+          .map((p) => p.innerText)
+          .join(" ");
 
-  if (button.innerText === "Play") {
-    button.innerText = "Pause";
-    playText(textToRead);
-  } else {
-    button.innerText = "Play";
-    pauseText();
-  }
-}
-
-      
-        function finishPage(pageIndex) {
-          const pageElements = document.querySelectorAll(".page");
-          if (pageElements[pageIndex]) {
-            pageElements[pageIndex].style.display = "none"; // Hide the finished page
-            finishedPagesCount++;
-            if (finishedPagesCount >= 3) {
-              updateStreakValue();
-              finishedPagesCount = 0; // Reset the count after updating the streak
-            }
-
-            // Show confetti on the fullView div
-            const fullView = document.querySelector(
-              "div[style*='position: fixed']"
-            );
-            if (fullView) {
-              confetti({
-                particleCount: 150,
-                spread: 180,
-                origin: { y: 1.0 }, // Start from the bottom
-                zIndex: 1001, // Ensure confetti is above the fullView
-              });
-            }
-          }
+        if (button.innerText === "Play") {
+          button.innerText = "Pause";
+          playText(textToRead);
+        } else {
+          button.innerText = "Play";
+          pauseText();
         }
+      }
 
-        function updateStreakValue() {
-          const streakValueElement = document.getElementById("streak-value");
-          let streakValue = parseInt(streakValueElement.innerText);
-          streakValue++;
-          streakValueElement.innerText = `${streakValue} days`;
-          updateStreakIconColor();
-        }
-
-        function navigatePages(direction) {
-          const pageElements = document.querySelectorAll(".page");
-          pageElements[currentPageIndex].classList.remove("active");
-          currentPageIndex =
-            (currentPageIndex + direction + pages.length) % pages.length;
-          pageElements[currentPageIndex].classList.add("active");
-        }
-
-        function hideTextEntry() {
-          document.querySelector(".add-button").style.display = "none";
-          document.querySelector(".show-button").style.display = "inline-block";
-          document.querySelector(".return-button").style.display = "none";
-          document.querySelector(".additional-buttons").style.display = "none";
-
-          const inputSections = document.querySelectorAll(".input-section");
-          inputSections.forEach((section) => section.remove());
-
-          const separators = document.querySelectorAll(".separator");
-          separators.forEach((separator) => separator.remove());
-
-          const submitButton = document.querySelector(".submit-button");
-          if (submitButton) {
-            submitButton.remove();
-            isSubmitButtonAdded = false;
+      function finishPage(pageIndex) {
+        const pageElements = document.querySelectorAll(".page");
+        if (pageElements[pageIndex]) {
+          pageElements[pageIndex].style.display = "none"; // Hide the finished page
+          finishedPagesCount++;
+          if (finishedPagesCount >= 3) {
+            updateStreakValue();
+            finishedPagesCount = 0; // Reset the count after updating the streak
           }
 
-          pages.length = 0; // Reset pages
-          pages.push([]); // Start with one page
-        }
-
-        function updateNavNumbers() {
-          const navNumbers = document.querySelector(".nav-numbers");
-          if (navNumbers) {
-            navNumbers.childNodes.forEach((pageNumber, index) => {
-              pageNumber.style.backgroundColor =
-                index === currentPageIndex ? "#2196f3" : "#555";
+          // Show confetti on the fullView div
+          const fullView = document.querySelector(
+            "div[style*='position: fixed']"
+          );
+          if (fullView) {
+            confetti({
+              particleCount: 150,
+              spread: 180,
+              origin: { y: 1.0 }, // Start from the bottom
+              zIndex: 1001, // Ensure confetti is above the fullView
             });
           }
         }
+      }
 
-        // Function to update the streak icon color
-        function updateStreakIconColor() {
-          const streakValueElement = document.getElementById("streak-value");
-          const streakIcon = document.getElementById("streak-icon");
-          const streakValue = parseInt(streakValueElement.innerText);
-
-          if (streakValue > 0) {
-            streakIcon.style.color = "#FF8833";
-          } else {
-            streakIcon.style.color = ""; // Default color
-          }
-        }
-
-        // Call the function to update the icon color on page load
+      function updateStreakValue() {
+        const streakValueElement = document.getElementById("streak-value");
+        let streakValue = parseInt(streakValueElement.innerText);
+        streakValue++;
+        streakValueElement.innerText = `${streakValue} days`;
         updateStreakIconColor();
+      }
 
-        function openEditModal(cardIndex) {
-          currentCardIndex = cardIndex; // Set the current card index
-          const modal = document.getElementById("edit-modal");
-          const editForm = document.getElementById("edit-form");
-          editForm.innerHTML = ""; // Clear previous content
+      function navigatePages(direction) {
+        const pageElements = document.querySelectorAll(".page");
+        pageElements[currentPageIndex].classList.remove("active");
+        currentPageIndex =
+          (currentPageIndex + direction + pages.length) % pages.length;
+        pageElements[currentPageIndex].classList.add("active");
+      }
 
-          const cardContent = cardContents[cardIndex];
-          cardContent.forEach((page, pageIndex) => {
-            page.forEach((content, contentIndex) => {
-              const textarea = document.createElement("textarea");
-              textarea.value = content.text;
-              textarea.dataset.pageIndex = pageIndex;
-              textarea.dataset.contentIndex = contentIndex;
-              editForm.appendChild(textarea);
-            });
+      function hideTextEntry() {
+        document.querySelector(".add-button").style.display = "none";
+        document.querySelector(".show-button").style.display = "inline-block";
+        document.querySelector(".return-button").style.display = "none";
+        document.querySelector(".additional-buttons").style.display = "none";
+
+        const inputSections = document.querySelectorAll(".input-section");
+        inputSections.forEach((section) => section.remove());
+
+        const separators = document.querySelectorAll(".separator");
+        separators.forEach((separator) => separator.remove());
+
+        const submitButton = document.querySelector(".submit-button");
+        if (submitButton) {
+          submitButton.remove();
+          isSubmitButtonAdded = false;
+        }
+
+        pages.length = 0; // Reset pages
+        pages.push([]); // Start with one page
+      }
+
+      function updateNavNumbers() {
+        const navNumbers = document.querySelector(".nav-numbers");
+        if (navNumbers) {
+          navNumbers.childNodes.forEach((pageNumber, index) => {
+            pageNumber.style.backgroundColor =
+              index === currentPageIndex ? "#2196f3" : "#555";
           });
-
-          modal.style.display = "block";
         }
+      }
 
-        function closeModal() {
-          const modal = document.getElementById("edit-modal");
-          modal.style.display = "none";
+      // Function to update the streak icon color
+      function updateStreakIconColor() {
+        const streakValueElement = document.getElementById("streak-value");
+        const streakIcon = document.getElementById("streak-icon");
+        const streakValue = parseInt(streakValueElement.innerText);
+
+        if (streakValue > 0) {
+          streakIcon.style.color = "#FF8833";
+        } else {
+          streakIcon.style.color = ""; // Default color
         }
+      }
 
-        function submitEdit() {
-          const editForm = document.getElementById("edit-form");
-          const textareas = editForm.querySelectorAll("textarea");
+      // Call the function to update the icon color on page load
+      updateStreakIconColor();
 
-          textareas.forEach((textarea) => {
-            const pageIndex = textarea.dataset.pageIndex;
-            const contentIndex = textarea.dataset.contentIndex;
-            cardContents[currentCardIndex][pageIndex][contentIndex].text =
-              textarea.value;
+      function openEditModal(cardIndex) {
+        currentCardIndex = cardIndex; // Set the current card index
+        const modal = document.getElementById("edit-modal");
+        const editForm = document.getElementById("edit-form");
+        editForm.innerHTML = ""; // Clear previous content
+
+        const cardContent = cardContents[cardIndex];
+        cardContent.forEach((page, pageIndex) => {
+          page.forEach((content, contentIndex) => {
+            const textarea = document.createElement("textarea");
+            textarea.value = content.text;
+            textarea.dataset.pageIndex = pageIndex;
+            textarea.dataset.contentIndex = contentIndex;
+            editForm.appendChild(textarea);
           });
+        });
 
-          localStorage.setItem("cardContents", JSON.stringify(cardContents)); // Update localStorage
-          closeModal();
-          updateCardDisplay(currentCardIndex); // Update the card display
+        modal.style.display = "block";
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("edit-modal");
+        modal.style.display = "none";
+      }
+
+      function submitEdit() {
+        const editForm = document.getElementById("edit-form");
+        const textareas = editForm.querySelectorAll("textarea");
+
+        textareas.forEach((textarea) => {
+          const pageIndex = textarea.dataset.pageIndex;
+          const contentIndex = textarea.dataset.contentIndex;
+          cardContents[currentCardIndex][pageIndex][contentIndex].text =
+            textarea.value;
+        });
+
+        localStorage.setItem("cardContents", JSON.stringify(cardContents)); // Update localStorage
+        closeModal();
+        updateCardDisplay(currentCardIndex); // Update the card display
+      }
+
+      function updateCardDisplay(cardIndex) {
+        const card = document.querySelectorAll(".book-card")[cardIndex];
+        if (card) {
+          card.innerText = "Click to view content"; // Update the card text or content as needed
+
+          // Add settings icon
+          const settingsIcon = document.createElement("i");
+          settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
+          settingsIcon.onclick = (event) => {
+            event.stopPropagation(); // Prevent triggering the card click event
+            toggleDeleteButton(card);
+          };
+          card.appendChild(settingsIcon);
+
+          // Add delete button
+          const deleteButton = document.createElement("button");
+          deleteButton.innerText = "Delete";
+          deleteButton.classList.add("delete-button");
+          deleteButton.onclick = (event) => {
+            event.stopPropagation(); // Prevent triggering the card click event
+            deleteCard(cardIndex, card);
+          };
+          card.appendChild(deleteButton);
+
+          // Add edit button
+          const editButton = document.createElement("button");
+          editButton.innerText = "Edit";
+          editButton.classList.add("edit-button");
+          editButton.onclick = (event) => {
+            event.stopPropagation(); // Prevent triggering the card click event
+            openEditModal(cardIndex);
+          };
+          card.appendChild(editButton);
         }
-
-        function updateCardDisplay(cardIndex) {
-          const card = document.querySelectorAll(".book-card")[cardIndex];
-          if (card) {
-            card.innerText = "Click to view content"; // Update the card text or content as needed
-
-            // Add settings icon
-            const settingsIcon = document.createElement("i");
-            settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
-            settingsIcon.onclick = (event) => {
-              event.stopPropagation(); // Prevent triggering the card click event
-              toggleDeleteButton(card);
-            };
-            card.appendChild(settingsIcon);
-
-            // Add delete button
-            const deleteButton = document.createElement("button");
-            deleteButton.innerText = "Delete";
-            deleteButton.classList.add("delete-button");
-            deleteButton.onclick = (event) => {
-              event.stopPropagation(); // Prevent triggering the card click event
-              deleteCard(cardIndex, card);
-            };
-            card.appendChild(deleteButton);
-
-            // Add edit button
-            const editButton = document.createElement("button");
-            editButton.innerText = "Edit";
-            editButton.classList.add("edit-button");
-            editButton.onclick = (event) => {
-              event.stopPropagation(); // Prevent triggering the card click event
-              openEditModal(cardIndex);
-            };
-            card.appendChild(editButton);
-          }
-        }
-        
-      </script>
-    </body>
-  </html>
-    
+      }
+    </script>
+  </body>
+</html>
