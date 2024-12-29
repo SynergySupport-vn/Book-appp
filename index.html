@@ -1,20 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Text Input Page</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-    <script
-      src="https://kit.fontawesome.com/03d2fb7007.js"
-      crossorigin="anonymous"
-    ></script>
-
-    <style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Main Interface</title>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+        <script src="https://kit.fontawesome.com/03d2fb7007.js" crossorigin="anonymous"></script>
+        <style>
       body {
         font-family: "Roboto", sans-serif;
         margin: 0;
@@ -22,31 +15,32 @@
         background: linear-gradient(to bottom right, #6a11cb, #2575fc);
         height: 100vh;
         color: white;
-        overflow: hidden; /* Prevent body overflow */
+        overflow: hidden;
+        transition: background 1s ease;
       }
 
       .container {
         width: 100%;
-        height: 100vh; /* Fullscreen height */
-        overflow-y: auto; /* Enable vertical scrolling */
+        height: 100vh;
+        overflow-y: auto;
         background-color: rgba(255, 255, 255, 0.9);
         padding: 30px;
-        box-sizing: border-box; /* Include padding in width and height */
+        box-sizing: border-box;
         text-align: center;
       }
 
       .horizontal-card {
         width: 100%;
         padding: 20px;
-        background-color: #333; /* Dark background */
-        color: #fff; /* Light text color for contrast */
+        background-color: #333;
+        color: #fff;
         border-radius: 8px;
-        border: 1px solid #ccc; /* Light gray border */
+        border: 1px solid #ccc;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         margin-bottom: 20px;
         text-align: left;
         display: flex;
-        flex-direction: column; /* Change to column to stack elements vertically */
+        flex-direction: column;
         align-items: center;
       }
 
@@ -76,7 +70,7 @@
         display: block;
         font-weight: bold;
         margin-bottom: 5px;
-        color: #ffcc00; /* Change this color to your desired label color */
+        color: #ffcc00;
       }
 
       .card-section .value {
@@ -162,26 +156,42 @@
         }
       }
 
-      .book-card {
-        margin-top: 30px;
-        padding: 20px;
-        background-color: #fff;
-        color: #333;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: left;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-        position: relative; /* For positioning the settings icon */
-      }
+      .book-card img {
+    width: 100px;
+    height: auto;
+    border-radius: 4px; /* Add rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add shadow */
+    margin-bottom: 10px; /* Add spacing below the image */
+  }
+
+  .book-card:hover {
+    transform: scale(1.05);
+  }
+
+  .book-card {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fff;
+    color: #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    position: relative;
+  }
 
       .book-card:hover {
         transform: scale(1.05);
       }
 
       .book-card h2 {
-        margin-top: 0;
-      }
+    margin-top: 0;
+    font-size: 1.8em; /* Increase font size */
+    font-weight: bold; /* Make text bold */
+    margin-bottom: 10px; /* Add some spacing below the title */
+  }
+
 
       .settings-icon {
         position: absolute;
@@ -303,13 +313,13 @@
 
       .page p {
         width: 100%;
-        max-width: 100%; /* Ensure the paragraph doesn't exceed the container width */
-        margin: 0; /* Remove default margin */
-        padding: 0; /* Remove default padding */
-        word-wrap: break-word; /* Ensure long words break to the next line */
-        overflow-wrap: break-word; /* Ensure long words break to the next line */
-        line-height: 1.5; /* Adjust line height for readability */
-        box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        line-height: 1.5;
+        box-sizing: border-box;
       }
 
       .page.active {
@@ -376,9 +386,9 @@
       }
 
       .edit-button {
-        display: none; /* Hide the edit button initially */
+        display: none;
         position: absolute;
-        top: 70px; /* Adjust position as needed */
+        top: 70px;
         right: 10px;
         padding: 5px 10px;
         font-size: 14px;
@@ -394,608 +404,885 @@
         background-color: #1976d2;
         transform: scale(1.05);
       }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="horizontal-card">
-        <div class="card-header">Start learning to see weekly stats</div>
-        <div class="card-content">
-          <div class="card-section">
-            <i id="streak-icon" class="fa-solid fa-fire"></i>
-            <label>Streak</label>
-            <div id="streak-value" class="value">0 days</div>
+
+      .play-pause-button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #2196f3;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .play-pause-button:hover {
+        background-color: #1976d2;
+        transform: scale(1.05);
+      }
+
+      /* Dark mode styles */
+      .dark-mode body {
+        background: linear-gradient(to bottom right, #1a1a1a, #333);
+        color: #ccc;
+      }
+
+      .dark-mode .container {
+        background-color: rgba(50, 50, 50, 0.9);
+      }
+
+
+      .dark-mode .horizontal-card {
+        background-color: #444;
+        color: #ccc;
+      }
+
+      .dark-mode .book-card {
+        background-color: #555;
+        color: #ccc;
+      }
+
+      .dark-mode .book-card h2 {
+    color: #fff; /* Ensure title is visible in dark mode */
+  }
+
+  .dark-mode .book-card img {
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.2); /* Adjust shadow for dark mode */
+  }
+
+      .dark-mode .library {
+        background-color: #444;
+        color: #ccc;
+      }
+
+      .dark-mode .modal-content {
+        background-color: #444;
+      }
+
+      .dark-mode .settings-icon,
+      .dark-mode .delete-button,
+      .dark-mode .edit-button,
+      .dark-mode .play-pause-button {
+        color: #ccc;
+      }
+
+      /* Add this CSS to your existing styles */
+  .speed-control {
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-left: 10px;
+  }
+
+  .speed-control:hover {
+    background-color: #1976d2;
+    transform: scale(1.05);
+  }
+        </style>
+    </head>
+    <body>
+      <div class="container">
+          <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+          <div class="horizontal-card">
+              <div class="card-header">Start learning to see weekly stats</div>
+              <div class="card-content">
+                  <div class="card-section">
+                      <i id="streak-icon" class="fa-solid fa-fire"></i>
+                      <label>Streak</label>
+                      <div id="streak-value" class="value">0 days</div>
+                  </div>
+                  <div class="card-section">
+                      <img src="blue-circle-icon.png" alt="Blue Circle Icon">
+                      <label>Key Points</label>
+                      <div class="value">0</div>
+                  </div>
+                  <div class="card-section">
+                      <img src="green-circle-icon.png" alt="Green Circle Icon">
+                      <label>Minutes</label>
+                      <div class="value">0</div>
+                  </div>
+                  <div class="card-section">
+                      <img src="orange-circle-icon.png" alt="Orange Circle Icon">
+                      <label>Insights</label>
+                      <div class="value">0</div>
+                  </div>
+              </div>
           </div>
-          <div class="card-section">
-            <img src="blue-circle-icon.png" alt="Blue Circle Icon" />
-            <label>Key Points</label>
-            <div class="value">0</div>
+          <h1>Text Entry Page</h1>
+          <button class="show-button" onclick="showAddButton()">Click to Enter Text</button>
+          <button class="return-button" onclick="hideTextEntry()">Return</button>
+          <button class="add-button" onclick="showAdditionalButtons()">+</button>
+          <div class="additional-buttons">
+              <button onclick="addPage()">Add Page</button>
+              <button onclick="addInsight()">Add Insight</button>
+              <button onclick="addParagraph()">Add Paragraph</button>
+              <button onclick="addHeading()">Add Heading</button>
+              <button onclick="addAudio()">Add Audio</button>
+              <button onclick="addTitle()">Add Title</button>
           </div>
-          <div class="card-section">
-            <img src="green-circle-icon.png" alt="Green Circle Icon" />
-            <label>Minutes</label>
-            <div class="value">0</div>
+          <div id="library" class="library">
+              <h2>Library</h2>
+              <div id="library-content"></div>
           </div>
-          <div class="card-section">
-            <img src="orange-circle-icon.png" alt="Orange Circle Icon" />
-            <label>Insights</label>
-            <div class="value">0</div>
+      </div>
+      <div id="edit-modal" class="modal">
+          <div class="modal-content">
+              <button class="close-modal" onclick="closeModal()">Close</button>
+              <div id="edit-form"></div>
+              <button class="submit-button" onclick="submitEdit()">Submit</button>
           </div>
-        </div>
       </div>
-
-      <h1>Text Entry Page</h1>
-
-      <button class="show-button" onclick="showAddButton()">
-        Click to Enter Text
-      </button>
-      <button class="return-button" onclick="hideTextEntry()">Return</button>
-      <button class="add-button" onclick="showAdditionalButtons()">+</button>
-
-      <div class="additional-buttons">
-        <button onclick="addPage()">Add Page</button>
-        <button onclick="addInsight()">Add Insight</button>
-        <button onclick="addParagraph()">Add Paragraph</button>
-        <button onclick="addHeading()">Add Heading</button>
-      </div>
-
-      <div id="library" class="library">
-        <h2>Library</h2>
-        <div id="library-content"></div>
-      </div>
-    </div>
-
-    <!-- Modal for editing card content -->
-    <div id="edit-modal" class="modal">
-      <div class="modal-content">
-        <button class="close-modal" onclick="closeModal()">Close</button>
-        <div id="edit-form"></div>
-        <button class="submit-button" onclick="submitEdit()">Submit</button>
-      </div>
-    </div>
-
-    <script>
-      let isSubmitButtonAdded = false;
-      let currentPageIndex = 0;
-      const pages = [[]]; // Start with one page
-      let finishedPagesCount = 0;
-      const cardContents =
-        JSON.parse(localStorage.getItem("cardContents")) || []; // Load from localStorage
-      let currentCardIndex = null; // Add this line to track the current card index
-
-      document.addEventListener("DOMContentLoaded", () => {
-        displaySavedCards();
-      });
-
-      let synth = window.speechSynthesis;
-      let utterance = null;
-      function showAddButton() {
-        document.querySelector(".add-button").style.display = "inline-block";
-        document.querySelector(".show-button").style.display = "none";
-        document.querySelector(".return-button").style.display = "inline-block";
-      }
-
-      function showAdditionalButtons() {
-        const additionalButtons = document.querySelector(".additional-buttons");
-        const isVisible = additionalButtons.style.display === "block";
-
-        if (isVisible) {
-          additionalButtons.style.display = "none";
-        } else {
-          additionalButtons.style.display = "block";
-        }
-      }
-
-      function addPage() {
-        pages.push([]); // Start a new page
-        const container = document.querySelector(".container");
-        const separator = document.createElement("div");
-        separator.classList.add("separator");
-        container.insertBefore(
-          separator,
-          document.querySelector(".add-button")
-        );
-        addSubmitButtonOnce(container);
-      }
-
-      function addInsight() {
-        addInputSection("Insight");
-      }
-
-      function addParagraph() {
-        addInputSection("Paragraph");
-      }
-
-      function addHeading() {
-        addInputSection("Heading");
-      }
-
-      function addInputSection(type) {
-        const container = document.querySelector(".container");
-        const inputSection = createInputSection(type);
-        container.insertBefore(
-          inputSection,
-          document.querySelector(".add-button")
-        );
-        pages[pages.length - 1].push({ element: inputSection, type }); // Add to the current page with type
-        addSubmitButtonOnce(container);
-      }
-
-      function createInputSection(type) {
-        const section = document.createElement("div");
-        section.classList.add("input-section");
-        const label = document.createElement("label");
-        label.innerText = `Enter ${type}:`;
-        const input = document.createElement("textarea");
-        input.placeholder = `Enter ${type} details here...`;
-        section.appendChild(label);
-        section.appendChild(input);
-        return section;
-      }
-
-      function addSubmitButtonOnce(container) {
-        if (!isSubmitButtonAdded) {
-          const submitButton = document.createElement("button");
-          submitButton.innerText = "Submit";
-          submitButton.classList.add("submit-button");
-          submitButton.onclick = displayLibraryContent;
-          container.appendChild(submitButton);
-          isSubmitButtonAdded = true;
-        }
-      }
-
-      function displayLibraryContent() {
-        const libraryContent = document.getElementById("library-content");
-
-        const cardIndex = cardContents.length; // Use the current length as an index
-        const cardContent = pages.map((page) =>
-          page.map((section) => ({
-            text: section.element.querySelector("textarea").value,
-            type: section.type,
-          }))
-        );
-        cardContents.push(cardContent); // Store the content for this card
-        localStorage.setItem("cardContents", JSON.stringify(cardContents)); // Save to localStorage
-
-        const card = document.createElement("div");
-        card.classList.add("book-card");
-        card.innerText = "Click to view content";
-        card.onclick = () => showFullView(cardIndex); // Pass the index to showFullView
-
-        // Add settings icon
-        const settingsIcon = document.createElement("i");
-        settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
-        settingsIcon.onclick = (event) => {
-          event.stopPropagation(); // Prevent triggering the card click event
-          toggleDeleteButton(card);
-        };
-        card.appendChild(settingsIcon);
-
-        // Add delete button
-        const deleteButton = document.createElement("button");
-        deleteButton.innerText = "Delete";
-        deleteButton.classList.add("delete-button");
-        deleteButton.onclick = (event) => {
-          event.stopPropagation(); // Prevent triggering the card click event
-          deleteCard(cardIndex, card);
-        };
-        card.appendChild(deleteButton);
-
-        // Add edit button
-        const editButton = document.createElement("button");
-        editButton.innerText = "Edit";
-        editButton.classList.add("edit-button");
-        editButton.onclick = (event) => {
-          event.stopPropagation(); // Prevent triggering the card click event
-          openEditModal(cardIndex);
-        };
-        card.appendChild(editButton);
-
-        libraryContent.appendChild(card);
-
-        document.getElementById("library").style.display = "block";
-      }
-
-      function toggleDeleteButton(card) {
-        const deleteButton = card.querySelector(".delete-button");
-        const editButton = card.querySelector(".edit-button");
-        const isVisible = deleteButton.style.display === "block";
-
-        deleteButton.style.display = isVisible ? "none" : "block";
-        editButton.style.display = isVisible ? "none" : "block";
-      }
-      function deleteCard(cardIndex, cardElement) {
-        cardContents.splice(cardIndex, 1); // Remove the card content from the array
-        localStorage.setItem("cardContents", JSON.stringify(cardContents)); // Update localStorage
-        cardElement.remove(); // Remove the card element from the DOM
-      }
-
-      function displaySavedCards() {
-        const libraryContent = document.getElementById("library-content");
-        cardContents.forEach((_, cardIndex) => {
-          const card = document.createElement("div");
-          card.classList.add("book-card");
-          card.innerText = "Click to view content";
-          card.onclick = () => showFullView(cardIndex);
-
-          // Add settings icon
-          const settingsIcon = document.createElement("i");
-          settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
-          settingsIcon.onclick = (event) => {
-            event.stopPropagation(); // Prevent triggering the card click event
-            toggleDeleteButton(card);
-          };
-          card.appendChild(settingsIcon);
-
-          // Add delete button
-          const deleteButton = document.createElement("button");
-          deleteButton.innerText = "Delete";
-          deleteButton.classList.add("delete-button");
-          deleteButton.onclick = (event) => {
-            event.stopPropagation(); // Prevent triggering the card click event
-            deleteCard(cardIndex, card);
-          };
-          card.appendChild(deleteButton);
-
-          // Add edit button
-          const editButton = document.createElement("button");
-          editButton.innerText = "Edit";
-          editButton.classList.add("edit-button");
-          editButton.onclick = (event) => {
-            event.stopPropagation(); // Prevent triggering the card click event
-            openEditModal(cardIndex);
-          };
-          card.appendChild(editButton);
-
-          libraryContent.appendChild(card);
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch('data.json')
+                .then(response => response.json())
+                .then(data => {
+                    cardContents.push(...data.cards);
+                    streakValue = data.streak || 0;
+                    updateStreakDisplay();
+                    displaySavedCards();
+                })
+                .catch(error => console.error('Error loading card contents:', error));
         });
 
-        if (cardContents.length > 0) {
-          document.getElementById("library").style.display = "block";
+        let isSubmitButtonAdded = false;
+        const pages = [[]];
+        let finishedPagesCount = 0;
+        const cardContents = [];
+        let currentCardIndex = null;
+        let cardTitle = "";
+        let streakValue = 0;
+
+        const cardPageIndices = [];
+
+        function updateStreakDisplay() {
+            const streakValueElement = document.getElementById("streak-value");
+            streakValueElement.innerText = `${streakValue} days`;
+            updateStreakIconColor();
         }
-      }
 
-      function playText(text) {
-        fetch("/synthesize", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ text: text }),
-        })
-          .then((response) => response.blob())
-          .then((blob) => {
-            const audioUrl = URL.createObjectURL(blob);
-            const audio = new Audio(audioUrl);
-            audio.play();
-          })
-          .catch((error) => console.error("Error:", error));
-      }
+        function updateStreakValue() {
+            streakValue++;
+            updateStreakDisplay();
+            saveDataToServer();
+        }
 
-      function showFullView(cardIndex) {
-        const fullView = document.createElement("div");
-        fullView.style.position = "fixed";
-        fullView.style.top = "0";
-        fullView.style.left = "0";
-        fullView.style.width = "100%";
-        fullView.style.height = "100%";
-        fullView.style.backgroundColor = "#333";
-        fullView.style.color = "white";
-        fullView.style.padding = "20px";
-        fullView.style.overflowY = "auto";
-        fullView.style.zIndex = "1000";
+        function saveDataToServer() {
+            const data = {
+                cards: cardContents.map(card => 
+                    card.map(page => 
+                        page.map(content => ({
+                            text: content.text,
+                            type: content.type,
+                            audioPath: content.audioPath,
+                            imagePath: content.imagePath
+                        }))
+                    )
+                ),
+                streak: streakValue
+            };
 
-        const closeButton = document.createElement("button");
-        closeButton.innerText = "Close";
-        closeButton.style.marginBottom = "20px";
-        closeButton.style.padding = "10px 20px";
-        closeButton.style.fontSize = "16px";
-        closeButton.style.backgroundColor = "#f44336"; // Red background
-        closeButton.style.color = "white";
-        closeButton.style.border = "none";
-        closeButton.style.borderRadius = "4px";
-        closeButton.style.cursor = "pointer";
-        closeButton.style.transition =
-          "background-color 0.3s ease, transform 0.3s ease";
-        closeButton.onmouseover = () => {
-          closeButton.style.backgroundColor = "#d32f2f"; // Darker red on hover
-          closeButton.style.transform = "scale(1.05)";
-        };
-        closeButton.onmouseout = () => {
-          closeButton.style.backgroundColor = "#f44336"; // Original red
-          closeButton.style.transform = "scale(1)";
-        };
-        closeButton.onclick = () => document.body.removeChild(fullView);
-        fullView.appendChild(closeButton);
+            fetch('data.json', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Data saved successfully');
+                }
+            })
+            .catch(error => console.error('Error saving data:', error));
+        }
 
-        const cardContent = cardContents[cardIndex]; // Retrieve the content for this card
+        function showAddButton() {
+            document.querySelector(".add-button").style.display = "inline-block";
+            document.querySelector(".show-button").style.display = "none";
+            document.querySelector(".return-button").style.display = "inline-block";
+        }
 
-        cardContent.forEach((page, pageIndex) => {
-          const pageDiv = document.createElement("div");
-          pageDiv.classList.add("page");
-          if (pageIndex === currentPageIndex) {
-            pageDiv.classList.add("active");
-          }
+        function showAdditionalButtons() {
+            const additionalButtons = document.querySelector(".additional-buttons");
+            const isVisible = additionalButtons.style.display === "block";
 
-          page.forEach((content) => {
-            const paragraphElement = document.createElement("p");
-            paragraphElement.innerText = content.text;
-
-            // Apply styles based on the type of input
-            if (content.type === "Heading") {
-              paragraphElement.style.fontWeight = "bold";
-              paragraphElement.style.fontSize = "1.5em"; // Larger font size for headings
-            } else if (content.type === "Insight") {
-              paragraphElement.style.fontStyle = "italic"; // Italic style for insights
-              paragraphElement.style.color = "#ffcc00"; // Different color for insights
+            if (isVisible) {
+                additionalButtons.style.display = "none";
             } else {
-              paragraphElement.style.fontFamily = "sans-serif"; // Clean, sans-serif font for paragraphs
+                additionalButtons.style.display = "block";
+            }
+        }
+
+        function addPage() {
+            const newPage = [];
+            pages.push(newPage);
+            const container = document.querySelector(".container");
+            const separator = document.createElement("div");
+            separator.classList.add("separator");
+
+            const closeButton = document.createElement("button");
+            closeButton.innerHTML = "&times;";
+            closeButton.style.position = "absolute";
+            closeButton.style.right = "10px";
+            closeButton.style.top = "50%";
+            closeButton.style.transform = "translateY(-50%)";
+            closeButton.style.cursor = "pointer";
+            closeButton.style.backgroundColor = "transparent";
+            closeButton.style.border = "none";
+            closeButton.style.color = "#f44336";
+            closeButton.style.fontSize = "20px";
+
+            closeButton.onclick = () => {
+                separator.remove();
+                const pageIndex = pages.indexOf(newPage);
+                if (pageIndex !== -1) {
+                    pages.splice(pageIndex, 1);
+                }
+            };
+
+            separator.appendChild(closeButton);
+            container.insertBefore(separator, document.querySelector(".add-button"));
+            addSubmitButtonOnce(container);
+        }
+
+        function addInsight() {
+            addInputSection("Insight");
+        }
+
+        function addParagraph() {
+            addInputSection("Paragraph");
+        }
+
+        function addHeading() {
+            addInputSection("Heading");
+        }
+
+        function addAudio() {
+            addInputSection("Audio");
+        }
+
+        function addTitle() {
+            const container = document.querySelector(".container");
+            const inputSection = createInputSection("Title");
+            const imageSection = createImageInputSection();
+            container.insertBefore(inputSection, document.querySelector(".add-button"));
+            container.insertBefore(imageSection, document.querySelector(".add-button"));
+            pages[pages.length - 1].push({ element: inputSection, type: "Title" });
+            pages[pages.length - 1].push({ element: imageSection, type: "Image" });
+            addSubmitButtonOnce(container);
+        }
+
+        function addInputSection(type) {
+            const container = document.querySelector(".container");
+            const inputSection = createInputSection(type);
+            container.insertBefore(inputSection, document.querySelector(".add-button"));
+            pages[pages.length - 1].push({ element: inputSection, type });
+            addSubmitButtonOnce(container);
+        }
+
+        function createInputSection(type) {
+            const section = document.createElement("div");
+            section.classList.add("input-section");
+            
+            const label = document.createElement("label");
+            label.innerText = `Enter ${type}:`;
+            
+            const closeButton = document.createElement("button");
+            closeButton.innerHTML = "&times;";
+            closeButton.style.marginLeft = "10px";
+            closeButton.style.cursor = "pointer";
+            closeButton.style.backgroundColor = "transparent";
+            closeButton.style.border = "none";
+            closeButton.style.color = "#f44336";
+            closeButton.style.fontSize = "20px";
+            
+            const currentPage = pages[pages.length - 1];
+            const sectionIndex = currentPage.length;
+            
+            closeButton.onclick = () => {
+                section.remove();
+                currentPage.splice(sectionIndex, 1);
+            };
+
+            if (type === "Audio") {
+                const input = document.createElement("input");
+                input.type = "file";
+                input.accept = "audio/*,video/*";
+                input.onchange = handleAudioUpload;
+                section.appendChild(label);
+                section.appendChild(input);
+            } else {
+                const input = document.createElement("textarea");
+                input.placeholder = `Enter ${type} details here...`;
+                section.appendChild(label);
+                section.appendChild(input);
             }
 
-            pageDiv.appendChild(paragraphElement);
-          });
-
-          // Add Play/Pause button to each page
-          const playPauseButton = document.createElement("button");
-          playPauseButton.innerText = "Play";
-          playPauseButton.style.marginTop = "10px";
-          playPauseButton.style.padding = "10px 20px";
-          playPauseButton.style.fontSize = "16px";
-          playPauseButton.style.backgroundColor = "#4caf50"; // Green background
-          playPauseButton.style.color = "white";
-          playPauseButton.style.border = "none";
-          playPauseButton.style.borderRadius = "4px";
-          playPauseButton.style.cursor = "pointer";
-          playPauseButton.style.transition =
-            "background-color 0.3s ease, transform 0.3s ease";
-          playPauseButton.onmouseover = () => {
-            playPauseButton.style.backgroundColor = "#45a049"; // Darker green on hover
-            playPauseButton.style.transform = "scale(1.05)";
-          };
-          playPauseButton.onmouseout = () => {
-            playPauseButton.style.backgroundColor = "#4caf50"; // Original green
-            playPauseButton.style.transform = "scale(1)";
-          };
-          playPauseButton.onclick = () => togglePlayPause(playPauseButton);
-          pageDiv.appendChild(playPauseButton);
-
-          // Add Finish button to each page
-          const finishButton = document.createElement("button");
-          finishButton.innerText = "Finish";
-          finishButton.style.marginTop = "10px";
-          finishButton.style.padding = "10px 20px";
-          finishButton.style.fontSize = "16px";
-          finishButton.style.backgroundColor = "#ff9800"; // Orange background
-          finishButton.style.color = "white";
-          finishButton.style.border = "none";
-          finishButton.style.borderRadius = "4px";
-          finishButton.style.cursor = "pointer";
-          finishButton.style.transition =
-            "background-color 0.3s ease, transform 0.3s ease";
-          finishButton.onmouseover = () => {
-            finishButton.style.backgroundColor = "#fb8c00"; // Darker orange on hover
-            finishButton.style.transform = "scale(1.05)";
-          };
-          finishButton.onmouseout = () => {
-            finishButton.style.backgroundColor = "#ff9800"; // Original orange
-            finishButton.style.transform = "scale(1)";
-          };
-          finishButton.onclick = () => finishPage(pageIndex);
-          pageDiv.appendChild(finishButton);
-
-          fullView.appendChild(pageDiv);
-        });
-
-        const navNumbers = document.createElement("div");
-        navNumbers.classList.add("nav-numbers");
-        navNumbers.style.marginTop = "20px";
-        navNumbers.style.textAlign = "center";
-
-        cardContent.forEach((_, pageIndex) => {
-          const pageNumber = document.createElement("span");
-          pageNumber.innerText = pageIndex + 1;
-          pageNumber.style.cursor = "pointer";
-          pageNumber.style.margin = "0 5px";
-          pageNumber.style.padding = "5px 10px";
-          pageNumber.style.backgroundColor =
-            pageIndex === currentPageIndex ? "#2196f3" : "#555";
-          pageNumber.style.color = "white";
-          pageNumber.style.borderRadius = "4px";
-          pageNumber.onclick = () => {
-            document.querySelectorAll(".page").forEach((page, index) => {
-              page.classList.toggle("active", index === pageIndex);
-            });
-            currentPageIndex = pageIndex;
-            updateNavNumbers();
-          };
-          navNumbers.appendChild(pageNumber);
-        });
-
-        fullView.appendChild(navNumbers);
-        document.body.appendChild(fullView);
-      }
-
-      function togglePlayPause(button) {
-        const pageDiv = button.parentElement;
-        const paragraphs = pageDiv.querySelectorAll("p");
-        const textToRead = Array.from(paragraphs)
-          .map((p) => p.innerText)
-          .join(" ");
-
-        if (button.innerText === "Play") {
-          button.innerText = "Pause";
-          playText(textToRead);
-        } else {
-          button.innerText = "Play";
-          pauseText();
+            section.appendChild(closeButton);
+            return section;
         }
-      }
 
-      function finishPage(pageIndex) {
-        const pageElements = document.querySelectorAll(".page");
-        if (pageElements[pageIndex]) {
-          pageElements[pageIndex].style.display = "none"; // Hide the finished page
-          finishedPagesCount++;
-          if (finishedPagesCount >= 3) {
-            updateStreakValue();
-            finishedPagesCount = 0; // Reset the count after updating the streak
-          }
-
-          // Show confetti on the fullView div
-          const fullView = document.querySelector(
-            "div[style*='position: fixed']"
-          );
-          if (fullView) {
-            confetti({
-              particleCount: 150,
-              spread: 180,
-              origin: { y: 1.0 }, // Start from the bottom
-              zIndex: 1001, // Ensure confetti is above the fullView
-            });
-          }
+        function handleAudioUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const filePath = `audio/${file.name}`;
+                localStorage.setItem('audioFile', filePath);
+            }
         }
-      }
 
-      function updateStreakValue() {
-        const streakValueElement = document.getElementById("streak-value");
-        let streakValue = parseInt(streakValueElement.innerText);
-        streakValue++;
-        streakValueElement.innerText = `${streakValue} days`;
+        function addSubmitButtonOnce(container) {
+            if (!isSubmitButtonAdded) {
+                const submitButton = document.createElement("button");
+                submitButton.innerText = "Submit";
+                submitButton.classList.add("submit-button");
+                submitButton.onclick = displayLibraryContent;
+                container.appendChild(submitButton);
+                isSubmitButtonAdded = true;
+            }
+        }
+        
+        function createImageInputSection() {
+            const section = document.createElement("div");
+            section.classList.add("input-section");
+
+            const label = document.createElement("label");
+            label.innerText = "Upload Image:";
+
+            const input = document.createElement("input");
+            input.type = "file";
+            input.accept = "image/*";
+            input.onchange = handleImageUpload;
+
+            const closeButton = document.createElement("button");
+            closeButton.innerHTML = "&times;";
+            closeButton.style.marginLeft = "10px";
+            closeButton.style.cursor = "pointer";
+            closeButton.style.backgroundColor = "transparent";
+            closeButton.style.border = "none";
+            closeButton.style.color = "#f44336";
+            closeButton.style.fontSize = "20px";
+
+            const currentPage = pages[pages.length - 1];
+            const sectionIndex = currentPage.length;
+
+            closeButton.onclick = () => {
+                section.remove();
+                currentPage.splice(sectionIndex, 1);
+            };
+
+            section.appendChild(label);
+            section.appendChild(input);
+            section.appendChild(closeButton);
+
+            return section;
+        }
+
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64String = e.target.result;
+                    const currentPage = pages[pages.length - 1];
+                    currentPage.push({ element: null, type: "Image", imagePath: base64String });
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function displayLibraryContent() {
+            const libraryContent = document.getElementById("library-content");
+
+            const cardIndex = cardContents.length;
+            const cardContent = pages.map((page) =>
+                page.map((section) => {
+                    const inputElement = section.element ? section.element.querySelector("textarea, input[type='file']") : null;
+                    const text = inputElement ? (inputElement.type === "file" ? inputElement.files[0]?.name || "No file selected" : inputElement.value) : "";
+                    const audioPath = inputElement && inputElement.type === "file" && inputElement.accept.includes("audio") ? `audio/${inputElement.files[0].name}` : null;
+                    const imagePath = section.type === "Image" ? section.imagePath : null;
+
+                    if (section.type === "Title") {
+                        cardTitle = text;
+                    }
+                    return {
+                        text,
+                        type: section.type,
+                        audioPath,
+                        imagePath,
+                    };
+                })
+            );
+            cardContents.push(cardContent);
+
+            saveDataToServer();
+
+            const card = document.createElement("div");
+            card.classList.add("book-card");
+            card.innerText = cardTitle || "Click to view content";
+            card.onclick = () => showFullView(cardIndex);
+
+            cardContent.forEach(page => {
+                page.forEach(content => {
+                    if (content.type === "Image" && content.imagePath) {
+                        const imgElement = document.createElement("img");
+                        imgElement.src = content.imagePath;
+                        imgElement.style.width = "100px";
+                        imgElement.style.height = "auto";
+                        card.appendChild(imgElement);
+                    }
+                });
+            });
+
+            const settingsIcon = document.createElement("i");
+            settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
+            settingsIcon.onclick = (event) => {
+                event.stopPropagation();
+                toggleDeleteButton(card);
+            };
+            card.appendChild(settingsIcon);
+
+            const deleteButton = document.createElement("button");
+            deleteButton.innerText = "Delete";
+            deleteButton.classList.add("delete-button");
+            deleteButton.onclick = (event) => {
+                event.stopPropagation();
+                deleteCard(cardIndex, card);
+            };
+            card.appendChild(deleteButton);
+
+            const editButton = document.createElement("button");
+            editButton.innerText = "Edit";
+            editButton.classList.add("edit-button");
+            editButton.onclick = (event) => {
+                event.stopPropagation();
+                openEditModal(cardIndex);
+            };
+            card.appendChild(editButton);
+
+            libraryContent.appendChild(card);
+
+            document.getElementById("library").style.display = "block";
+        }
+
+        function toggleDeleteButton(card) {
+            const deleteButton = card.querySelector(".delete-button");
+            const editButton = card.querySelector(".edit-button");
+            const isVisible = deleteButton.style.display === "block";
+
+            deleteButton.style.display = isVisible ? "none" : "block";
+            editButton.style.display = isVisible ? "none" : "block";
+        }
+
+        function deleteCard(cardIndex, cardElement) {
+            cardContents.splice(cardIndex, 1);
+
+            saveDataToServer();
+
+            cardElement.remove();
+        }
+
+        function displaySavedCards() {
+            const libraryContent = document.getElementById("library-content");
+            cardContents.forEach((cardContent, cardIndex) => {
+                const card = document.createElement("div");
+                card.classList.add("book-card");
+                card.innerText = "Click to view content";
+                card.onclick = () => showFullView(cardIndex);
+
+                cardContent.forEach(page => {
+                    page.forEach(content => {
+                        if (content.type === "Image" && content.imagePath) {
+                            const imgElement = document.createElement("img");
+                            imgElement.src = content.imagePath;
+                            imgElement.style.width = "100px";
+                            imgElement.style.height = "auto";
+                            card.appendChild(imgElement);
+                        }
+                    });
+                });
+
+                const settingsIcon = document.createElement("i");
+                settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
+                settingsIcon.onclick = (event) => {
+                    event.stopPropagation();
+                    toggleDeleteButton(card);
+                };
+                card.appendChild(settingsIcon);
+
+                const deleteButton = document.createElement("button");
+                deleteButton.innerText = "Delete";
+                deleteButton.classList.add("delete-button");
+                deleteButton.onclick = (event) => {
+                    event.stopPropagation();
+                    deleteCard(cardIndex, card);
+                };
+                card.appendChild(deleteButton);
+
+                const editButton = document.createElement("button");
+                editButton.innerText = "Edit";
+                editButton.classList.add("edit-button");
+                editButton.onclick = (event) => {
+                    event.stopPropagation();
+                    openEditModal(cardIndex);
+                };
+                card.appendChild(editButton);
+
+                libraryContent.appendChild(card);
+            });
+
+            if (cardContents.length > 0) {
+                document.getElementById("library").style.display = "block";
+            }
+        }
+
+        function showFullView(cardIndex) {
+            if (cardPageIndices[cardIndex] === undefined) {
+                cardPageIndices[cardIndex] = 0;
+            }
+
+            const fullView = document.createElement("div");
+            fullView.style.position = "fixed";
+            fullView.style.top = "0";
+            fullView.style.left = "0";
+            fullView.style.width = "100%";
+            fullView.style.height = "100%";
+            fullView.style.backgroundColor = "#333";
+            fullView.style.color = "white";
+            fullView.style.padding = "20px";
+            fullView.style.overflowY = "auto";
+            fullView.style.zIndex = "1000";
+
+            const closeButton = document.createElement("button");
+            closeButton.innerText = "Close";
+            closeButton.style.marginBottom = "20px";
+            closeButton.style.padding = "10px 20px";
+            closeButton.style.fontSize = "16px";
+            closeButton.style.backgroundColor = "#f44336";
+            closeButton.style.color = "white";
+            closeButton.style.border = "none";
+            closeButton.style.borderRadius = "4px";
+            closeButton.style.cursor = "pointer";
+            closeButton.style.transition = "background-color 0.3s ease, transform 0.3s ease";
+            closeButton.onmouseover = () => {
+                closeButton.style.backgroundColor = "#d32f2f";
+                closeButton.style.transform = "scale(1.05)";
+            };
+            closeButton.onmouseout = () => {
+                closeButton.style.backgroundColor = "#f44336";
+                closeButton.style.transform = "scale(1)";
+            };
+            closeButton.onclick = () => document.body.removeChild(fullView);
+            fullView.appendChild(closeButton);
+
+            const cardContent = cardContents[cardIndex];
+
+            cardContent.forEach((page, pageIndex) => {
+                const pageDiv = document.createElement("div");
+                pageDiv.classList.add("page");
+                if (pageIndex === cardPageIndices[cardIndex]) {
+                    pageDiv.classList.add("active");
+                }
+
+                page.forEach((content) => {
+                    if (content.type === "Title") return;
+
+                    if (content.type !== "Audio") {
+                        const paragraphElement = document.createElement("p");
+                        paragraphElement.innerText = content.text;
+
+                        if (content.type === "Heading") {
+                            paragraphElement.style.fontWeight = "bold";
+                            paragraphElement.style.fontSize = "1.5em";
+                        } else if (content.type === "Insight") {
+                            paragraphElement.style.fontStyle = "italic";
+                            paragraphElement.style.color = "#ffcc00";
+                        } else {
+                            paragraphElement.style.fontFamily = "sans-serif";
+                        }
+
+                        pageDiv.appendChild(paragraphElement);
+                    } else {
+                        const audioElement = document.createElement("audio");
+                        audioElement.src = content.audioPath;
+                        audioElement.controls = true;
+                        pageDiv.appendChild(audioElement);
+                    }
+                });
+
+                fullView.appendChild(pageDiv);
+            });
+
+            const controlsContainer = document.createElement("div");
+            controlsContainer.style.position = "fixed";
+            controlsContainer.style.bottom = "0";
+            controlsContainer.style.left = "0";
+            controlsContainer.style.width = "100%";
+            controlsContainer.style.backgroundColor = "#444";
+            controlsContainer.style.padding = "10px";
+            controlsContainer.style.display = "flex";
+            controlsContainer.style.justifyContent = "center";
+            controlsContainer.style.alignItems = "center";
+
+            const playPauseButton = document.createElement("button");
+            playPauseButton.classList.add("play-pause-button");
+            playPauseButton.innerHTML = '<i class="fa fa-play"></i>';
+            playPauseButton.onclick = () => {
+                const activePage = fullView.querySelector(".page.active");
+                const audioElement = activePage.querySelector("audio");
+                togglePlayPause(playPauseButton, audioElement);
+            };
+            controlsContainer.appendChild(playPauseButton);
+
+            const speedControl = document.createElement("select");
+            speedControl.classList.add("speed-control");
+            speedControl.innerHTML = `
+                <option value="0.25">0.25x</option>
+                <option value="0.5">0.5x</option>
+                <option value="0.75">0.75x</option>
+                <option value="1" selected>1x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2">2x</option>
+            `;
+            speedControl.onchange = () => {
+                const activePage = fullView.querySelector(".page.active");
+                const audioElement = activePage.querySelector("audio");
+                if (audioElement) {
+                    audioElement.playbackRate = parseFloat(speedControl.value);
+                }
+            };
+
+            const finishButton = document.createElement("button");
+            finishButton.innerText = "Finish";
+            finishButton.style.marginLeft = "10px";
+            finishButton.style.padding = "10px 20px";
+            finishButton.style.fontSize = "16px";
+            finishButton.style.backgroundColor = "#ff9800";
+            finishButton.style.color = "white";
+            finishButton.style.border = "none";
+            finishButton.style.borderRadius = "4px";
+            finishButton.style.cursor = "pointer";
+            finishButton.style.transition = "background-color 0.3s ease, transform 0.3s ease";
+            finishButton.onmouseover = () => {
+                finishButton.style.backgroundColor = "#fb8c00";
+                finishButton.style.transform = "scale(1.05)";
+            };
+            finishButton.onmouseout = () => {
+                finishButton.style.backgroundColor = "#ff9800";
+                finishButton.style.transform = "scale(1)";
+            };
+            finishButton.onclick = () => finishPage(cardPageIndices[cardIndex]);
+
+            controlsContainer.appendChild(speedControl);
+            controlsContainer.appendChild(finishButton);
+
+            const navNumbers = document.createElement("div");
+            navNumbers.classList.add("nav-numbers");
+            navNumbers.style.marginLeft = "20px";
+
+            cardContent.forEach((_, pageIndex) => {
+                const pageNumber = document.createElement("span");
+                pageNumber.innerText = pageIndex + 1;
+                pageNumber.style.cursor = "pointer";
+                pageNumber.style.margin = "0 5px";
+                pageNumber.style.padding = "5px 10px";
+                pageNumber.style.backgroundColor = pageIndex === cardPageIndices[cardIndex] ? "#2196f3" : "#555";
+                pageNumber.style.color = "white";
+                pageNumber.style.borderRadius = "4px";
+                pageNumber.onclick = () => {
+                    document.querySelectorAll(".page").forEach((page, index) => {
+                        page.classList.toggle("active", index === pageIndex);
+                    });
+                    cardPageIndices[cardIndex] = pageIndex;
+                    updateNavNumbers(cardIndex);
+                };
+                navNumbers.appendChild(pageNumber);
+            });
+
+            controlsContainer.appendChild(navNumbers);
+            fullView.appendChild(controlsContainer);
+            document.body.appendChild(fullView);
+        }
+
+        function togglePlayPause(button, audioElement) {
+            const icon = button.querySelector("i");
+            if (icon.classList.contains("fa-play")) {
+                icon.classList.remove("fa-play");
+                icon.classList.add("fa-pause");
+                if (audioElement) {
+                    audioElement.play();
+                    audioElement.onended = () => {
+                        icon.classList.remove("fa-pause");
+                        icon.classList.add("fa-play");
+                    };
+                }
+            } else {
+                icon.classList.remove("fa-pause");
+                icon.classList.add("fa-play");
+                if (audioElement) {
+                    audioElement.pause();
+                }
+            }
+        }
+
+        function finishPage(pageIndex) {
+            const pageElements = document.querySelectorAll(".page");
+            if (pageElements[pageIndex]) {
+                pageElements[pageIndex].style.display = "none";
+                finishedPagesCount++;
+                if (finishedPagesCount >= 3) {
+                    updateStreakValue();
+                    finishedPagesCount = 0;
+                }
+
+                const fullView = document.querySelector("div[style*='position: fixed']");
+                if (fullView) {
+                    confetti({
+                        particleCount: 150,
+                        spread: 180,
+                        origin: { y: 1.0 },
+                        zIndex: 1001,
+                    });
+                }
+            }
+        }
+
+        function navigatePages(direction) {
+            const pageElements = document.querySelectorAll(".page");
+            pageElements[currentPageIndex].classList.remove("active");
+            currentPageIndex = (currentPageIndex + direction + pages.length) % pages.length;
+            pageElements[currentPageIndex].classList.add("active");
+        }
+
+        function hideTextEntry() {
+            document.querySelector(".add-button").style.display = "none";
+            document.querySelector(".show-button").style.display = "inline-block";
+            document.querySelector(".return-button").style.display = "none";
+            document.querySelector(".additional-buttons").style.display = "none";
+
+            const inputSections = document.querySelectorAll(".input-section");
+            inputSections.forEach((section) => section.remove());
+
+            const separators = document.querySelectorAll(".separator");
+            separators.forEach((separator) => separator.remove());
+
+            const submitButton = document.querySelector(".submit-button");
+            if (submitButton) {
+                submitButton.remove();
+                isSubmitButtonAdded = false;
+            }
+
+            pages.length = 0;
+            pages.push([]);
+        }
+
+        function updateNavNumbers(cardIndex) {
+            const navNumbers = document.querySelector(".nav-numbers");
+            if (navNumbers) {
+                navNumbers.childNodes.forEach((pageNumber, index) => {
+                    pageNumber.style.backgroundColor = index === cardPageIndices[cardIndex] ? "#2196f3" : "#555";
+                });
+            }
+        }
+
+        function updateStreakIconColor() {
+            const streakValueElement = document.getElementById("streak-value");
+            const streakIcon = document.getElementById("streak-icon");
+            const streakValue = parseInt(streakValueElement.innerText);
+
+            if (streakValue > 0) {
+                streakIcon.style.color = "#FF8833";
+            } else {
+                streakIcon.style.color = "";
+            }
+        }
+
         updateStreakIconColor();
-      }
 
-      function navigatePages(direction) {
-        const pageElements = document.querySelectorAll(".page");
-        pageElements[currentPageIndex].classList.remove("active");
-        currentPageIndex =
-          (currentPageIndex + direction + pages.length) % pages.length;
-        pageElements[currentPageIndex].classList.add("active");
-      }
+        function openEditModal(cardIndex) {
+            currentCardIndex = cardIndex;
+            const modal = document.getElementById("edit-modal");
+            const editForm = document.getElementById("edit-form");
+            editForm.innerHTML = "";
 
-      function hideTextEntry() {
-        document.querySelector(".add-button").style.display = "none";
-        document.querySelector(".show-button").style.display = "inline-block";
-        document.querySelector(".return-button").style.display = "none";
-        document.querySelector(".additional-buttons").style.display = "none";
+            const cardContent = cardContents[cardIndex];
+            cardContent.forEach((page, pageIndex) => {
+                page.forEach((content, contentIndex) => {
+                    const textarea = document.createElement("textarea");
+                    textarea.value = content.text;
+                    textarea.dataset.pageIndex = pageIndex;
+                    textarea.dataset.contentIndex = contentIndex;
+                    editForm.appendChild(textarea);
+                });
+            });
 
-        const inputSections = document.querySelectorAll(".input-section");
-        inputSections.forEach((section) => section.remove());
-
-        const separators = document.querySelectorAll(".separator");
-        separators.forEach((separator) => separator.remove());
-
-        const submitButton = document.querySelector(".submit-button");
-        if (submitButton) {
-          submitButton.remove();
-          isSubmitButtonAdded = false;
+            modal.style.display = "block";
         }
 
-        pages.length = 0; // Reset pages
-        pages.push([]); // Start with one page
-      }
-
-      function updateNavNumbers() {
-        const navNumbers = document.querySelector(".nav-numbers");
-        if (navNumbers) {
-          navNumbers.childNodes.forEach((pageNumber, index) => {
-            pageNumber.style.backgroundColor =
-              index === currentPageIndex ? "#2196f3" : "#555";
-          });
+        function closeModal() {
+            const modal = document.getElementById("edit-modal");
+            modal.style.display = "none";
         }
-      }
 
-      // Function to update the streak icon color
-      function updateStreakIconColor() {
-        const streakValueElement = document.getElementById("streak-value");
-        const streakIcon = document.getElementById("streak-icon");
-        const streakValue = parseInt(streakValueElement.innerText);
+        function submitEdit() {
+            const editForm = document.getElementById("edit-form");
+            const textareas = editForm.querySelectorAll("textarea");
 
-        if (streakValue > 0) {
-          streakIcon.style.color = "#FF8833";
-        } else {
-          streakIcon.style.color = ""; // Default color
+            textareas.forEach((textarea) => {
+                const pageIndex = textarea.dataset.pageIndex;
+                const contentIndex = textarea.dataset.contentIndex;
+                cardContents[currentCardIndex][pageIndex][contentIndex].text = textarea.value;
+            });
+
+            saveDataToServer();
+
+            closeModal();
+            updateCardDisplay(currentCardIndex);
         }
-      }
 
-      // Call the function to update the icon color on page load
-      updateStreakIconColor();
+        function updateCardDisplay(cardIndex) {
+            const card = document.querySelectorAll(".book-card")[cardIndex];
+            if (card) {
+                card.innerText = "Click to view content";
 
-      function openEditModal(cardIndex) {
-        currentCardIndex = cardIndex; // Set the current card index
-        const modal = document.getElementById("edit-modal");
-        const editForm = document.getElementById("edit-form");
-        editForm.innerHTML = ""; // Clear previous content
+                const settingsIcon = document.createElement("i");
+                settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
+                settingsIcon.onclick = (event) => {
+                    event.stopPropagation();
+                    toggleDeleteButton(card);
+                };
+                card.appendChild(settingsIcon);
 
-        const cardContent = cardContents[cardIndex];
-        cardContent.forEach((page, pageIndex) => {
-          page.forEach((content, contentIndex) => {
-            const textarea = document.createElement("textarea");
-            textarea.value = content.text;
-            textarea.dataset.pageIndex = pageIndex;
-            textarea.dataset.contentIndex = contentIndex;
-            editForm.appendChild(textarea);
-          });
-        });
+                const deleteButton = document.createElement("button");
+                deleteButton.innerText = "Delete";
+                deleteButton.classList.add("delete-button");
+                deleteButton.onclick = (event) => {
+                    event.stopPropagation();
+                    deleteCard(cardIndex, card);
+                };
+                card.appendChild(deleteButton);
 
-        modal.style.display = "block";
-      }
-
-      function closeModal() {
-        const modal = document.getElementById("edit-modal");
-        modal.style.display = "none";
-      }
-
-      function submitEdit() {
-        const editForm = document.getElementById("edit-form");
-        const textareas = editForm.querySelectorAll("textarea");
-
-        textareas.forEach((textarea) => {
-          const pageIndex = textarea.dataset.pageIndex;
-          const contentIndex = textarea.dataset.contentIndex;
-          cardContents[currentCardIndex][pageIndex][contentIndex].text =
-            textarea.value;
-        });
-
-        localStorage.setItem("cardContents", JSON.stringify(cardContents)); // Update localStorage
-        closeModal();
-        updateCardDisplay(currentCardIndex); // Update the card display
-      }
-
-      function updateCardDisplay(cardIndex) {
-        const card = document.querySelectorAll(".book-card")[cardIndex];
-        if (card) {
-          card.innerText = "Click to view content"; // Update the card text or content as needed
-
-          // Add settings icon
-          const settingsIcon = document.createElement("i");
-          settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
-          settingsIcon.onclick = (event) => {
-            event.stopPropagation(); // Prevent triggering the card click event
-            toggleDeleteButton(card);
-          };
-          card.appendChild(settingsIcon);
-
-          // Add delete button
-          const deleteButton = document.createElement("button");
-          deleteButton.innerText = "Delete";
-          deleteButton.classList.add("delete-button");
-          deleteButton.onclick = (event) => {
-            event.stopPropagation(); // Prevent triggering the card click event
-            deleteCard(cardIndex, card);
-          };
-          card.appendChild(deleteButton);
-
-          // Add edit button
-          const editButton = document.createElement("button");
-          editButton.innerText = "Edit";
-          editButton.classList.add("edit-button");
-          editButton.onclick = (event) => {
-            event.stopPropagation(); // Prevent triggering the card click event
-            openEditModal(cardIndex);
-          };
-          card.appendChild(editButton);
+                const editButton = document.createElement("button");
+                editButton.innerText = "Edit";
+                editButton.classList.add("edit-button");
+                editButton.onclick = (event) => {
+                    event.stopPropagation();
+                    openEditModal(cardIndex);
+                };
+                card.appendChild(editButton);
+            }
         }
-      }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
     </script>
-  </body>
+</body>
 </html>
