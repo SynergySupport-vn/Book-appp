@@ -308,8 +308,14 @@
       }
 
       .page {
-        display: none;
-      }
+    display: none;
+    overflow: auto; /* Allow scrolling if content overflows */
+    max-width: 100%; /* Ensure the content does not exceed the container width */
+    padding: 10px; /* Add some padding for better readability */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    overflow-wrap: break-word; /* Ensure text wraps */
+    word-wrap: break-word; /* Ensure text wraps */
+}
 
       .page p {
         width: 100%;
@@ -484,6 +490,30 @@
     background-color: #1976d2;
     transform: scale(1.05);
   }
+
+  @media (max-width: 600px) {
+  .controls-container {
+    flex-direction: column; /* Stack elements vertically */
+    align-items: stretch; /* Stretch elements to fill the container */
+  }
+
+  .controls-container button,
+  .controls-container select {
+    width: 100%; /* Make buttons and select elements take full width */
+    margin-bottom: 10px; /* Add some space between elements */
+  }
+
+  .nav-numbers {
+    display: flex;
+    flex-wrap: wrap; /* Allow numbers to wrap to the next line */
+    justify-content: center;
+  } 
+
+  .nav-numbers span {
+    margin: 5px; /* Add some space around page numbers */
+  }
+}
+
         </style>
     </head>
     <body>
@@ -519,15 +549,17 @@
           <button class="return-button" onclick="hideTextEntry()">Return</button>
           <button class="add-button" onclick="showAdditionalButtons()">+</button>
           <div class="additional-buttons">
+            <button onclick="addImage()">Add Image</button>
               <button onclick="addPage()">Add Page</button>
               <button onclick="addInsight()">Add Insight</button>
               <button onclick="addParagraph()">Add Paragraph</button>
               <button onclick="addHeading()">Add Heading</button>
               <button onclick="addAudio()">Add Audio</button>
-              <button onclick="addTitle()">Add Title</button>
+              
+              
           </div>
           <div id="library" class="library">
-              <h2>Library</h2>
+              <h2>Lib rary</h2>
               <div id="library-content"></div>
           </div>
       </div>
@@ -539,8 +571,8 @@
           </div>
       </div>
       <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            fetch('data.json')
+      document.addEventListener("DOMContentLoaded", () => {
+            fetch('/api/cards')
                 .then(response => response.json())
                 .then(data => {
                     cardContents.push(...data.cards);
@@ -556,7 +588,6 @@
         let finishedPagesCount = 0;
         const cardContents = [];
         let currentCardIndex = null;
-        let cardTitle = "";
         let streakValue = 0;
 
         const cardPageIndices = [];
@@ -588,7 +619,7 @@
                 streak: streakValue
             };
 
-            fetch('data.json', {
+            fetch('/api/cards', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -669,15 +700,8 @@
             addInputSection("Audio");
         }
 
-        function addTitle() {
-            const container = document.querySelector(".container");
-            const inputSection = createInputSection("Title");
-            const imageSection = createImageInputSection();
-            container.insertBefore(inputSection, document.querySelector(".add-button"));
-            container.insertBefore(imageSection, document.querySelector(".add-button"));
-            pages[pages.length - 1].push({ element: inputSection, type: "Title" });
-            pages[pages.length - 1].push({ element: imageSection, type: "Image" });
-            addSubmitButtonOnce(container);
+        function addImage() {
+            addInputSection("Image");
         }
 
         function addInputSection(type) {
@@ -719,6 +743,13 @@
                 input.onchange = handleAudioUpload;
                 section.appendChild(label);
                 section.appendChild(input);
+            } else if (type === "Image") {
+                const input = document.createElement("input");
+                input.type = "file";
+                input.accept = "image/*";
+                input.onchange = handleImageUpload;
+                section.appendChild(label);
+                section.appendChild(input);
             } else {
                 const input = document.createElement("textarea");
                 input.placeholder = `Enter ${type} details here...`;
@@ -730,14 +761,86 @@
             return section;
         }
 
-        function handleAudioUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const filePath = `audio/${file.name}`;
-                localStorage.setItem('audioFile', filePath);
-            }
-        }
+        function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        // Update the file path to match your directory structure
+        const filePath = `images-3d-illustrations/images/${file.name}`;
+        const currentPage = pages[pages.length - 1];
+        currentPage.push({ element: null, type: "Image", imagePath: filePath });
+    }
+}
 
+function displayLibraryContent() {
+    const libraryContent = document.getElementById("library-content");
+
+    const cardIndex = cardContents.length;
+    const cardContent = pages.map((page) =>
+        page.map((section) => {
+            const inputElement = section.element ? section.element.querySelector("textarea, input[type='file']") : null;
+            const text = inputElement ? (inputElement.type === "file" ? inputElement.files[0]?.name || "No file selected" : inputElement.value) : "";
+            const audioPath = inputElement && inputElement.type === "file" && inputElement.accept.includes("audio") ? `audio/${inputElement.files[0].name}` : null;
+            const imagePath = section.type === "Image" ? section.imagePath : null;
+
+            return {
+                text,
+                type: section.type,
+                audioPath,
+                imagePath,
+            };
+        })
+    );
+    cardContents.push(cardContent);
+
+    saveDataToServer();
+
+    const card = document.createElement("div");
+    card.classList.add("book-card");
+    card.innerText = "Click to view content";
+    card.onclick = () => showFullView(cardIndex);
+
+    cardContent.forEach(page => {
+        page.forEach(content => {
+            if (content.type === "Image" && content.imagePath) {
+                const imgElement = document.createElement("img");
+                imgElement.src = content.imagePath;
+                imgElement.style.width = "100px";
+                imgElement.style.height = "auto";
+                card.appendChild(imgElement);
+            }
+        });
+    });
+
+    const settingsIcon = document.createElement("i");
+    settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
+    settingsIcon.onclick = (event) => {
+        event.stopPropagation();
+        toggleDeleteButton(card);
+    };
+    card.appendChild(settingsIcon);
+
+    const deleteButton = document.createElement("button");
+    deleteButton.innerText = "Delete";
+    deleteButton.classList.add("delete-button");
+    deleteButton.onclick = (event) => {
+        event.stopPropagation();
+        deleteCard(cardIndex, card);
+    };
+    card.appendChild(deleteButton);
+
+    const editButton = document.createElement("button");
+    editButton.innerText = "Edit";
+    editButton.classList.add("edit-button");
+    editButton.onclick = (event) => {
+        event.stopPropagation();
+        openEditModal(cardIndex);
+    };
+    card.appendChild(editButton);
+
+    libraryContent.appendChild(card);
+
+    document.getElementById("library").style.display = "block";
+}
         function addSubmitButtonOnce(container) {
             if (!isSubmitButtonAdded) {
                 const submitButton = document.createElement("button");
@@ -748,130 +851,8 @@
                 isSubmitButtonAdded = true;
             }
         }
-        
-        function createImageInputSection() {
-            const section = document.createElement("div");
-            section.classList.add("input-section");
 
-            const label = document.createElement("label");
-            label.innerText = "Upload Image:";
-
-            const input = document.createElement("input");
-            input.type = "file";
-            input.accept = "image/*";
-            input.onchange = handleImageUpload;
-
-            const closeButton = document.createElement("button");
-            closeButton.innerHTML = "&times;";
-            closeButton.style.marginLeft = "10px";
-            closeButton.style.cursor = "pointer";
-            closeButton.style.backgroundColor = "transparent";
-            closeButton.style.border = "none";
-            closeButton.style.color = "#f44336";
-            closeButton.style.fontSize = "20px";
-
-            const currentPage = pages[pages.length - 1];
-            const sectionIndex = currentPage.length;
-
-            closeButton.onclick = () => {
-                section.remove();
-                currentPage.splice(sectionIndex, 1);
-            };
-
-            section.appendChild(label);
-            section.appendChild(input);
-            section.appendChild(closeButton);
-
-            return section;
-        }
-
-        function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const base64String = e.target.result;
-                    const currentPage = pages[pages.length - 1];
-                    currentPage.push({ element: null, type: "Image", imagePath: base64String });
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function displayLibraryContent() {
-            const libraryContent = document.getElementById("library-content");
-
-            const cardIndex = cardContents.length;
-            const cardContent = pages.map((page) =>
-                page.map((section) => {
-                    const inputElement = section.element ? section.element.querySelector("textarea, input[type='file']") : null;
-                    const text = inputElement ? (inputElement.type === "file" ? inputElement.files[0]?.name || "No file selected" : inputElement.value) : "";
-                    const audioPath = inputElement && inputElement.type === "file" && inputElement.accept.includes("audio") ? `audio/${inputElement.files[0].name}` : null;
-                    const imagePath = section.type === "Image" ? section.imagePath : null;
-
-                    if (section.type === "Title") {
-                        cardTitle = text;
-                    }
-                    return {
-                        text,
-                        type: section.type,
-                        audioPath,
-                        imagePath,
-                    };
-                })
-            );
-            cardContents.push(cardContent);
-
-            saveDataToServer();
-
-            const card = document.createElement("div");
-            card.classList.add("book-card");
-            card.innerText = cardTitle || "Click to view content";
-            card.onclick = () => showFullView(cardIndex);
-
-            cardContent.forEach(page => {
-                page.forEach(content => {
-                    if (content.type === "Image" && content.imagePath) {
-                        const imgElement = document.createElement("img");
-                        imgElement.src = content.imagePath;
-                        imgElement.style.width = "100px";
-                        imgElement.style.height = "auto";
-                        card.appendChild(imgElement);
-                    }
-                });
-            });
-
-            const settingsIcon = document.createElement("i");
-            settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
-            settingsIcon.onclick = (event) => {
-                event.stopPropagation();
-                toggleDeleteButton(card);
-            };
-            card.appendChild(settingsIcon);
-
-            const deleteButton = document.createElement("button");
-            deleteButton.innerText = "Delete";
-            deleteButton.classList.add("delete-button");
-            deleteButton.onclick = (event) => {
-                event.stopPropagation();
-                deleteCard(cardIndex, card);
-            };
-            card.appendChild(deleteButton);
-
-            const editButton = document.createElement("button");
-            editButton.innerText = "Edit";
-            editButton.classList.add("edit-button");
-            editButton.onclick = (event) => {
-                event.stopPropagation();
-                openEditModal(cardIndex);
-            };
-            card.appendChild(editButton);
-
-            libraryContent.appendChild(card);
-
-            document.getElementById("library").style.display = "block";
-        }
-
+     
         function toggleDeleteButton(card) {
             const deleteButton = card.querySelector(".delete-button");
             const editButton = card.querySelector(".edit-button");
@@ -959,6 +940,7 @@
             fullView.style.padding = "20px";
             fullView.style.overflowY = "auto";
             fullView.style.zIndex = "1000";
+            fullView.style.boxSizing = "border-box"; 
 
             const closeButton = document.createElement("button");
             closeButton.innerText = "Close";
@@ -991,12 +973,17 @@
                     pageDiv.classList.add("active");
                 }
 
-                page.forEach((content) => {
-                    if (content.type === "Title") return;
+                pageDiv.style.overflowWrap = "break-word"; // Ensure text wraps
+                pageDiv.style.wordWrap = "break-word"; // Ensure text wraps
+                pageDiv.style.maxWidth = "100%"; // Ensure it doesn't exceed screen width
+                pageDiv.style.boxSizing = "border-box";
 
+                page.forEach((content) => {
                     if (content.type !== "Audio") {
                         const paragraphElement = document.createElement("p");
                         paragraphElement.innerText = content.text;
+                        paragraphElement.style.margin = "0"; // Reset margin to prevent overflow
+                        paragraphElement.style.padding = "0";
 
                         if (content.type === "Heading") {
                             paragraphElement.style.fontWeight = "bold";
