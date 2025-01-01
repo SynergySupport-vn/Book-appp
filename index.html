@@ -8,167 +8,302 @@
         <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
         <script src="https://kit.fontawesome.com/03d2fb7007.js" crossorigin="anonymous"></script>
         <style>
-      body {
-        font-family: "Roboto", sans-serif;
-        margin: 0;
-        padding: 0;
-        background: linear-gradient(to bottom right, #6a11cb, #2575fc);
-        height: 100vh;
-        color: white;
-        overflow: hidden;
-        transition: background 1s ease;
-      }
+  body {
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom right, #6a11cb, #2575fc);
+    height: 100vh;
+    color: white;
+    overflow: hidden;
+    transition: background 1s ease;
+}
 
-      .container {
-        width: 100%;
-        height: 100vh;
-        overflow-y: auto;
-        background-color: rgba(255, 255, 255, 0.9);
-        padding: 30px;
-        box-sizing: border-box;
-        text-align: center;
-      }
+.container {
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    box-sizing: border-box;
+    text-align: center;
+}
 
-      .horizontal-card {
-        width: 100%;
-        padding: 20px;
-        background-color: #333;
-        color: #fff;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-        text-align: left;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
+.horizontal-card {
+    width: 100%;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-      .card-header {
-        font-size: 1.2em;
-        margin-bottom: 10px;
-        text-align: center;
-      }
+.card-header {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    text-align: center;
+}
 
-      .card-content {
-        display: flex;
-        justify-content: space-around;
-        width: 100%;
-      }
+.card-content {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
 
-      .card-section {
-        text-align: center;
-      }
+.card-section {
+    text-align: center;
+}
 
-      .card-section img {
-        width: 24px;
-        height: 24px;
-        margin-bottom: 5px;
-      }
+.card-section img {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 5px;
+}
 
-      .card-section label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-        color: #ffcc00;
-      }
+.card-section label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ffcc00;
+}
 
-      .card-section .value {
-        font-size: 1.2em;
-      }
+.card-section .value {
+    font-size: 1.2em;
+}
 
-      h1 {
-        font-size: 2.5em;
-        margin-bottom: 20px;
-        color: #333;
-      }
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #333;
+}
 
-      .input-section {
-        margin-bottom: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
+.input-section {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-      label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-        color: #333;
-      }
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
 
-      textarea {
-        width: 100%;
-        max-width: 600px;
-        height: 100px;
-        padding: 10px;
-        border: 2px solid #ddd;
-        border-radius: 4px;
-        font-size: 16px;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-      }
+textarea {
+    width: 100%;
+    max-width: 600px;
+    height: 100px;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
 
-      textarea:focus {
-        border-color: #4caf50;
-        box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
-        outline: none;
-      }
+textarea:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    outline: none;
+}
 
-      .show-button,
-      .return-button,
-      .add-button {
-        padding: 12px 24px;
-        font-size: 18px;
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-      }
+.show-button,
+.return-button,
+.add-button {
+    padding: 12px 24px;
+    font-size: 18px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
 
-      .show-button:hover,
-      .return-button:hover,
-      .add-button:hover {
-        background-color: #45a049;
-        transform: scale(1.05);
-      }
-
-      .return-button {
-        display: none;
-      }
-
-      .add-button {
-        display: none;
-      }
-
-      .show-button {
-        animation: bounce 1s infinite;
-      }
-
-      @keyframes bounce {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-10px);
-        }
-      }
-
-      .book-card img {
-    width: 100px;
-    height: auto;
-    border-radius: 4px; /* Add rounded corners */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add shadow */
-    margin-bottom: 10px; /* Add spacing below the image */
-  }
-
-  .book-card:hover {
+.show-button:hover,
+.return-button:hover,
+.add-button:hover {
+    background-color: #45a049;
     transform: scale(1.05);
-  }
+}
 
-  .book-card {
+.return-button {
+    display: none;
+}
+
+.add-button {
+    display: none;
+}
+
+.show-button {
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.book-card {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fff;
+    color: #333;
+    border-radius: 12px; /* Softer rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    text-align: center; /* Center-align text */
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    max-width: 300px; /* Limit the width for a cleaner look */
+    margin: 20px auto; /* Center the card horizontally */
+}
+
+.book-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px; /* Rounded corners for the image */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-bottom: 15px; /* Spacing below the image */
+}
+
+.book-card h2 {
+    margin-top: 0;
+    font-size: 1.5em; /* Adjusted font size for readability */
+    font-weight: 500; /* Medium weight for a clean look */
+    color: #333; /* Darker color for better contrast */
+    margin-bottom: 10px; /* Spacing below the title */
+}
+
+.book-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+.settings-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #999; /* Subtle color for the icon */
+    transition: color 0.3s ease;
+}
+
+.settings-icon:hover {
+    color: #666; /* Darker color on hover */
+}
+
+.delete-button,
+.edit-button {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.delete-button:hover,
+.edit-button:hover {
+    background-color: #d32f2f;
+    transform: scale(1.05);
+}
+
+.additional-buttons {
+    display: none;
+    margin-top: 20px;
+}
+
+.additional-buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin: 5px;
+}
+
+.additional-buttons button:hover {
+    background-color: #1976d2;
+    transform: scale(1.05);
+}
+
+.submit-button {
+    padding: 12px 24px;
+    font-size: 18px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.separator {
+    height: 4px;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    margin: 20px 0;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.separator::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0)
+    );
+    animation: slide 2s infinite;
+}
+
+@keyframes slide {
+    0% {
+        left: -100%;
+    }
+    50% {
+        left: 100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+.library {
     margin-top: 30px;
     padding: 20px;
     background-color: #fff;
@@ -176,305 +311,202 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: left;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    position: relative;
-  }
-
-      .book-card:hover {
-        transform: scale(1.05);
-      }
-
-      .book-card h2 {
-    margin-top: 0;
-    font-size: 1.8em; /* Increase font size */
-    font-weight: bold; /* Make text bold */
-    margin-bottom: 10px; /* Add some spacing below the title */
-  }
-
-
-      .settings-icon {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        cursor: pointer;
-        font-size: 20px;
-        color: #333;
-      }
-
-      .delete-button {
-        display: none;
-        position: absolute;
-        top: 40px;
-        right: 10px;
-        padding: 5px 10px;
-        font-size: 14px;
-        background-color: #f44336;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-      }
-
-      .delete-button:hover {
-        background-color: #d32f2f;
-        transform: scale(1.05);
-      }
-
-      .additional-buttons {
-        display: none;
-        margin-top: 20px;
-      }
-
-      .additional-buttons button {
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: #2196f3;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-        margin: 5px;
-      }
-
-      .additional-buttons button:hover {
-        background-color: #1976d2;
-        transform: scale(1.05);
-      }
-
-      .submit-button {
-        padding: 12px 24px;
-        font-size: 18px;
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-top: 10px;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-      }
-
-      .submit-button:hover {
-        background-color: #45a049;
-        transform: scale(1.05);
-      }
-
-      .separator {
-        height: 4px;
-        background: linear-gradient(to right, #ff7e5f, #feb47b);
-        margin: 20px 0;
-        border-radius: 2px;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .separator::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          to right,
-          rgba(255, 255, 255, 0.3),
-          rgba(255, 255, 255, 0)
-        );
-        animation: slide 2s infinite;
-      }
-
-      @keyframes slide {
-        0% {
-          left: -100%;
-        }
-        50% {
-          left: 100%;
-        }
-        100% {
-          left: 100%;
-        }
-      }
-
-      .library {
-        margin-top: 30px;
-        padding: 20px;
-        background-color: #fff;
-        color: #333;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: left;
-      }
-
-      .page {
-    display: none;
-    overflow: auto; /* Allow scrolling if content overflows */
-    max-width: 100%; /* Ensure the content does not exceed the container width */
-    padding: 10px; /* Add some padding for better readability */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-    overflow-wrap: break-word; /* Ensure text wraps */
-    word-wrap: break-word; /* Ensure text wraps */
 }
 
-      .page p {
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        line-height: 1.5;
-        box-sizing: border-box;
-      }
+.page {
+    display: none;
+}
 
-      .page.active {
-        display: block;
-      }
+.page p {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    box-sizing: border-box;
+}
 
-      .nav-buttons {
-        margin-top: 20px;
-      }
+.page.active {
+    display: block;
+}
 
-      .nav-buttons button {
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: #2196f3;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-        margin: 5px;
-      }
+.nav-buttons {
+    margin-top: 20px;
+}
 
-      .nav-buttons button:hover {
-        background-color: #1976d2;
-        transform: scale(1.05);
-      }
 
-      .modal {
-        display: none;
+
+.nav-buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin: 5px;
+}
+
+.nav-buttons button:hover {
+    background-color: #1976d2;
+    transform: scale(1.05);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+.close-modal {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.close-modal:hover {
+    background-color: #d32f2f;
+    transform: scale(1.05);
+}
+
+.edit-button {
+    display: none;
+    position: absolute;
+    top: 70px;
+    right: 10px;
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.edit-button:hover {
+    background-color: #1976d2;
+    transform: scale(1.05);
+}
+
+/* Add this CSS to your existing styles */
+    .full-view {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: #333;
         color: white;
         padding: 20px;
         overflow-y: auto;
         z-index: 1000;
-      }
+        box-sizing: border-box;
+    }
 
-      .modal-content {
-        background-color: #333;
-        padding: 20px;
-        border-radius: 8px;
-        max-width: 600px;
-        margin: 50px auto;
-      }
+    .full-view .page {
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+    }
 
-      .close-modal {
-        background-color: #f44336;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        padding: 10px 20px;
-        margin-bottom: 20px;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-      }
+    .full-view .page p {
+        margin: 0;
+        padding: 0;
+        line-height: 1.5;
+        box-sizing: border-box;
+    }
 
-      .close-modal:hover {
-        background-color: #d32f2f;
-        transform: scale(1.05);
-      }
+.play-pause-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
 
-      .edit-button {
-        display: none;
-        position: absolute;
-        top: 70px;
-        right: 10px;
-        padding: 5px 10px;
-        font-size: 14px;
-        background-color: #2196f3;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-      }
+.play-pause-button:hover {
+    background-color: #1976d2;
+    transform: scale(1.05);
+}
 
-      .edit-button:hover {
-        background-color: #1976d2;
-        transform: scale(1.05);
-      }
+/* Dark mode styles */
+.dark-mode body {
+    background: linear-gradient(to bottom right, #1a1a1a, #333);
+    color: #ccc;
+}
 
-      .play-pause-button {
-        margin-top: 10px;
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: #2196f3;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-      }
+.dark-mode .container {
+    background-color: rgba(50, 50, 50, 0.9);
+}
 
-      .play-pause-button:hover {
-        background-color: #1976d2;
-        transform: scale(1.05);
-      }
+.dark-mode .horizontal-card {
+    background-color: #444;
+    color: #ccc;
+}
 
-      /* Dark mode styles */
-      .dark-mode body {
-        background: linear-gradient(to bottom right, #1a1a1a, #333);
-        color: #ccc;
-      }
+.dark-mode .book-card {
+    background-color: #555;
+    color: #ccc;
+}
 
-      .dark-mode .container {
-        background-color: rgba(50, 50, 50, 0.9);
-      }
-
-
-      .dark-mode .horizontal-card {
-        background-color: #444;
-        color: #ccc;
-      }
-
-      .dark-mode .book-card {
-        background-color: #555;
-        color: #ccc;
-      }
-
-      .dark-mode .book-card h2 {
+.dark-mode .book-card h2 {
     color: #fff; /* Ensure title is visible in dark mode */
-  }
+}
 
-  .dark-mode .book-card img {
+.dark-mode .book-card img {
     box-shadow: 0 2px 4px rgba(255, 255, 255, 0.2); /* Adjust shadow for dark mode */
-  }
+}
 
-      .dark-mode .library {
-        background-color: #444;
-        color: #ccc;
-      }
+.dark-mode .library {
+    background-color: #444;
+    color: #ccc;
+}
 
-      .dark-mode .modal-content {
-        background-color: #444;
-      }
+.dark-mode .modal-content {
+    background-color: #444;
+}
 
-      .dark-mode .settings-icon,
-      .dark-mode .delete-button,
-      .dark-mode .edit-button,
-      .dark-mode .play-pause-button {
-        color: #ccc;
-      }
+.dark-mode .settings-icon,
+.dark-mode .delete-button,
+.dark-mode .edit-button,
+.dark-mode .play-pause-button {
+    color: #ccc;
+}
 
-      /* Add this CSS to your existing styles */
-  .speed-control {
+
+
+/* Add this CSS to your existing styles */
+.speed-control {
     padding: 5px 10px;
     font-size: 16px;
     background-color: #2196f3;
@@ -484,34 +516,11 @@
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
     margin-left: 10px;
-  }
+}
 
-  .speed-control:hover {
+.speed-control:hover {
     background-color: #1976d2;
     transform: scale(1.05);
-  }
-
-  @media (max-width: 600px) {
-  .controls-container {
-    flex-direction: column; /* Stack elements vertically */
-    align-items: stretch; /* Stretch elements to fill the container */
-  }
-
-  .controls-container button,
-  .controls-container select {
-    width: 100%; /* Make buttons and select elements take full width */
-    margin-bottom: 10px; /* Add some space between elements */
-  }
-
-  .nav-numbers {
-    display: flex;
-    flex-wrap: wrap; /* Allow numbers to wrap to the next line */
-    justify-content: center;
-  } 
-
-  .nav-numbers span {
-    margin: 5px; /* Add some space around page numbers */
-  }
 }
 
         </style>
@@ -549,17 +558,15 @@
           <button class="return-button" onclick="hideTextEntry()">Return</button>
           <button class="add-button" onclick="showAdditionalButtons()">+</button>
           <div class="additional-buttons">
-            <button onclick="addImage()">Add Image</button>
               <button onclick="addPage()">Add Page</button>
               <button onclick="addInsight()">Add Insight</button>
               <button onclick="addParagraph()">Add Paragraph</button>
               <button onclick="addHeading()">Add Heading</button>
               <button onclick="addAudio()">Add Audio</button>
-              
-              
+              <button onclick="addTitle()">Add Title</button>
           </div>
           <div id="library" class="library">
-              <h2>Lib rary</h2>
+              <h2>Library</h2>
               <div id="library-content"></div>
           </div>
       </div>
@@ -571,7 +578,7 @@
           </div>
       </div>
       <script>
-      document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", () => {
             fetch('/api/cards')
                 .then(response => response.json())
                 .then(data => {
@@ -583,11 +590,14 @@
                 .catch(error => console.error('Error loading card contents:', error));
         });
 
+        let currentAudioElement = null;
+
         let isSubmitButtonAdded = false;
         const pages = [[]];
         let finishedPagesCount = 0;
         const cardContents = [];
         let currentCardIndex = null;
+        let cardTitle = "";
         let streakValue = 0;
 
         const cardPageIndices = [];
@@ -700,8 +710,15 @@
             addInputSection("Audio");
         }
 
-        function addImage() {
-            addInputSection("Image");
+        function addTitle() {
+            const container = document.querySelector(".container");
+            const inputSection = createInputSection("Title");
+            const imageSection = createImageInputSection();
+            container.insertBefore(inputSection, document.querySelector(".add-button"));
+            container.insertBefore(imageSection, document.querySelector(".add-button"));
+            pages[pages.length - 1].push({ element: inputSection, type: "Title" });
+            pages[pages.length - 1].push({ element: imageSection, type: "Image" });
+            addSubmitButtonOnce(container);
         }
 
         function addInputSection(type) {
@@ -743,13 +760,6 @@
                 input.onchange = handleAudioUpload;
                 section.appendChild(label);
                 section.appendChild(input);
-            } else if (type === "Image") {
-                const input = document.createElement("input");
-                input.type = "file";
-                input.accept = "image/*";
-                input.onchange = handleImageUpload;
-                section.appendChild(label);
-                section.appendChild(input);
             } else {
                 const input = document.createElement("textarea");
                 input.placeholder = `Enter ${type} details here...`;
@@ -761,10 +771,65 @@
             return section;
         }
 
+        function handleAudioUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const filePath = `audio/${file.name}`;
+                localStorage.setItem('audioFile', filePath);
+            }
+        }
+
+        function addSubmitButtonOnce(container) {
+            if (!isSubmitButtonAdded) {
+                const submitButton = document.createElement("button");
+                submitButton.innerText = "Submit";
+                submitButton.classList.add("submit-button");
+                submitButton.onclick = displayLibraryContent;
+                container.appendChild(submitButton);
+                isSubmitButtonAdded = true;
+            }
+        }
+        
+        function createImageInputSection() {
+            const section = document.createElement("div");
+            section.classList.add("input-section");
+
+            const label = document.createElement("label");
+            label.innerText = "Upload Image:";
+
+            const input = document.createElement("input");
+            input.type = "file";
+            input.accept = "image/*";
+            input.onchange = handleImageUpload;
+
+            const closeButton = document.createElement("button");
+            closeButton.innerHTML = "&times;";
+            closeButton.style.marginLeft = "10px";
+            closeButton.style.cursor = "pointer";
+            closeButton.style.backgroundColor = "transparent";
+            closeButton.style.border = "none";
+            closeButton.style.color = "#f44336";
+            closeButton.style.fontSize = "20px";
+
+            const currentPage = pages[pages.length - 1];
+            const sectionIndex = currentPage.length;
+
+            closeButton.onclick = () => {
+                section.remove();
+                currentPage.splice(sectionIndex, 1);
+            };
+
+            section.appendChild(label);
+            section.appendChild(input);
+            section.appendChild(closeButton);
+
+            return section;
+        }
+
         function handleImageUpload(event) {
     const file = event.target.files[0];
     if (file) {
-        // Update the file path to match your directory structure
+        // Assuming the images are stored in the directory 'images-3d-illustrations/images'
         const filePath = `images-3d-illustrations/images/${file.name}`;
         const currentPage = pages[pages.length - 1];
         currentPage.push({ element: null, type: "Image", imagePath: filePath });
@@ -782,6 +847,9 @@ function displayLibraryContent() {
             const audioPath = inputElement && inputElement.type === "file" && inputElement.accept.includes("audio") ? `audio/${inputElement.files[0].name}` : null;
             const imagePath = section.type === "Image" ? section.imagePath : null;
 
+            if (section.type === "Title") {
+                cardTitle = text;
+            }
             return {
                 text,
                 type: section.type,
@@ -796,14 +864,14 @@ function displayLibraryContent() {
 
     const card = document.createElement("div");
     card.classList.add("book-card");
-    card.innerText = "Click to view content";
+    card.innerText = cardTitle || "Click to view content";
     card.onclick = () => showFullView(cardIndex);
 
     cardContent.forEach(page => {
         page.forEach(content => {
             if (content.type === "Image" && content.imagePath) {
                 const imgElement = document.createElement("img");
-                imgElement.src = content.imagePath;
+                imgElement.src = content.imagePath; // Use the file path
                 imgElement.style.width = "100px";
                 imgElement.style.height = "auto";
                 card.appendChild(imgElement);
@@ -841,18 +909,7 @@ function displayLibraryContent() {
 
     document.getElementById("library").style.display = "block";
 }
-        function addSubmitButtonOnce(container) {
-            if (!isSubmitButtonAdded) {
-                const submitButton = document.createElement("button");
-                submitButton.innerText = "Submit";
-                submitButton.classList.add("submit-button");
-                submitButton.onclick = displayLibraryContent;
-                container.appendChild(submitButton);
-                isSubmitButtonAdded = true;
-            }
-        }
 
-     
         function toggleDeleteButton(card) {
             const deleteButton = card.querySelector(".delete-button");
             const editButton = card.querySelector(".edit-button");
@@ -871,253 +928,271 @@ function displayLibraryContent() {
         }
 
         function displaySavedCards() {
-            const libraryContent = document.getElementById("library-content");
-            cardContents.forEach((cardContent, cardIndex) => {
-                const card = document.createElement("div");
-                card.classList.add("book-card");
-                card.innerText = "Click to view content";
-                card.onclick = () => showFullView(cardIndex);
+    const libraryContent = document.getElementById("library-content");
+    cardContents.forEach((cardContent, cardIndex) => {
+        const card = document.createElement("div");
+        card.classList.add("book-card");
 
-                cardContent.forEach(page => {
-                    page.forEach(content => {
-                        if (content.type === "Image" && content.imagePath) {
-                            const imgElement = document.createElement("img");
-                            imgElement.src = content.imagePath;
-                            imgElement.style.width = "100px";
-                            imgElement.style.height = "auto";
-                            card.appendChild(imgElement);
-                        }
-                    });
-                });
-
-                const settingsIcon = document.createElement("i");
-                settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
-                settingsIcon.onclick = (event) => {
-                    event.stopPropagation();
-                    toggleDeleteButton(card);
-                };
-                card.appendChild(settingsIcon);
-
-                const deleteButton = document.createElement("button");
-                deleteButton.innerText = "Delete";
-                deleteButton.classList.add("delete-button");
-                deleteButton.onclick = (event) => {
-                    event.stopPropagation();
-                    deleteCard(cardIndex, card);
-                };
-                card.appendChild(deleteButton);
-
-                const editButton = document.createElement("button");
-                editButton.innerText = "Edit";
-                editButton.classList.add("edit-button");
-                editButton.onclick = (event) => {
-                    event.stopPropagation();
-                    openEditModal(cardIndex);
-                };
-                card.appendChild(editButton);
-
-                libraryContent.appendChild(card);
+        // Extract the title from the cardContent
+        let cardTitle = "Click to view content";
+        cardContent.forEach(page => {
+            page.forEach(content => {
+                if (content.type === "Title") {
+                    cardTitle = content.text || cardTitle;
+                }
             });
+        });
 
-            if (cardContents.length > 0) {
-                document.getElementById("library").style.display = "block";
-            }
+        card.innerText = cardTitle; // Set the card's inner text to the title
+        card.onclick = () => showFullView(cardIndex);
+
+        cardContent.forEach(page => {
+            page.forEach(content => {
+                if (content.type === "Image" && content.imagePath) {
+                    const imgElement = document.createElement("img");
+                    imgElement.src = content.imagePath;
+                    imgElement.style.width = "100px";
+                    imgElement.style.height = "auto";
+                    card.appendChild(imgElement);
+                }
+            });
+        });
+
+        const settingsIcon = document.createElement("i");
+        settingsIcon.classList.add("fa", "fa-cog", "settings-icon");
+        settingsIcon.onclick = (event) => {
+            event.stopPropagation();
+            toggleDeleteButton(card);
+        };
+        card.appendChild(settingsIcon);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.innerText = "Delete";
+        deleteButton.classList.add("delete-button");
+        deleteButton.onclick = (event) => {
+            event.stopPropagation();
+            deleteCard(cardIndex, card);
+        };
+        card.appendChild(deleteButton);
+
+        const editButton = document.createElement("button");
+        editButton.innerText = "Edit";
+        editButton.classList.add("edit-button");
+        editButton.onclick = (event) => {
+            event.stopPropagation();
+            openEditModal(cardIndex);
+        };
+        card.appendChild(editButton);
+
+        libraryContent.appendChild(card);
+    });
+
+    if (cardContents.length > 0) {
+        document.getElementById("library").style.display = "block";
+    }
+}
+
+     
+function showFullView(cardIndex) {
+    if (cardPageIndices[cardIndex] === undefined) {
+        cardPageIndices[cardIndex] = 0;
+    }
+
+    const fullView = document.createElement("div");
+    fullView.classList.add("full-view"); // Use the new class
+    fullView.style.position = "fixed";
+    fullView.style.top = "0";
+    fullView.style.left = "0";
+    fullView.style.width = "100%";
+    fullView.style.height = "100%";
+    fullView.style.backgroundColor = "#333";
+    fullView.style.color = "white";
+    fullView.style.padding = "20px";
+    fullView.style.overflowY = "auto";
+    fullView.style.zIndex = "1000";
+
+    const closeButton = document.createElement("button");
+    closeButton.innerText = "Close";
+    closeButton.style.marginBottom = "20px";
+    closeButton.style.padding = "10px 20px";
+    closeButton.style.fontSize = "16px";
+    closeButton.style.backgroundColor = "#f44336";
+    closeButton.style.color = "white";
+    closeButton.style.border = "none";
+    closeButton.style.borderRadius = "4px";
+    closeButton.style.cursor = "pointer";
+    closeButton.style.transition = "background-color 0.3s ease, transform 0.3s ease";
+    closeButton.onmouseover = () => {
+        closeButton.style.backgroundColor = "#d32f2f";
+        closeButton.style.transform = "scale(1.05)";
+    };
+    closeButton.onmouseout = () => {
+        closeButton.style.backgroundColor = "#f44336";
+        closeButton.style.transform = "scale(1)";
+    };
+    closeButton.onclick = () => document.body.removeChild(fullView);
+    fullView.appendChild(closeButton);
+
+    const cardContent = cardContents[cardIndex];
+
+    cardContent.forEach((page, pageIndex) => {
+        const pageDiv = document.createElement("div");
+        pageDiv.classList.add("page");
+        if (pageIndex === cardPageIndices[cardIndex]) {
+            pageDiv.classList.add("active");
         }
 
-        function showFullView(cardIndex) {
-            if (cardPageIndices[cardIndex] === undefined) {
-                cardPageIndices[cardIndex] = 0;
-            }
+        page.forEach((content) => {
+            if (content.type === "Title") return;
 
-            const fullView = document.createElement("div");
-            fullView.style.position = "fixed";
-            fullView.style.top = "0";
-            fullView.style.left = "0";
-            fullView.style.width = "100%";
-            fullView.style.height = "100%";
-            fullView.style.backgroundColor = "#333";
-            fullView.style.color = "white";
-            fullView.style.padding = "20px";
-            fullView.style.overflowY = "auto";
-            fullView.style.zIndex = "1000";
-            fullView.style.boxSizing = "border-box"; 
+            if (content.type !== "Audio") {
+                const paragraphElement = document.createElement("p");
+                paragraphElement.innerText = content.text;
 
-            const closeButton = document.createElement("button");
-            closeButton.innerText = "Close";
-            closeButton.style.marginBottom = "20px";
-            closeButton.style.padding = "10px 20px";
-            closeButton.style.fontSize = "16px";
-            closeButton.style.backgroundColor = "#f44336";
-            closeButton.style.color = "white";
-            closeButton.style.border = "none";
-            closeButton.style.borderRadius = "4px";
-            closeButton.style.cursor = "pointer";
-            closeButton.style.transition = "background-color 0.3s ease, transform 0.3s ease";
-            closeButton.onmouseover = () => {
-                closeButton.style.backgroundColor = "#d32f2f";
-                closeButton.style.transform = "scale(1.05)";
-            };
-            closeButton.onmouseout = () => {
-                closeButton.style.backgroundColor = "#f44336";
-                closeButton.style.transform = "scale(1)";
-            };
-            closeButton.onclick = () => document.body.removeChild(fullView);
-            fullView.appendChild(closeButton);
-
-            const cardContent = cardContents[cardIndex];
-
-            cardContent.forEach((page, pageIndex) => {
-                const pageDiv = document.createElement("div");
-                pageDiv.classList.add("page");
-                if (pageIndex === cardPageIndices[cardIndex]) {
-                    pageDiv.classList.add("active");
+                if (content.type === "Heading") {
+                    paragraphElement.style.fontWeight = "bold";
+                    paragraphElement.style.fontSize = "1.5em";
+                } else if (content.type === "Insight") {
+                    paragraphElement.style.fontStyle = "italic";
+                    paragraphElement.style.color = "#ffcc00";
+                } else {
+                    paragraphElement.style.fontFamily = "sans-serif";
                 }
 
-                pageDiv.style.overflowWrap = "break-word"; // Ensure text wraps
-                pageDiv.style.wordWrap = "break-word"; // Ensure text wraps
-                pageDiv.style.maxWidth = "100%"; // Ensure it doesn't exceed screen width
-                pageDiv.style.boxSizing = "border-box";
-
-                page.forEach((content) => {
-                    if (content.type !== "Audio") {
-                        const paragraphElement = document.createElement("p");
-                        paragraphElement.innerText = content.text;
-                        paragraphElement.style.margin = "0"; // Reset margin to prevent overflow
-                        paragraphElement.style.padding = "0";
-
-                        if (content.type === "Heading") {
-                            paragraphElement.style.fontWeight = "bold";
-                            paragraphElement.style.fontSize = "1.5em";
-                        } else if (content.type === "Insight") {
-                            paragraphElement.style.fontStyle = "italic";
-                            paragraphElement.style.color = "#ffcc00";
-                        } else {
-                            paragraphElement.style.fontFamily = "sans-serif";
-                        }
-
-                        pageDiv.appendChild(paragraphElement);
-                    } else {
-                        const audioElement = document.createElement("audio");
-                        audioElement.src = content.audioPath;
-                        audioElement.controls = true;
-                        pageDiv.appendChild(audioElement);
-                    }
-                });
-
-                fullView.appendChild(pageDiv);
-            });
-
-            const controlsContainer = document.createElement("div");
-            controlsContainer.style.position = "fixed";
-            controlsContainer.style.bottom = "0";
-            controlsContainer.style.left = "0";
-            controlsContainer.style.width = "100%";
-            controlsContainer.style.backgroundColor = "#444";
-            controlsContainer.style.padding = "10px";
-            controlsContainer.style.display = "flex";
-            controlsContainer.style.justifyContent = "center";
-            controlsContainer.style.alignItems = "center";
-
-            const playPauseButton = document.createElement("button");
-            playPauseButton.classList.add("play-pause-button");
-            playPauseButton.innerHTML = '<i class="fa fa-play"></i>';
-            playPauseButton.onclick = () => {
-                const activePage = fullView.querySelector(".page.active");
-                const audioElement = activePage.querySelector("audio");
-                togglePlayPause(playPauseButton, audioElement);
-            };
-            controlsContainer.appendChild(playPauseButton);
-
-            const speedControl = document.createElement("select");
-            speedControl.classList.add("speed-control");
-            speedControl.innerHTML = `
-                <option value="0.25">0.25x</option>
-                <option value="0.5">0.5x</option>
-                <option value="0.75">0.75x</option>
-                <option value="1" selected>1x</option>
-                <option value="1.5">1.5x</option>
-                <option value="2">2x</option>
-            `;
-            speedControl.onchange = () => {
-                const activePage = fullView.querySelector(".page.active");
-                const audioElement = activePage.querySelector("audio");
-                if (audioElement) {
-                    audioElement.playbackRate = parseFloat(speedControl.value);
-                }
-            };
-
-            const finishButton = document.createElement("button");
-            finishButton.innerText = "Finish";
-            finishButton.style.marginLeft = "10px";
-            finishButton.style.padding = "10px 20px";
-            finishButton.style.fontSize = "16px";
-            finishButton.style.backgroundColor = "#ff9800";
-            finishButton.style.color = "white";
-            finishButton.style.border = "none";
-            finishButton.style.borderRadius = "4px";
-            finishButton.style.cursor = "pointer";
-            finishButton.style.transition = "background-color 0.3s ease, transform 0.3s ease";
-            finishButton.onmouseover = () => {
-                finishButton.style.backgroundColor = "#fb8c00";
-                finishButton.style.transform = "scale(1.05)";
-            };
-            finishButton.onmouseout = () => {
-                finishButton.style.backgroundColor = "#ff9800";
-                finishButton.style.transform = "scale(1)";
-            };
-            finishButton.onclick = () => finishPage(cardPageIndices[cardIndex]);
-
-            controlsContainer.appendChild(speedControl);
-            controlsContainer.appendChild(finishButton);
-
-            const navNumbers = document.createElement("div");
-            navNumbers.classList.add("nav-numbers");
-            navNumbers.style.marginLeft = "20px";
-
-            cardContent.forEach((_, pageIndex) => {
-                const pageNumber = document.createElement("span");
-                pageNumber.innerText = pageIndex + 1;
-                pageNumber.style.cursor = "pointer";
-                pageNumber.style.margin = "0 5px";
-                pageNumber.style.padding = "5px 10px";
-                pageNumber.style.backgroundColor = pageIndex === cardPageIndices[cardIndex] ? "#2196f3" : "#555";
-                pageNumber.style.color = "white";
-                pageNumber.style.borderRadius = "4px";
-                pageNumber.onclick = () => {
-                    document.querySelectorAll(".page").forEach((page, index) => {
-                        page.classList.toggle("active", index === pageIndex);
-                    });
-                    cardPageIndices[cardIndex] = pageIndex;
-                    updateNavNumbers(cardIndex);
-                };
-                navNumbers.appendChild(pageNumber);
-            });
-
-            controlsContainer.appendChild(navNumbers);
-            fullView.appendChild(controlsContainer);
-            document.body.appendChild(fullView);
-        }
-
-        function togglePlayPause(button, audioElement) {
-            const icon = button.querySelector("i");
-            if (icon.classList.contains("fa-play")) {
-                icon.classList.remove("fa-play");
-                icon.classList.add("fa-pause");
-                if (audioElement) {
-                    audioElement.play();
-                    audioElement.onended = () => {
-                        icon.classList.remove("fa-pause");
-                        icon.classList.add("fa-play");
-                    };
-                }
+                pageDiv.appendChild(paragraphElement);
             } else {
+                const audioElement = document.createElement("audio");
+                audioElement.src = content.audioPath;
+                audioElement.controls = true;
+                pageDiv.appendChild(audioElement);
+            }
+        });
+
+        fullView.appendChild(pageDiv);
+    });
+
+    const controlsContainer = document.createElement("div");
+    controlsContainer.style.position = "fixed";
+    controlsContainer.style.bottom = "0";
+    controlsContainer.style.left = "0";
+    controlsContainer.style.width = "100%";
+    controlsContainer.style.backgroundColor = "#444";
+    controlsContainer.style.padding = "10px";
+    controlsContainer.style.display = "flex";
+    controlsContainer.style.justifyContent = "center";
+    controlsContainer.style.alignItems = "center";
+
+    const playPauseButton = document.createElement("button");
+    playPauseButton.classList.add("play-pause-button");
+    playPauseButton.innerHTML = '<i class="fa fa-play"></i>';
+    playPauseButton.onclick = () => {
+        const activePage = fullView.querySelector(".page.active");
+        const audioElement = activePage.querySelector("audio");
+        togglePlayPause(playPauseButton, audioElement);
+    };
+    controlsContainer.appendChild(playPauseButton);
+
+    const speedControl = document.createElement("select");
+    speedControl.classList.add("speed-control");
+    speedControl.innerHTML = `
+        <option value="0.25">0.25x</option>
+        <option value="0.5">0.5x</option>
+        <option value="0.75">0.75x</option>
+        <option value="1" selected>1x</option>
+        <option value="1.5">1.5x</option>
+        <option value="2">2x</option>
+    `;
+    speedControl.onchange = () => {
+        const activePage = fullView.querySelector(".page.active");
+        const audioElement = activePage.querySelector("audio");
+        if (audioElement) {
+            audioElement.playbackRate = parseFloat(speedControl.value);
+        }
+    };
+
+    const finishButton = document.createElement("button");
+    finishButton.innerText = "Finish";
+    finishButton.style.marginLeft = "10px";
+    finishButton.style.padding = "10px 20px";
+    finishButton.style.fontSize = "16px";
+    finishButton.style.backgroundColor = "#ff9800";
+    finishButton.style.color = "white";
+    finishButton.style.border = "none";
+    finishButton.style.borderRadius = "4px";
+    finishButton.style.cursor = "pointer";
+    finishButton.style.transition = "background-color 0.3s ease, transform 0.3s ease";
+    finishButton.onmouseover = () => {
+        finishButton.style.backgroundColor = "#fb8c00";
+        finishButton.style.transform = "scale(1.05)";
+    };
+    finishButton.onmouseout = () => {
+        finishButton.style.backgroundColor = "#ff9800";
+        finishButton.style.transform = "scale(1)";
+    };
+    finishButton.onclick = () => finishPage(cardPageIndices[cardIndex]);
+
+    controlsContainer.appendChild(speedControl);
+    controlsContainer.appendChild(finishButton);
+
+    const navNumbers = document.createElement("div");
+    navNumbers.classList.add("nav-numbers");
+    navNumbers.style.marginLeft = "20px";
+
+    cardContent.forEach((_, pageIndex) => {
+        const pageNumber = document.createElement("span");
+        pageNumber.innerText = pageIndex + 1;
+        pageNumber.style.cursor = "pointer";
+        pageNumber.style.margin = "0 5px";
+        pageNumber.style.padding = "5px 10px";
+        pageNumber.style.backgroundColor = pageIndex === cardPageIndices[cardIndex] ? "#2196f3" : "#555";
+        pageNumber.style.color = "white";
+        pageNumber.style.borderRadius = "4px";
+        pageNumber.onclick = () => {
+            // Reset and pause the current audio if playing
+            if (currentAudioElement) {
+                currentAudioElement.pause();
+                currentAudioElement.currentTime = 0;
+            }
+            // Reset the play/pause button to "play"
+            const playPauseButtonIcon = playPauseButton.querySelector("i");
+            playPauseButtonIcon.classList.remove("fa-pause");
+            playPauseButtonIcon.classList.add("fa-play");
+
+            document.querySelectorAll(".page").forEach((page, index) => {
+                page.classList.toggle("active", index === pageIndex);
+            });
+            cardPageIndices[cardIndex] = pageIndex;
+            updateNavNumbers(cardIndex);
+        };
+        navNumbers.appendChild(pageNumber);
+    });
+
+    controlsContainer.appendChild(navNumbers);
+    fullView.appendChild(controlsContainer);
+    document.body.appendChild(fullView);
+}
+
+function togglePlayPause(button, audioElement) {
+    const icon = button.querySelector("i");
+    if (icon.classList.contains("fa-play")) {
+        icon.classList.remove("fa-play");
+        icon.classList.add("fa-pause");
+        if (audioElement) {
+            audioElement.play();
+            currentAudioElement = audioElement; // Track the current audio element
+            audioElement.onended = () => {
                 icon.classList.remove("fa-pause");
                 icon.classList.add("fa-play");
-                if (audioElement) {
-                    audioElement.pause();
-                }
-            }
+            };
         }
+    } else {
+        icon.classList.remove("fa-pause");
+        icon.classList.add("fa-play");
+        if (audioElement) {
+            audioElement.pause();
+        }
+    }
+}
 
         function finishPage(pageIndex) {
             const pageElements = document.querySelectorAll(".page");
