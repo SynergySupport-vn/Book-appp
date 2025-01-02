@@ -658,7 +658,7 @@ textarea:focus {
       </div>
       <script>
         document.addEventListener("DOMContentLoaded", () => {
-        fetch('/api/cards')
+        fetch('data.json')
             .then(response => response.json())
             .then(data => {
                 cardContents.push(...data.cards);
@@ -712,7 +712,7 @@ textarea:focus {
             darkMode: document.body.classList.contains('dark-mode') // Save dark mode state
         };
 
-        fetch('/api/cards', {
+        fetch('data.json', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
