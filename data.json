@@ -817,8 +817,332 @@
           "imagePath": null
         }
       ]
+    ],
+    [
+      [
+        {
+          "text": "b1.wav",
+          "type": "Audio",
+          "audioPath": "audio/b1.wav",
+          "imagePath": null
+        },
+        {
+          "text": "Steal Like an Artist",
+          "type": "Title",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "2.jpg",
+          "type": "Image",
+          "audioPath": null
+        },
+        {
+          "text": "Art is our imagination brought to life by creativity",
+          "type": "Heading",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "Art fosters the expression of unique human creative skills and imagination, often in a visual form such as painting or sculpture. These works are appreciated primarily for their aesthetic qualities or emotional power. Regardless of complexity or simplicity, they are always ingenious.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "The expression of creativity through art isn’t exclusive to one form. It comprises various genres, from classical music to graffiti.",
+          "type": "Insight",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "Humanity has engaged in artistic endeavors for a long time; cave paintings were the first sign of humans evolving into intelligent creatures. We couldn't speak, but we found another way to express ourselves — painting. This truth explains the reason behind associating images with art. As our thought process evolved, we discovered new forms of communicating feelings and ideas. Soon masterpieces became a way to gauge the country's level of development.\n\nOver time, creativity acquired an almost magical atmosphere. We all know about muses that bring inspiration, stories of extraordinary geniuses, and light-bulb moments. Myths are a natural part of our life, but we need to be aware of the stereotypes they popularize. “Inspiration is a miracle, we should wait for it” and “Only a few people can create art” are the most ubiquitous. The truth is that each of us has artistic skills, and we choose whether to nurture or neglect them.\n\nWe don't need to organize exhibitions, publish a book, or sing in opera to consider ourselves creative. The impulse to bring something novel into people's lives goes far beyond sculpture, music, theater, etc. The whole of life can become a laboratory for experiments.\n\nIn this summary, you will discover how to help your imagination and thinking-out-of-box thrive. Are you ready to overcome mental blocks and unleash your full potential? Let's get started!",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        }
+      ],
+      [
+        {
+          "text": "b2.wav",
+          "type": "Audio",
+          "audioPath": "audio/b2.wav",
+          "imagePath": null
+        },
+        {
+          "text": "There is nothing new under the sun, so don't be afraid to draw inspiration from different sources",
+          "type": "Heading",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "Are you searching for inspiration? Are you stuck in a creative rut? Don't fret; there's no such thing as an original idea. Any notion today springs from another that predates it either as a loose basis or a complete “rip-off.” You probably think using someone else's ideas in your work is theft. Well, you'd be correct, but that is just what art is. Even the geniuses admitted it.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "No idea is entirely unique; there's always inspiration waiting if you look hard enough.",
+          "type": "Insight",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "The phrase “art is theft” belongs to the prominent Spanish painter Pablo Picasso. It suggests that each masterpiece is a subtle imitation of another one. You can call it indirect inspiration or musing to make it sound more pleasant. Yet it's the truth: most of the ideas today grow out of older ones or are simply a continuation of them. So, don't feel guilty if you find a better application or interpretation for someone else's vision.\n\nAustin Kleon encourages readers to surround themselves with material from which they can “steal.” Thus, read books, watch videos, or listen to podcasts. The core condition is to focus on the depth of your research, rather than the number of reviewed items. Profound knowledge will pave the way for your success.\n\nMake taking notes your daily habit. Write down the quotations from books, ads, films, or conversations between strangers. These notes don’t have to be entirely relevant to your ongoing project; consider any eye-opening idea an investment for future artwork. It's also sound to keep all your observations in one place; this way, you'll create your own “bank” of inspiration triggers. Next time you have to come up with a new design or text, revise your jottings.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "Internal rumination isn't the only way to find inspiration. Don't let this limitation impede your progress.",
+          "type": "Insight",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "The principle “Nothing is original” is a hope for the many people struggling to snatch an idea from thin air and make a breakthrough. It is a wake-up call, telling them they will find references if they look hard enough. So instead of striving for a never-before-seen masterpiece, reach for an old text and get inspired.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        }
+      ],
+      [
+        {
+          "text": "b3.wav",
+          "type": "Audio",
+          "audioPath": "audio/b3.wav",
+          "imagePath": null
+        },
+        {
+          "text": "Learning from your role models assists in shaping your identity",
+          "type": "Heading",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "Sometimes, we face limitations caused by our identity — or lack of one. We are scared to start something because we don't yet know who we are, what we want to do, or how to achieve it. This lack of distinctiveness means you should reveal and free the artist inside you. It's a natural process. Genetically, we are a collection of our parent's chromosomes, but it doesn't define us. We become someone through our own experiences and choices.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "A lack of identity isn’t a drawback. It is a chance to define oneself through art.",
+          "type": "Insight",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "However, a lack of personal brand isn't an excuse or obstacle to reaching your goal. We never are ready enough. Besides, our fears can be illusional. Many intelligent people suffer from “imposter syndrome.” Despite possessing exceptional skills, they constantly doubt their accomplishments and abilities.\n\nIf you are still figuring out where to start or cannot form a concrete idea, take the first step anyway. Such a blind leap of faith can help you overcome worries. Take courage from people you admire. If you want to reach their level or outclass them, scrutinize the process behind their art. Break it down and find your unique way to deal with the task.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "Nobody is born with a style or a voice. We don’t come out of the womb knowing who we are. In the beginning, we learn by pretending to be our heroes. We learn by copying.",
+          "type": "Insight",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "Imitation is flattery as long as you aren't plagiarizing someone else's work as yours. You can learn from the business world how to do it. For example, developing new comic characters is daunting when we have a book giant like DC Comics. However, several companies managed to do it. Instead of copying and slapping a new name on the surface, they identified the successful patterns used by DC Comics and created their unique stories.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "The greatest artists create a unique identity for themselves through personal style.",
+          "type": "Insight",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "Besides, finding yourself by learning from your idols is easy because humans can't make perfect copies. Therefore, we will remain ourselves but with a dash of our idols sprinkled on us. So, to be you, you should try and fail to be someone else, ironically.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        }
+      ],
+      [
+        {
+          "text": "b4.wav",
+          "type": "Audio",
+          "audioPath": "audio/b4.wav",
+          "imagePath": null
+        },
+        {
+          "text": "Limit technology's use and critical judgments to keep the creative process captivating",
+          "type": "Heading",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "Laptops and other digital devices are supposed to aid our creative process. Yet sometimes they decrease our productivity. For example, we rely on automatic sentence correction so significantly that we no longer use our own words. Or the computer invites us to hurriedly delete or edit an idea or a line of a poem without letting it form. These devices have made us harsh critics.\n\nIt isn't art if there isn't some imperfection in it. Feel free to go back to the paper and dirty easel and enjoy how your idea evolves naturally, without technological constraints. Moreover, it's helpful to have two different creative workspaces. One should be full of sticky notes, papers, and markers. It's a place for toying with ideas, organizing your thoughts, and preparing drafts. When the first version is ready, you can move to the second space, equipped with electronic devices, and enhance your creations.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "Art is best without the need for the ideal. It is often amidst the mess of imperfections.",
+          "type": "Insight",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "To fully embrace art, we must distance our creative process from the screens of our digital devices until we are ready to edit and publish. This technique will allow us to draw inspiration from the process instead of making it monotonous.\n\nSometimes creating art becomes dull since we perceive it as meaningless and devalue its role. To some, it might be a hobby, just a side job in case our regular work has become tiring. And as such, art should get more attention but is regarded as unimportant and reserved for pastime activity instead. Yet hobbies can be very lucrative if you know how to harness them. According to the saying, what you do when you are not working is the one thing you will love doing for the rest of your life. Why not monetize your hobbies even as they bring joy and fulfilling stimulation?\n\nYou'll probably think it is too expensive to invest in your many passions, so it’s best to pick one and focus on it. This terrible decision can haunt you for the rest of your life. Whatever hobbies you have, please don't give them up. They can benefit your career or even become one.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        }
+      ],
+      [
+        {
+          "text": "b5.wav",
+          "type": "Audio",
+          "audioPath": "audio/b5.wav",
+          "imagePath": null
+        },
+        {
+          "text": "The path to true creativity will first take you out of your comfort zone",
+          "type": "Heading",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "Nothing much happens in the comfort zone. If you want to be crazily creative, become the best version of yourself and achieve your desired things, you will almost always have to move out of your “shell.” Sometimes it is mental, but often it is your physical location. For instance, your home can become too dull to carry out any creative activity. In such cases, you should find a different place you can regularly visit when you want to get creative.\n\nBesides, you don’t need to go somewhere intentionally for inspiration. Bring your notepad with you all the time. While waiting for the order, commuting to work, or sitting in a queue to a hairdresser, make notes.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "You can introduce your mind to new data and stimuli by changing your environment; it'll help improve your art.",
+          "type": "Insight",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "Change is always beneficial for creativity, as it challenges the mind to adapt to new surroundings. In doing so, it creates lovely coping mechanisms that translate into art. You can always return home when you feel the external stimulation is enough, but now you can integrate your new experience into your home space.\n\nWhile you travel to find newness or sit at home to create your world, remember that friends are essential. The world you have explored or created is always small. Surround yourself with those who can inspire you and are better informed or best suited to teach on a subject matter. These are the people whose input will unconsciously echo years later in your works.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "There must be a safe space that you call home, a comfort zone. Remember to go back to it.",
+          "type": "Insight",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "If you wish to use your collected data to form art or business, don't seek anyone's validation before you execute it. A lot of ideas have died waiting for approval. It is your concept, and even though people might misinterpret it and judge it harshly, you know it's worth it and should stand by it. If you've spent time studying your heroes and creating an identity for yourself, there's a high chance your work will be excellent; you have to believe it is.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        }
+      ],
+      [
+        {
+          "text": "b6.wav",
+          "type": "Audio",
+          "audioPath": "audio/b6.wav",
+          "imagePath": null
+        },
+        {
+          "text": "Sharing outcomes of your work is a vital necessity for success",
+          "type": "Heading",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "The creative process is of utmost importance, but more is needed to make a living from your work. You need exposure. Fortunately, now it's easier than ever thanks to the Internet.\n\nIndeed, accessibility to global informational space created high competition for people's attention. Nowadays, only some scan the 10th page of search results. Yet the less famous you are, the more room for experiments you have.\n\nHigh expectations won’t pressure you, and comments are free from thousands of haters. Use this time to form your online community and identify what works best. This way, until you gain numerous followers, your posts or videos will become viral.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "Keep all positive feedback on your work in a separate file; read it to boost your morale when you’re feeling low.",
+          "type": "Insight",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "While experimenting with content and format, share observations on things no one pays attention to. Your unique perspective on the world may be the best business card. Don't limit yourself to the familiar spheres; create the art you want to see, listen to, or read. Try to share your ideas as often as possible: it will be your advantage over others. According to HubSpot, the optimal number is three to four weekly posts.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "Life is a lonely business, often filled with discouragement and rejection. Yes, validation is for parking, but it’s still a tremendous boost when people say nice things about our work.",
+          "type": "Insight",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "If you are stuck, open the influencers' blogs and read the comments below. Find the ones you strongly disagree with. Instead of wasting your time undermining this user's argument, channel your irritation into creating posts expressing your position. Anger is an energizing emotion; use it correctly.\n\nAt the same time, endless ways to express yourself have the other side of the coin. It's easy to get lost and stumble at every choice: which concept to use, what programs to apply, etc. That's why you should set some limitations (deadlines or KPIs, for example). For instance, to write a text in two hours. Use the appropriate stimuli to incentivize yourself, and remember to celebrate even little achievements.\n\nDid you know? According to the Hosting Tribunal, the Internet contains 600 million blogs. Yet only 2 million bloggers publish posts daily.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        }
+      ],
+      [
+        {
+          "text": "b7.wav",
+          "type": "Audio",
+          "audioPath": "audio/b7.wav",
+          "imagePath": null
+        },
+        {
+          "text": "Creating your life is the most significant work of art",
+          "type": "Heading",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "Many artists rarely have plans for their lives, and they end up burning out, fading away before reaping the rewards of their art. You want your art to outlive you, but it doesn't mean you desire a short life. So, take action to live better.\n\nThe tortured artist stereotype will almost always lead to burnout and often zero monetary rewards. That's why Austin Kleon suggests that you prioritize taking care of yourself: sleep more, eat healthier, exercise, and take as many breaks as your body requires.\n\nThere is little money in art at the start, so it is advisable to save any you get. Don't be a frivolous spender; invest in your retirement and ensure you're alive long enough to use the funds.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "If you have a steady income source outside art, don't quit it; find a way to balance both activities.",
+          "type": "Insight",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "It isn't all glitz and glamor in the arts. If you have a job that pays well and affords you the time to invest in your art, try your hardest to keep it. Indeed, occupation can be tedious and make you hate waking up every day. The trick is finding one that you can tolerate; it’s difficult but possible. Things to look out for in a good job:\n\n• Reasonable salary\n• No need to overwork\n• A flexible schedule that affords you enough time and energy to indulge in your passions\n\nOnce you find a job with all these attributes, grasp the golden opportunity.\n\nYou may believe that work will limit you and hinder your talent development. Yet it only seems this way. Thinking about how to make ends meet would lead to enormous apprehensiveness and constant stress. On the contrary, the job will give you money and freedom. Apply the latter correctly, and success is inevitable. Moreover, occupation is a chance to meet people you can learn from. For instance, Austin Kleon picked up great research skills while working at the library.\n\nDid you know? The founder of the modern Olympics, Baron Pierre de Coubertin, was enamored with the idea of the true Olympian being both a talented artist and sportsperson. Between 1912 and 1948, people received medals for sporting-inspired masterpieces of architecture, music, painting, sculpture, and literature.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        }
+      ],
+      [
+        {
+          "text": "b8.wav",
+          "type": "Audio",
+          "audioPath": "audio/b8.wav",
+          "imagePath": null
+        },
+        {
+          "text": "Conclusion",
+          "type": "Heading",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "Art isn't limited to the definition on the Internet; it signifies anything you can imagine. A new app, a business plan, or a design for airplanes may be the fruit of your creativity. The variety of manifestations confirms the endless potential of human skills.\n\nAt the same time, each project, big or small, starts with ideas. Often that's the most challenging stage: many writers talk about the daunting emptiness of the first sheet of paper. The “art is a theft” principle is an “icebreaker” for the launch of the creative process. It doesn't mean you should copy what you see or hear. Instead, the masterpieces of others are fertile soil for growing your novel approach to the task. Dive into the depths and use the gained insights to your advantage.\n\nMoreover, we can combine inspiration with analytical tools. Choose the eye-opening works of your role model and find the patterns that make them prominent.\n\nIt's reasonable to be more intentional about how you handle your work. Many “artists” get derailed and drop their passions because of impatience or inconvenience. You must believe in your abilities and be willing to learn, adapt, and experience new challenges while pursuing your passion or career.\n\nSet your priorities right and maintain your balance. Take care of yourself, and prepare your safety net — monetize your hobbies and juggle art and work.\n\nYour life path is the best canvas for creativity.\n\nTry this\n\nSurround yourself with material on particular artists or role models and study their lives, work, and creative processes. Don't just try to copy and become them: use their material as clay to build your own identity.",
+          "type": "Paragraph",
+          "audioPath": null,
+          "imagePath": null
+        },
+        {
+          "text": "",
+          "type": "Image",
+          "audioPath": null,
+          "imagePath": "images-3d-illustrations/images/2.jpg"
+        }
+  
+      ]
     ]
   ],
   "streak": 22,
-  "darkMode": true
+  "darkMode": false
 }
